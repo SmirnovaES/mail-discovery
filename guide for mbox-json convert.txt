@@ -1,0 +1,24 @@
+1. sudo -i
+
+2. install Node.js:
+
+    apt-get update
+    apt-get install nodejs
+
+3. install npm:
+
+    apt-get install npm
+
+4. В директории с файлом .mbox подгружаем все модули:
+
+    npm install
+
+5. Запускаем скрипт:
+
+    node ./mbox-to-json.js --input FILENAME.mbox --output FILENAME.json
+
+    Пример:
+
+   	 node ./mbox-to-json.js --input 'Вся почта, включая _Спам_ и _Корзину_.mbox' --output 'answer.json'
+
+Сам скрипт: https://github.com/brysonian/mbox-to-json/blob/master/mbox-to-json.js
