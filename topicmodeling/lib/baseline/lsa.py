@@ -14,3 +14,4 @@ class LsaModel(BaselineABC):
         if self.topic_terms is None:
             self.topic_terms = self.model.get_topics()
         return self.topic_terms
+

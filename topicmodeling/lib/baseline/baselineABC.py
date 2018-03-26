@@ -149,3 +149,4 @@ class BaselineABC():
             for par in temp_dic:
                 self.docs_terms[i][par[0]] = par[1]
         return self.docs_terms
+
