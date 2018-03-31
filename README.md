@@ -1,3 +1,3 @@
 # mail-discovery
 
-Беконайзеры делают всякое
+best project ever
