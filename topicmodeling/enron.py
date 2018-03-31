@@ -1,16 +1,24 @@
-import numpy as np
 from topicmodeling.lib.visualization.visualizer import Visualizer
+from topicmodeling.lib.baseline.lsa import LsaModel
+from topicmodeling.lib.baseline.lda import LdaModel
+
+
+path = '/home/geras-artem/Desktop'
+corpus_path = '/home/geras-artem/Desktop/Study/6sem/InPrak/MailDiscoveryML//part/'
 
 
 def main():
-    a = np.ones((5, 4)) * np.arange(1, 5)
-    b = (np.ones((2, 4)) / 4)
-    dict = {0: 'a', 1: 'b', 2: 'c', 3: 'd'}
-    l = [('a', 0.25), ('b', 0.25), ('c', 0.25), ('d', 0.25)]
-    terms = [l for i in range(a.shape[0])]
+    model = LdaModel()
+    # model.load()
+    model.extract_corpus(corpus_path)
+    model.data_processing()
+    model.build(num_topics=20, passes=20)
 
-    Visualizer(b, a, dict, terms)\
-        .run('/home/geras-artem/Desktop', metrics='coherence')
+    docs_words = model.get_docs()
+    topics_words = model.get_topics()
+    topics_top_terms = model.show_topics(num_topics=20, formatted=False)
+
+    Visualizer(docs_words, topics_words, topics_top_terms).run(path, metrics='coherence')
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import numpy as np
+from tqdm import tqdm
+
 
 class MetricsABC():
     __metaclass__=ABCMeta
@@ -17,6 +19,7 @@ class MetricsABC():
 
     def calculate_all_topics(self):
         """Calculates metrics for all the topics"""
-        for i in np.arange(self.topics_words.shape[0]):
+        for i in tqdm(range(self.topics_words.shape[0]),
+                      desc='calculate_all_topics'):
             self.calculate_topic(i)
         return self.metrics

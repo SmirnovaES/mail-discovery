@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 from topicmodeling.lib.metrics.metricsABC import MetricsABC
 
 
@@ -16,14 +17,13 @@ class TfIdf(MetricsABC):
         words_index = np.arange(topic_distribution.size)[topic_distribution > 0]
 
         tf_idf_for_words = np.zeros_like(words_index, dtype=float)
-        for w in words_index:
+        for w in tqdm(list(words_index), desc='calculate topic 1/2'):
             document_index = self.docs_words[:, w]
             document_index = np.arange(document_index.size)[document_index > 0]
             for d in document_index:
                 tf_idf_for_words[w] += tf_idf(w, d)
 
-        print(tf_idf_for_words)
-        for w1 in words_index:
+        for w1 in tqdm(list(words_index), desc='calculate topic 2/2'):
             for w2 in words_index:
                 if w1 == w2:
                     continue
