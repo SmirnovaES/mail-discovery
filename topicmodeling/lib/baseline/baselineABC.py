@@ -60,6 +60,10 @@ class BaselineABC:
     def get_topics(self):
         """Returns num_topics x num_terms size numpy.ndarray"""
 
+    @abstractmethod
+    def show_topics(self, num_topics=-1, num_words=10, log=False, formatted=True):
+        '''Returns result of show_topics of model'''
+
     def extract_corpus(self, path):
         docs = []  # all documents
         docs_num_dict = []  # Stores email sender's name and number
@@ -148,3 +152,8 @@ class BaselineABC:
                 self.docs_terms[i][par[0]] = par[1]
         return self.docs_terms
 
+    def get_id2token(self):
+        return self.dictionary.id2token
+
+    def get_token2id(self):
+        return self.dictionary.token2id
