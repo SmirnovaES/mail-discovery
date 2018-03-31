@@ -1,0 +1,172 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[120.0219937874, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"], [31.4367978919, "../topics/b{system,_number,_math}.html", "b{system,_number,_math}"], [15.8100349113, "../topics/b{year,_time,_son}.html", "b{year,_time,_son}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'A'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'A'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{language,_work,_write}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+<tr class="list"><td id="b{system,_number,_math}" onmouseover="highlight(1)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr>
+<tr class="list"><td id="b{year,_time,_son}" onmouseover="highlight(2)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    
+b'<p><b>BA</b>, <b>B.A.</b>, <b>Ba</b>, or <b>ba</b> may refer to:</p>'
+b'<ul>\n<li class="toclevel-1 tocsection-1"><a href="http://en.wikipedia.org/wiki/b_A_#Businesses_and_organizations"><span class="tocnumber">1</span> <span class="toctext">Businesses and organizations</span></a></li>\n<li class="toclevel-1 tocsection-2"><a href="http://en.wikipedia.org/wiki/b_A_#Languages"><span class="tocnumber">2</span> <span class="toctext">Languages</span></a></li>\n<li class="toclevel-1 tocsection-3"><a href="http://en.wikipedia.org/wiki/b_A_#Names"><span class="tocnumber">3</span> <span class="toctext">Names</span></a></li>\n<li class="toclevel-1 tocsection-4"><a href="http://en.wikipedia.org/wiki/b_A_#Places"><span class="tocnumber">4</span> <span class="toctext">Places</span></a>\n<ul>\n<li class="toclevel-2 tocsection-5"><a href="http://en.wikipedia.org/wiki/b_A_#The_Americas"><span class="tocnumber">4.1</span> <span class="toctext">The Americas</span></a></li>\n<li class="toclevel-2 tocsection-6"><a href="http://en.wikipedia.org/wiki/b_A_#Asia"><span class="tocnumber">4.2</span> <span class="toctext">Asia</span></a></li>\n<li class="toclevel-2 tocsection-7"><a href="http://en.wikipedia.org/wiki/b_A_#Europe"><span class="tocnumber">4.3</span> <span class="toctext">Europe</span></a></li>\n<li class="toclevel-2 tocsection-8"><a href="http://en.wikipedia.org/wiki/b_A_#Fiji"><span class="tocnumber">4.4</span> <span class="toctext">Fiji</span></a></li>\n</ul>\n</li>\n<li class="toclevel-1 tocsection-9"><a href="http://en.wikipedia.org/wiki/b_A_#Science"><span class="tocnumber">5</span> <span class="toctext">Science</span></a></li>\n<li class="toclevel-1 tocsection-10"><a href="http://en.wikipedia.org/wiki/b_A_#Sport"><span class="tocnumber">6</span> <span class="toctext">Sport</span></a></li>\n<li class="toclevel-1 tocsection-11"><a href="http://en.wikipedia.org/wiki/b_A_#Technology"><span class="tocnumber">7</span> <span class="toctext">Technology</span></a></li>\n<li class="toclevel-1 tocsection-12"><a href="http://en.wikipedia.org/wiki/b_A_#Other_uses"><span class="tocnumber">8</span> <span class="toctext">Other uses</span></a></li>\n<li class="toclevel-1 tocsection-13"><a href="http://en.wikipedia.org/wiki/b_A_#See_also"><span class="tocnumber">9</span> <span class="toctext">See also</span></a></li>\n</ul>'
+<h3>b'<span class="mw-headline" id="Businesses_and_organizations">Businesses and organizations</span>'</h3>
+b'<ul>\n<li><a href="http://www.wikipedia.org/wiki/Bangladesh_Army" title="Bangladesh Army">Bangladesh Army</a></li>\n<li><a href="http://www.wikipedia.org/wiki/Bibliotheca_Alexandrina" title="Bibliotheca Alexandrina">Bibliotheca Alexandrina</a>, an Egyptian library and cultural center</li>\n<li><a href="http://www.wikipedia.org/wiki/Boeing" title="Boeing">Boeing</a> (stock symbol BA)</li>\n<li><a href="http://www.wikipedia.org/wiki/Boston_Acoustics" title="Boston Acoustics">Boston Acoustics</a>, an audio equipment manufacturer</li>\n<li><a href="http://www.wikipedia.org/wiki/Boston_and_Albany_Railroad" title="Boston and Albany Railroad">Boston and Albany Railroad</a> (reporting mark BA)</li>\n<li><a href="http://www.wikipedia.org/wiki/British_Aircraft_Manufacturing" title="British Aircraft Manufacturing">British Aircraft Manufacturing</a></li>\n<li><a href="http://www.wikipedia.org/wiki/British_Airways" title="British Airways">British Airways</a> (IATA airline code BA)</li>\n<li><a href="http://www.wikipedia.org/wiki/British-American_Oil" class="mw-redirect" title="British-American Oil">British-American Oil</a>, a Canadian petroleum company</li>\n<li><a href="http://www.wikipedia.org/wiki/British_Association_for_the_Advancement_of_Science" class="mw-redirect" title="British Association for the Advancement of Science">British Association for the Advancement of Science</a></li>\n<li><a href="http://www.wikipedia.org/wiki/The_Nottingham_Bluecoat_Academy" class="mw-redirect" title="The Nottingham Bluecoat Academy">The Nottingham Bluecoat Academy</a>, a Church of England secondary school in Nottingham, England</li>\n<li><a href="http://www.wikipedia.org/wiki/Selskap_med_begrenset_ansvar" title="Selskap med begrenset ansvar">Selskap med begrenset ansvar</a>, a type of Norwegian company with limited liability</li>\n</ul>'
+<h3>b'<span class="mw-headline" id="Languages">Languages</span>'</h3>
+b'<ul>\n<li><a href="http://www.wikipedia.org/wiki/Bashkir_language" title="Bashkir language">Bashkir language</a> (ISO 639 alpha-2 language code BA)</li>\n<li><a href="http://www.wikipedia.org/wiki/Ba_(Javanese)" title="Ba (Javanese)">Ba (Javanese)</a> (\xea\xa6\xa7), a letter in the Javanese script</li>\n<li><a href="http://www.wikipedia.org/wiki/Baa_language" title="Baa language">Baa language</a>, a Niger-Congo language</li>\n<li><a href="http://www.wikipedia.org/wiki/Aka-Bo_language" title="Aka-Bo language">Aka-Bo language</a>, an Indian language, also known as <i>Ba</i></li>\n<li><a href="http://www.wikipedia.org/wiki/Bet_(letter)#Arabic_b\xc4\x81\xca\xbe" title="Bet (letter)">B\xc4\x81\xca\xbe</a>, the Arabic letter <big>\xd8\xa8</big></li>\n</ul>'
+<h3>b'<span class="mw-headline" id="Names">Names</span>'</h3>
+b'<ul>\n<li><a href="http://www.wikipedia.org/wiki/Ba_(given_name)" title="Ba (given name)">Ba (given name)</a></li>\n<li><a href="http://www.wikipedia.org/wiki/Ba_(surname)" title="Ba (surname)">Ba (surname)</a>, common West African surname invariably of Fula origin</li>\n</ul>'
+<h3>b'<span class="mw-headline" id="Places">Places</span>'</h3>
+<h3>b''</h3>
+<h3>b''</h3>
+<h3>b''</h3>
+<h3>b'<span class="mw-headline" id="The_Americas">The Americas</span>'</h3>
+b'<ul>\n<li><a href="http://www.wikipedia.org/wiki/The_Bahamas" title="The Bahamas">The Bahamas</a> (WMO country code BA)</li>\n<li><a href="http://www.wikipedia.org/wiki/State_of_Bahia" class="mw-redirect" title="State of Bahia">State of Bahia</a>, Brazil (ISO 3166-2:BR code)</li>\n<li><a href="http://www.wikipedia.org/wiki/Barber_County,_Kansas" title="Barber County, Kansas">Barber County, Kansas</a> (state county code)</li>\n<li><a href="http://www.wikipedia.org/wiki/Buenos_Aires" title="Buenos Aires">Buenos Aires</a>, Argentina</li>\n</ul>'
+<p><a href="http://en.wikipedia.org/wiki/b_A_">Full article&nbsp;&#x25B8;</a></p>
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_Abhidharma_.html'">b'Abhidharma'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Answer_.html'">b'Answer'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Affidavit_.html'">b'Affidavit'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andrey_Markov_.html'">b'Andrey Markov'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Allomorph_.html'">b'Allomorph'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alvin_Toffler_.html'">b'Alvin Toffler'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_August_Derleth_.html'">b'August Derleth'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Autism_.html'">b'Autism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ablative_case_.html'">b'Ablative case'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Artistic_revolution_.html'">b'Artistic revolution'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alberto_Giacometti_.html'">b'Alberto Giacometti'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Approximant_consonant_.html'">b'Approximant consonant'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adventism_.html'">b'Adventism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Religious_denominations_in_Poland_.html'">b'Religious denominations in Poland'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alan_Garner_.html'">b'Alan Garner'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ancient_philosophy_.html'">b'Ancient philosophy'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antimony_.html'">b'Antimony'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andr\xc3\xa9-Marie_Amp\xc3\xa8re_.html'">b'Andr\xc3\xa9-Marie Amp\xc3\xa8re'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Affirming_the_consequent_.html'">b'Affirming the consequent'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Activism_.html'">b'Activism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Argument_form_.html'">b'Argument form'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abstract_(law)_.html'">b'Abstract (law)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Allocution_.html'">b'Allocution'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Acting_.html'">b'Acting'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alfred_Nobel_.html'">b'Alfred Nobel'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anatomy_.html'">b'Anatomy'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adventure_.html'">b'Adventure'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Angst_.html'">b'Angst'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Athanasian_Creed_.html'">b'Athanasian Creed'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abba_Arika_.html'">b'Abba Arika'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[61.3614657034, "../topics/b{system,_number,_math}.html", "b{system,_number,_math}"], [37.8177442092, "../topics/b{film,_game,_year}.html", "b{film,_game,_year}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'Antiprism'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'Antiprism'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{system,_number,_math}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr>
+<tr class="list"><td id="b{film,_game,_year}" onmouseover="highlight(1)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{film,_game,_year}.html'">b'{film, game, year}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    This page could not be found.
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_Alkali_metal_.html'">b'Alkali metal'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andrew_Tridgell_.html'">b'Andrew Tridgell'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aliphatic_compound_.html'">b'Aliphatic compound'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Analgesic_.html'">b'Analgesic'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Acantharea_.html'">b'Acantharea'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Applet_.html'">b'Applet'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Mouthwash_.html'">b'Mouthwash'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Applesoft_BASIC_.html'">b'Applesoft BASIC'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Allene_.html'">b'Allene'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Astronomical_year_numbering_.html'">b'Astronomical year numbering'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_AVL_tree_.html'">b'AVL tree'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Almost_all_.html'">b'Almost all'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adaptive_radiation_.html'">b'Adaptive radiation'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amazonite_.html'">b'Amazonite'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anthemius_of_Tralles_.html'">b'Anthemius of Tralles'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antianginal_.html'">b'Antianginal'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Actinopterygii_.html'">b'Actinopterygii'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_AutoCAD_DXF_.html'">b'AutoCAD DXF'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alligatoridae_.html'">b'Alligatoridae'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aloe_.html'">b'Aloe'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Unit_of_alcohol_.html'">b'Unit of alcohol'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alpha_(letter)_.html'">b'Alpha (letter)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abatis_.html'">b'Abatis'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Apiaceae_.html'">b'Apiaceae'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Agricultural_engineering_.html'">b'Agricultural engineering'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b"Ada_Byron_s_notes_on_the_analytical_engine".html'">b"Ada Byron's notes on the analytical engine"</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adrenal_gland_.html'">b'Adrenal gland'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Application_programming_interface_.html'">b'Application programming interface'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aeronautics_.html'">b'Aeronautics'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_AbiWord_.html'">b'AbiWord'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

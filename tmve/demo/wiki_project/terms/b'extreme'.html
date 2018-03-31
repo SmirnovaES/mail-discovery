@@ -1,0 +1,150 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[-8.1024518776, "../topics/b{state,_states,_city}.html", "b{state,_states,_city}"], [-8.3937341098, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"], [-8.7515968156, "../topics/b{system,_number,_math}.html", "b{system,_number,_math}"], [-8.8206528489, "../topics/b{year,_time,_son}.html", "b{year,_time,_son}"], [-8.9759279532, "../topics/b{film,_game,_year}.html", "b{film,_game,_year}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+    }
+    //-->
+    </script>
+
+<title>b'extreme'</title>
+<link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+  <body onload="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+<div id="top"></div>
+<h1 id="header">
+<table><tr>
+<td id="title">b'extreme'</td>
+</tr></table></span>
+<hr noshade></h1>
+
+<div id="main">
+<table><tr>
+<td width="20.0%">
+<table class="dark">
+<tr class="title">
+<td>related words</td>
+</tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'extensive'.html'">b'extensive'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'historically'.html'">b'historically'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'convention'.html'">b'convention'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'dominant'.html'">b'dominant'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'split'.html'">b'split'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'effectively'.html'">b'effectively'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'ensure'.html'">b'ensure'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'emerge'.html'">b'emerge'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'partly'.html'">b'partly'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'approve'.html'">b'approve'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'respond'.html'">b'respond'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'middle'.html'">b'middle'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'widespread'.html'">b'widespread'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'concentrate'.html'">b'concentrate'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'permit'.html'">b'permit'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'unique'.html'">b'unique'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'challenge'.html'">b'challenge'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'fine'.html'">b'fine'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'govern'.html'">b'govern'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'sit'.html'">b'sit'</a></td></tr>
+
+</table>
+</td>
+
+<td width="50.0%">
+<table class="light">
+<tr class="title">
+<td>related documents</td>
+</tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andes_.html'">b'Andes'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aleksandr_Solzhenitsyn_.html'">b'Aleksandr Solzhenitsyn'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b"Sid_Meier_s_Alpha_Centauri".html'">b"Sid Meier's Alpha Centauri"</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abiotic_stress_.html'">b'Abiotic stress'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alaska_.html'">b'Alaska'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Astatine_.html'">b'Astatine'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anarcho-capitalism_.html'">b'Anarcho-capitalism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arminianism_.html'">b'Arminianism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abbey_.html'">b'Abbey'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Geography_of_Africa_.html'">b'Geography of Africa'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arctic_Fox_.html'">b'Arctic Fox'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anointing_of_the_Sick_.html'">b'Anointing of the Sick'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amphetamine_.html'">b'Amphetamine'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anarchism_.html'">b'Anarchism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ayn_Rand_.html'">b'Ayn Rand'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andre_Agassi_.html'">b'Andre Agassi'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aldous_Huxley_.html'">b'Aldous Huxley'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alphabet_.html'">b'Alphabet'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adventure_.html'">b'Adventure'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alberta_.html'">b'Alberta'</td></tr>
+
+</table>
+</td>
+
+<td width="30.0%">
+<table class="dark">
+<tr class="title">
+<td>related topics</td>
+</tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{state,_states,_city}.html'">b'{state, states, city}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{film,_game,_year}.html'">b'{film, game, year}'</td></tr>
+
+</table>
+</td>
+</tr></table>
+</div>
+
+<div id="footer">
+<br>
+<hr noshade>
+</tr>
+</table>
+</div>
+  </body>
+</html>

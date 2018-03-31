@@ -1,0 +1,157 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[50.8440380456, "../topics/b{film,_game,_year}.html", "b{film,_game,_year}"], [21.5266213265, "../topics/b{state,_states,_city}.html", "b{state,_states,_city}"], [12.8981682706, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'Alfonso Arau'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'Alfonso Arau'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{film,_game,_year}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{film,_game,_year}.html'">b'{film, game, year}'</td></tr>
+<tr class="list"><td id="b{state,_states,_city}" onmouseover="highlight(1)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{state,_states,_city}.html'">b'{state, states, city}'</td></tr>
+<tr class="list"><td id="b{language,_work,_write}" onmouseover="highlight(2)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    This page could not be found.
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_American_Film_Institute_.html'">b'American Film Institute'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_August_Horch_.html'">b'August Horch'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Analog_Brothers_.html'">b'Analog Brothers'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_ALF_Tales_.html'">b'ALF Tales'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alban_Berg_.html'">b'Alban Berg'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_AbiWord_.html'">b'AbiWord'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Apache_Software_Foundation_.html'">b'Apache Software Foundation'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Avery_Hopwood_.html'">b'Avery Hopwood'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amati_.html'">b'Amati'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alarums_and_Excursions_.html'">b'Alarums and Excursions'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Auguste_and_Louis_Lumi\xc3\xa8re_.html'">b'Auguste and Louis Lumi\xc3\xa8re'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alessandro_Scarlatti_.html'">b'Alessandro Scarlatti'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Azincourt_.html'">b'Azincourt'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b"Ardal_O_Hanlon".html'">b"Ardal O'Hanlon"</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abd\xc3\xbclaziz_.html'">b'Abd\xc3\xbclaziz'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b"Dodo_(Alice_s_Adventures_in_Wonderland)".html'">b"Dodo (Alice's Adventures in Wonderland)"</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_August_Wilhelm_Ambros_.html'">b'August Wilhelm Ambros'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Albrecht_Altdorfer_.html'">b'Albrecht Altdorfer'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amateur_.html'">b'Amateur'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abana_River_.html'">b'Abana River'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ahmed_III_.html'">b'Ahmed III'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abac\xc3\xa1_.html'">b'Abac\xc3\xa1'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arctic_Circle_.html'">b'Arctic Circle'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anbar_(town)_.html'">b'Anbar (town)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abhorrers_.html'">b'Abhorrers'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adrian_.html'">b'Adrian'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antisymmetric_relation_.html'">b'Antisymmetric relation'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ajaigarh_.html'">b'Ajaigarh'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Geography_of_American_Samoa_.html'">b'Geography of American Samoa'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Albert_of_Mainz_.html'">b'Albert of Mainz'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>
