@@ -11,11 +11,10 @@ import numpy as np
 from gensim import corpora, models
 
 
-class BaselineABC():
+class BaselineABC:
     __metaclass__ = ABCMeta
 
-    class Parser():
-
+    class Parser:
         def __init__(self):
             self.regulars = []
             self.regulars.append(re.compile('>'))
@@ -41,7 +40,6 @@ class BaselineABC():
                 text = re.sub(reg, ' ', text)
             return text
 
-
     def __init__(self, parser=Parser(), tokenizer=RegexpTokenizer(r'\w+'), lemmatizer=WordNetLemmatizer()):
         self.docs_num_dict = {}
         self.docs = []
@@ -60,7 +58,7 @@ class BaselineABC():
 
     @abstractmethod
     def get_topics(self):
-        '''Returns num_topics x num_terms size numpy.ndarray'''
+        """Returns num_topics x num_terms size numpy.ndarray"""
 
     def extract_corpus(self, path):
         docs = []  # all documents
