@@ -42,7 +42,8 @@ class BaselineABC():
             return text
 
 
-    def __init__(self, parser=Parser(), tokenizer=RegexpTokenizer(r'\w+'), lemmatizer=WordNetLemmatizer()):
+    def __init__(self, parser=Parser, tokenizer=RegexpTokenizer(r'\w+'), lemmatizer=WordNetLemmatizer(),
+                 embedding=None, clf_embed=None, n_clusters_embed=None, emb_del_unknown=False, emb_limit=0):
         self.docs_num_dict = {}
         self.docs = []
         self.d = {}  # global counter of words # depricated, use self.dictioanry instead
@@ -53,9 +54,31 @@ class BaselineABC():
         self.docs_terms = None
         self.model = None
         self.topic_terms = None
-        self.parser = parser
+        self.parser = parser()
         self.tokenizer = tokenizer
         self.lemmatizer = lemmatizer
+        self.embedding = embedding
+        self.clf_embed = clf_embed
+        self.n_clusters_embed = n_clusters_embed
+        self.emb_word2cluster = {}
+        self.emb_del_unknown = emb_del_unknown
+        self.emb_limit = emb_limit
+
+    def embed(self):
+        file = open(self.embedding)
+        vec_of_words = []
+        emb_words = []
+        for line in file:
+            nums = line.split()
+            emb_words.append(nums[0])
+            vec_of_words.append(nums[1:])
+        y_pred = self.clf_embed(self.n_clusters_embed).fit_predict(vec_of_words)
+        lemmatized_emb_words = [self.lemmatizer.lemmatize(i) for i in emb_words]
+        if self.emb_limit == 0:
+            self.emb_limit = len(lemmatized_emb_words)
+        self.emb_word2cluster = dict(zip(lemmatized_emb_words[: self.emb_limit], y_pred[: self.emb_limit]))
+
+
 
 
     @abstractmethod
@@ -102,7 +125,13 @@ class BaselineABC():
                 tokens = self.tokenizer.tokenize(raw)
                 en_stop = get_stop_words('en')
                 stopped_tokens = [i for i in tokens if not i in en_stop]
-                lemmatized_tokens = [self.lemmatizer.lemmatize(i) for i in stopped_tokens]
+                lemmatized_tokens = [self.lemmatizer.lemmatize(i) for i in stopped_tokens if i.isdigit() == False]
+                if self.embedding is not None:
+                    self.embed()
+                    if self.emb_del_unknown:
+                        lemmatized_tokens = [self.emb_word2cluster[i] for i in lemmatized_tokens if i in self.emb_word2cluster]
+                    else:
+                        lemmatized_tokens = [self.emb_word2cluster[i] if i in self.emb_word2cluster else self.emb_word2cluster["unk"] for i in lemmatized_tokens]
                 self.texts.append(lemmatized_tokens)
                 new_docs_num_dict_1.append(lemmatized_tokens)
                 for word in lemmatized_tokens:
