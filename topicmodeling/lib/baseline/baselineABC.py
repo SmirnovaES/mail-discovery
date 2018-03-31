@@ -10,29 +10,39 @@ from collections import defaultdict
 import numpy as np
 from gensim import corpora, models
 
-re0 = re.compile('>')
-re1 = re.compile('(Message-ID(.*?\n)*X-FileName.*?\n)|'
-                 '(To:(.*?\n)*?Subject.*?\n)|'
-                 '(< (Message-ID(.*?\n)*.*?X-FileName.*?\n))')
-re2 = re.compile('(.+)@(.+)')  # Remove emails
-re3 = re.compile('\s(-----)(.*?)(-----)\s', re.DOTALL)
-re4 = re.compile('''\s(\*\*\*\*\*)(.*?)(\*\*\*\*\*)\s''', re.DOTALL)
-re5 = re.compile('\s(_____)(.*?)(_____)\s', re.DOTALL)
-re6 = re.compile('\n( )*-.*')
-re7 = re.compile('\n( )*\d.*')
-re8 = re.compile('(\n( )*[\w]+($|( )*\n))|(\n( )*(\w)+(\s)+(\w)+(( )*\n)|$)|'
-                 '(\n( )*(\w)+(\s)+(\w)+(\s)+(\w)+(( )*\n)|$)')
-re9 = re.compile('.*orwarded.*')
-re10 = re.compile('From.*|Sent.*|cc.*|Subject.*|Embedded.*|http.*|\w+\.\w+|.*\d\d/\d\d/\d\d\d\d.*')
-re11 = re.compile(' [\d:;,.]+ ')
-re12 = re.compile('[\n\t]+')
-re13 = re.compile('[\s]{2,}')
-
 
 class BaselineABC():
     __metaclass__ = ABCMeta
 
-    def __init__(self):
+    class Parser():
+
+        def __init__(self):
+            self.regulars = []
+            self.regulars.append(re.compile('>'))
+            self.regulars.append(re.compile('(Message-ID(.*?\n)*X-FileName.*?\n)|'
+                             '(To:(.*?\n)*?Subject.*?\n)|'
+                             '(< (Message-ID(.*?\n)*.*?X-FileName.*?\n))'))
+            self.regulars.append(re.compile('(.+)@(.+)'))  # Remove emails
+            self.regulars.append(re.compile('\s(-----)(.*?)(-----)\s', re.DOTALL))
+            self.regulars.append(re.compile('''\s(\*\*\*\*\*)(.*?)(\*\*\*\*\*)\s''', re.DOTALL))
+            self.regulars.append(re.compile('\s(_____)(.*?)(_____)\s', re.DOTALL))
+            self.regulars.append(re.compile('\n( )*-.*'))
+            self.regulars.append(re.compile('\n( )*\d.*'))
+            self.regulars.append(re.compile('(\n( )*[\w]+($|( )*\n))|(\n( )*(\w)+(\s)+(\w)+(( )*\n)|$)|'
+                             '(\n( )*(\w)+(\s)+(\w)+(\s)+(\w)+(( )*\n)|$)'))
+            self.regulars.append(re.compile('.*orwarded.*'))
+            self.regulars.append(re.compile('From.*|Sent.*|cc.*|Subject.*|Embedded.*|http.*|\w+\.\w+|.*\d\d/\d\d/\d\d\d\d.*'))
+            self.regulars.append(re.compile(' [\d:;,.]+ '))
+            self.regulars.append(re.compile('[\n\t]+'))
+            self.regulars.append(re.compile('[\s]{2,}'))
+
+        def parse(self, text):
+            for reg in self.regulars:
+                text = re.sub(reg, ' ', text)
+            return text
+
+
+    def __init__(self, parser=Parser(), tokenizer=RegexpTokenizer(r'\w+'), lemmatizer=WordNetLemmatizer()):
         self.docs_num_dict = {}
         self.docs = []
         self.d = {}  # global counter of words # depricated, use self.dictioanry instead
@@ -43,6 +53,10 @@ class BaselineABC():
         self.docs_terms = None
         self.model = None
         self.topic_terms = None
+        self.parser = parser
+        self.tokenizer = tokenizer
+        self.lemmatizer = lemmatizer
+
 
     @abstractmethod
     def get_topics(self):
@@ -61,19 +75,7 @@ class BaselineABC():
                 d = []
                 for email in listdir():
                     text = open(email, 'r').read()
-                    # Regular expressions are used below to remove 'clutter'
-                    text = re.sub(re0, ' ', text)
-                    text = re.sub(re1, ' ', text)
-                    text = re.sub(re2, ' ', text)
-                    text = re.sub(re3, ' ', text)
-                    text = re.sub(re4, ' ', text)
-                    text = re.sub(re5, ' ', text)
-                    text = re.sub(re6, ' ', text)
-                    text = re.sub(re7, ' ', text)
-                    text = re.sub(re8, ' ', text)
-                    text = re.sub(re9, ' ', text)
-                    text = re.sub(re10, ' ', text)
-                    text = re.sub(re11, ' ', text)
+                    text = self.parser.parse(text)
                     docs.append(text)
                     d.append(text)
                 docs_num_dict.append((m, [name, d]))
@@ -86,7 +88,6 @@ class BaselineABC():
 
     def data_processing(self):
         self.d = defaultdict(int)
-        tokenizer = RegexpTokenizer(r'\w+')
 
         self.texts = []
 
@@ -94,11 +95,10 @@ class BaselineABC():
             new_docs_num_dict_1 = []
             for doc in self.docs_num_dict[i][1]:
                 raw = doc.lower()
-                tokens = tokenizer.tokenize(raw)
+                tokens = self.tokenizer.tokenize(raw)
                 en_stop = get_stop_words('en')
                 stopped_tokens = [i for i in tokens if not i in en_stop]
-                wordnet_lemmatizer = WordNetLemmatizer()
-                lemmatized_tokens = [wordnet_lemmatizer.lemmatize(i) for i in stopped_tokens]
+                lemmatized_tokens = [self.lemmatizer.lemmatize(i) for i in stopped_tokens]
                 self.texts.append(lemmatized_tokens)
                 new_docs_num_dict_1.append(lemmatized_tokens)
                 for word in lemmatized_tokens:
