@@ -1,0 +1,158 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[974.3393437383, "../topics/b{film,_game,_year}.html", "b{film,_game,_year}"], [83.0123548674, "../topics/b{state,_states,_city}.html", "b{state,_states,_city}"], [52.7771848946, "../topics/b{year,_time,_son}.html", "b{year,_time,_son}"], [29.2295663957, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'Amitabh Bachchan'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'Amitabh Bachchan'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{film,_game,_year}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{film,_game,_year}.html'">b'{film, game, year}'</td></tr>
+<tr class="list"><td id="b{state,_states,_city}" onmouseover="highlight(1)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{state,_states,_city}.html'">b'{state, states, city}'</td></tr>
+<tr class="list"><td id="b{year,_time,_son}" onmouseover="highlight(2)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr>
+<tr class="list"><td id="b{language,_work,_write}" onmouseover="highlight(3)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    This page could not be found.
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_Amiga_.html'">b'Amiga'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arizona_Cardinals_.html'">b'Arizona Cardinals'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Auto_racing_.html'">b'Auto racing'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Audi_.html'">b'Audi'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_2600_.html'">b'Atari 2600'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Apple_Inc._.html'">b'Apple Inc.'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_7800_.html'">b'Atari 7800'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_AFC_Ajax_.html'">b'AFC Ajax'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arsenal_F.C._.html'">b'Arsenal F.C.'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Advanced_Micro_Devices_.html'">b'Advanced Micro Devices'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andy_Warhol_.html'">b'Andy Warhol'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aaliyah_.html'">b'Aaliyah'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arnold_Schwarzenegger_.html'">b'Arnold Schwarzenegger'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Approval_voting_.html'">b'Approval voting'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arizona_Diamondbacks_.html'">b'Arizona Diamondbacks'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Archery_.html'">b'Archery'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_The_Ashes_.html'">b'The Ashes'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Australian_rules_football_.html'">b'Australian rules football'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andr\xc3\xa9_the_Giant_.html'">b'Andr\xc3\xa9 the Giant'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andre_Agassi_.html'">b'Andre Agassi'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_American_Telephone_&amp;_Telegraph_.html'">b'American Telephone &amp; Telegraph'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aster_CT-80_.html'">b'Aster CT-80'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anthony_Hopkins_.html'">b'Anthony Hopkins'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_ASCII_art_.html'">b'ASCII art'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amy_Grant_.html'">b'Amy Grant'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_American_Quarter_Horse_.html'">b'American Quarter Horse'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aston_Martin_.html'">b'Aston Martin'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adam_Carolla_.html'">b'Adam Carolla'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_American_Football_League_.html'">b'American Football League'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Animaniacs_.html'">b'Animaniacs'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

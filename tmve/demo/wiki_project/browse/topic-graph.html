@@ -1,0 +1,142 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+    <script type="text/JavaScript">
+    <!--
+    function init() {
+        browser_adjust();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Wikipedia Topics</title>
+<link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+  <body onload="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+<div id="top"></div>
+<div id="header">
+<h1>Wikipedia Topics</h1>
+<h2>Term Distributions Per Topic</h2>
+<hr noshade>
+</div>
+<div id="graph">
+<table width="100.0%">
+<tr><td>
+
+<table width="250px"><tr><td class="dark-hover" onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr></table>
+<table width="250px"><tr><td class="dark-hover" onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr></table>
+<table width="250px"><tr><td class="dark-hover" onclick="window.location.href='../topics/b{state,_states,_city}.html'">b'{state, states, city}'</td></tr></table>
+<table width="250px"><tr><td class="dark-hover" onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr></table>
+<table width="250px"><tr><td class="dark-hover" onclick="window.location.href='../topics/b{film,_game,_year}.html'">b'{film, game, year}'</td></tr></table>
+
+</td><td class="bars">
+<table width="100%" class="high-contrast-table"><tr>
+<td class="clickable" width="1.156214744907329%" title="b'language'" onclick="window.location.href='../terms/b'language'.html'"></td>
+<td class="clickable" width="1.111561149817025%" title="b'work'" onclick="window.location.href='../terms/b'work'.html'"></td>
+<td class="clickable" width="0.8642487335022603%" title="b'write'" onclick="window.location.href='../terms/b'write'.html'"></td>
+<td class="clickable" width="0.6653673673793715%" title="b'book'" onclick="window.location.href='../terms/b'book'.html'"></td>
+<td class="clickable" width="0.6041311787233996%" title="b'word'" onclick="window.location.href='../terms/b'word'.html'"></td>
+<td class="clickable" width="0.5587928020251007%" title="b'form'" onclick="window.location.href='../terms/b'form'.html'"></td>
+<td class="clickable" width="0.503129662479968%" title="b'art'" onclick="window.location.href='../terms/b'art'.html'"></td>
+<td width="94.53655436116554%" title="b'make', b'case', b'life', b'time', b'term', b'law', b'theory', b'century', b'publish', b'human', b'study', b'world', b'influence', b'early', b'history'...">&nbsp;</td>
+</tr></table>
+<table width="100%" class="high-contrast-table"><tr>
+<td class="clickable" width="0.8907342648169275%" title="b'system'" onclick="window.location.href='../terms/b'system'.html'"></td>
+<td class="clickable" width="0.7666939275840148%" title="b'number'" onclick="window.location.href='../terms/b'number'.html'"></td>
+<td class="clickable" width="0.7408538217442264%" title="b'math'" onclick="window.location.href='../terms/b'math'.html'"></td>
+<td class="clickable" width="0.5668352307862148%" title="b'form'" onclick="window.location.href='../terms/b'form'.html'"></td>
+<td width="97.03488275506862%" title="b'time', b'call', b'acid', b'set', b'code', b'make', b'give', b'function', b'group', b'small', b'large', b'atom', b'computer', b'element', b'produce', b'high'...">&nbsp;</td>
+</tr></table>
+<table width="100%" class="high-contrast-table"><tr>
+<td class="clickable" width="1.1983010933067344%" title="b'state'" onclick="window.location.href='../terms/b'state'.html'"></td>
+<td class="clickable" width="0.9809917339367245%" title="b'states'" onclick="window.location.href='../terms/b'states'.html'"></td>
+<td class="clickable" width="0.9527256740454648%" title="b'city'" onclick="window.location.href='../terms/b'city'.html'"></td>
+<td class="clickable" width="0.777311392062756%" title="b'government'" onclick="window.location.href='../terms/b'government'.html'"></td>
+<td class="clickable" width="0.750119137765925%" title="b'area'" onclick="window.location.href='../terms/b'area'.html'"></td>
+<td class="clickable" width="0.7241518614463881%" title="b'large'" onclick="window.location.href='../terms/b'large'.html'"></td>
+<td class="clickable" width="0.5871805396156101%" title="b'country'" onclick="window.location.href='../terms/b'country'.html'"></td>
+<td class="clickable" width="0.5778034827216093%" title="b'style'" onclick="window.location.href='../terms/b'style'.html'"></td>
+<td class="clickable" width="0.5710398441790178%" title="b'population'" onclick="window.location.href='../terms/b'population'.html'"></td>
+<td class="clickable" width="0.5517081848563541%" title="b'people'" onclick="window.location.href='../terms/b'people'.html'"></td>
+<td class="clickable" width="0.547072065075842%" title="b'year'" onclick="window.location.href='../terms/b'year'.html'"></td>
+<td width="91.78159499098757%" title="b'part', b'region', b'high', b'american', b'land', b'small', b'century', b'member', b'party', b'make', b'election', b'war', b'group', b'island', b'force'...">&nbsp;</td>
+</tr></table>
+<table width="100%" class="high-contrast-table"><tr>
+<td class="clickable" width="0.9077296057899137%" title="b'year'" onclick="window.location.href='../terms/b'year'.html'"></td>
+<td class="clickable" width="0.7322135514533469%" title="b'time'" onclick="window.location.href='../terms/b'time'.html'"></td>
+<td class="clickable" width="0.7285759835525869%" title="b'son'" onclick="window.location.href='../terms/b'son'.html'"></td>
+<td class="clickable" width="0.7041571964697891%" title="b'make'" onclick="window.location.href='../terms/b'make'.html'"></td>
+<td class="clickable" width="0.6237705268940895%" title="b'death'" onclick="window.location.href='../terms/b'death'.html'"></td>
+<td class="clickable" width="0.5527987710822022%" title="b'king'" onclick="window.location.href='../terms/b'king'.html'"></td>
+<td class="clickable" width="0.546074667180276%" title="b'give'" onclick="window.location.href='../terms/b'give'.html'"></td>
+<td class="clickable" width="0.5189222976114329%" title="b'die'" onclick="window.location.href='../terms/b'die'.html'"></td>
+<td class="clickable" width="0.5160117661162621%" title="b'century'" onclick="window.location.href='../terms/b'century'.html'"></td>
+<td class="clickable" width="0.5047713803906027%" title="b'father'" onclick="window.location.href='../terms/b'father'.html'"></td>
+<td width="93.6649742534595%" title="b'call', b'church', b'man', b'city', b'place', b'great', b'order', b'army', b'early', b'war', b'find', b'bear', b'ancient', b'family', b'part', b'lead'...">&nbsp;</td>
+</tr></table>
+<table width="100%" class="high-contrast-table"><tr>
+<td class="clickable" width="1.50527506145597%" title="b'film'" onclick="window.location.href='../terms/b'film'.html'"></td>
+<td class="clickable" width="1.0053605588431915%" title="b'game'" onclick="window.location.href='../terms/b'game'.html'"></td>
+<td class="clickable" width="0.8897718372066491%" title="b'year'" onclick="window.location.href='../terms/b'year'.html'"></td>
+<td class="clickable" width="0.837944726327669%" title="b'play'" onclick="window.location.href='../terms/b'play'.html'"></td>
+<td class="clickable" width="0.6844829917840541%" title="b'release'" onclick="window.location.href='../terms/b'release'.html'"></td>
+<td class="clickable" width="0.6817544425325406%" title="b'time'" onclick="window.location.href='../terms/b'time'.html'"></td>
+<td class="clickable" width="0.6758961491141042%" title="b'team'" onclick="window.location.href='../terms/b'team'.html'"></td>
+<td class="clickable" width="0.6406118388428922%" title="b'win'" onclick="window.location.href='../terms/b'win'.html'"></td>
+<td class="clickable" width="0.6261773452942146%" title="b'style'" onclick="window.location.href='../terms/b'style'.html'"></td>
+<td class="clickable" width="0.6205967779501117%" title="b'make'" onclick="window.location.href='../terms/b'make'.html'"></td>
+<td class="clickable" width="0.5751140868161504%" title="b'series'" onclick="window.location.href='../terms/b'series'.html'"></td>
+<td class="clickable" width="0.5077189212233397%" title="b'music'" onclick="window.location.href='../terms/b'music'.html'"></td>
+<td class="clickable" width="0.5051855716405681%" title="b'season'" onclick="window.location.href='../terms/b'season'.html'"></td>
+<td class="clickable" width="0.5047990771979185%" title="b'company'" onclick="window.location.href='../terms/b'company'.html'"></td>
+<td width="89.73931061377063%" title="b'character', b'player', b'computer', b'album', b'football', b'song', b'feature', b'early', b'run', b'design', b'record', b'work', b'bgcolor', b'begin'...">&nbsp;</td>
+</tr></table>
+
+</td></tr>
+</table>
+</div>
+<div id="footer">
+<br>
+<hr noshade>
+</div>
+  </body>
+</html>

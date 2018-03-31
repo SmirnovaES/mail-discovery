@@ -1,0 +1,144 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[-7.2058376097, "../topics/b{film,_game,_year}.html", "b{film,_game,_year}"], [-23.6738361794, "../topics/b{year,_time,_son}.html", "b{year,_time,_son}"], [-23.6989762088, "../topics/b{system,_number,_math}.html", "b{system,_number,_math}"], [-26.2747356766, "../topics/b{state,_states,_city}.html", "b{state,_states,_city}"], [-37.7181563858, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+    }
+    //-->
+    </script>
+
+<title>b'arcade'</title>
+<link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+  <body onload="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+<div id="top"></div>
+<h1 id="header">
+<table><tr>
+<td id="title">b'arcade'</td>
+</tr></table></span>
+<hr noshade></h1>
+
+<div id="main">
+<table><tr>
+<td width="20.0%">
+<table class="dark">
+<tr class="title">
+<td>related words</td>
+</tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'cappella'.html'">b'cappella'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'chipset'.html'">b'chipset'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'franchise'.html'">b'franchise'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'accordion'.html'">b'accordion'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'debut'.html'">b'debut'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'coach'.html'">b'coach'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'concert'.html'">b'concert'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'tournament'.html'">b'tournament'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'actress'.html'">b'actress'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'desktop'.html'">b'desktop'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'guitar'.html'">b'guitar'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'lyric'.html'">b'lyric'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'archer'.html'">b'archer'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'comedy'.html'">b'comedy'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'piano'.html'">b'piano'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'racing'.html'">b'racing'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'spider-man'.html'">b'spider-man'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'advertising'.html'">b'advertising'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'keyboard'.html'">b'keyboard'</a></td></tr>
+<tr class="list"><td onclick="window.location.href='../terms/b'developer'.html'">b'developer'</a></td></tr>
+
+</table>
+</td>
+
+<td width="50.0%">
+<table class="light">
+<tr class="title">
+<td>related documents</td>
+</tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_7800_.html'">b'Atari 7800'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Asteroids_(video_game)_.html'">b'Asteroids (video game)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_.html'">b'Atari'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Acorn_Electron_.html'">b'Acorn Electron'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_2600_.html'">b'Atari 2600'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Andy_Warhol_.html'">b'Andy Warhol'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anatole_France_.html'">b'Anatole France'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Park_G\xc3\xbcell_.html'">b'Park G\xc3\xbcell'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Algiers_.html'">b'Algiers'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amiga_.html'">b'Amiga'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_ST_.html'">b'Atari ST'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arbroath_Abbey_.html'">b'Arbroath Abbey'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aberdour_.html'">b'Aberdour'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atari_Jaguar_.html'">b'Atari Jaguar'</td></tr>
+
+</table>
+</td>
+
+<td width="30.0%">
+<table class="dark">
+<tr class="title">
+<td>related topics</td>
+</tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{film,_game,_year}.html'">b'{film, game, year}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{state,_states,_city}.html'">b'{state, states, city}'</td></tr>
+<tr class="list"><td onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+
+</table>
+</td>
+</tr></table>
+</div>
+
+<div id="footer">
+<br>
+<hr noshade>
+</tr>
+</table>
+</div>
+  </body>
+</html>

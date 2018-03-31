@@ -1,0 +1,155 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[134.0896028725, "../topics/b{system,_number,_math}.html", "b{system,_number,_math}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'Algebraic extension'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'Algebraic extension'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{system,_number,_math}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    This page could not be found.
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_Amoeboid_.html'">b'Amoeboid'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Au_file_format_.html'">b'Au file format'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Algebraic_number_.html'">b'Algebraic number'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Astronomer_.html'">b'Astronomer'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Auger_effect_.html'">b'Auger effect'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Atlas_Autocode_.html'">b'Atlas Autocode'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antacid_.html'">b'Antacid'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Apollo_7_.html'">b'Apollo 7'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ampicillin_.html'">b'Ampicillin'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Archimedean_solid_.html'">b'Archimedean solid'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alkaloid_.html'">b'Alkaloid'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abbe_number_.html'">b'Abbe number'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ampere_.html'">b'Ampere'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adrastea_(moon)_.html'">b'Adrastea (moon)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Actinoid_.html'">b'Actinoid'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Addition_of_natural_numbers_.html'">b'Addition of natural numbers'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ames_test_.html'">b'Ames test'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Automorphism_.html'">b'Automorphism'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ataxia_.html'">b'Ataxia'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abzyme_.html'">b'Abzyme'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Apollo_17_.html'">b'Apollo 17'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Actinophryid_.html'">b'Actinophryid'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alkyne_.html'">b'Alkyne'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Actinium_.html'">b'Actinium'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Asynchronous_communication_.html'">b'Asynchronous communication'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adenylate_cyclase_.html'">b'Adenylate cyclase'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ambergris_.html'">b'Ambergris'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Audio_file_format_.html'">b'Audio file format'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ansible_.html'">b'Ansible'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amethyst_.html'">b'Amethyst'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[78.0204160724, "../topics/b{year,_time,_son}.html", "b{year,_time,_son}"], [47.1587888466, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'Andreas Schl\xc3\xbcter'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'Andreas Schl\xc3\xbcter'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{year,_time,_son}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr>
+<tr class="list"><td id="b{language,_work,_write}" onmouseover="highlight(1)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    This page could not be found.
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_Ammianus_Marcellinus_.html'">b'Ammianus Marcellinus'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b"Antoine_Thomson_d_Abbadie".html'">b"Antoine Thomson d'Abbadie"</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ardipithecus_.html'">b'Ardipithecus'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aelianus_Tacticus_.html'">b'Aelianus Tacticus'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Achaeans_.html'">b'Achaeans'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abiathar_.html'">b'Abiathar'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alfonso_III_of_Aragon_.html'">b'Alfonso III of Aragon'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anacharsis_.html'">b'Anacharsis'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_April_.html'">b'April'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Armored_car_(military)_.html'">b'Armored car (military)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Adhemar_of_Le_Puy_.html'">b'Adhemar of Le Puy'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arachnophobia_.html'">b'Arachnophobia'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aardvark_.html'">b'Aardvark'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alexios_II_Komnenos_.html'">b'Alexios II Komnenos'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alaric_II_.html'">b'Alaric II'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anah_.html'">b'Anah'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aristophanes_.html'">b'Aristophanes'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ananda_.html'">b'Ananda'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aedicula_.html'">b'Aedicula'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anazarbus_.html'">b'Anazarbus'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amalasuntha_.html'">b'Amalasuntha'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Actaeon_.html'">b'Actaeon'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ajax_(mythology)_.html'">b'Ajax (mythology)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_\xc3\x86gir_.html'">b'\xc3\x86gir'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Afonso_III_of_Portugal_.html'">b'Afonso III of Portugal'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Titus_(Biblical)_.html'">b'Titus (Biblical)'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aegisthus_.html'">b'Aegisthus'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_House_of_Ascania_.html'">b'House of Ascania'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Almoravid_dynasty_.html'">b'Almoravid dynasty'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Agathocles_.html'">b'Agathocles'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

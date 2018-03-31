@@ -1,0 +1,157 @@
+<html>
+<head>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="../js/pie.js"></script>
+    <script language="JavaScript" src="../js/browser_adjust.js"></script>
+    <script language="JavaScript" src="../js/search.js"></script>
+
+
+    <script type="text/JavaScript">
+    <!--
+
+    var array = [[36.8245340349, "../topics/b{system,_number,_math}.html", "b{system,_number,_math}"], [29.3705782973, "../topics/b{year,_time,_son}.html", "b{year,_time,_son}"], [3.0737169769, "../topics/b{language,_work,_write}.html", "b{language,_work,_write}"]];
+    var elements = generate_pie_elements(array);
+    var piec = null;
+    function init() {
+        browser_adjust();
+        
+        // create pie chart
+        piec = new PieChart(elements);
+        piec.initialize();
+
+    }
+
+    function highlight(i) {
+        piec.highlight(i);
+    }
+    
+    function unhighlight() {
+        piec.unhighlight();
+    }
+    //-->
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>b'Asparagales'</title>
+
+    <link href="../styling.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="init()">
+<div id="navigation">
+<hr noshade>
+<table><tr>
+    <td class="navtext">Browse&nbsp;&#x25B8;</td> 
+    <td class="linked"><a>Topics</a>
+      <ul> 
+        <li><a href="../browse/topic-list.html">List of Terms</a></li> 
+        <li><a href="../browse/topic-graph.html">Term Distributions</a></li> 
+        <li><a href="../browse/topic-presence.html">Relative Presence</a></li>
+      </ul> 
+    </td> 
+    <td class="linked"><a>Documents</a>
+      <ul>
+        <li><a href="../browse/doc-graph.html">Topic Distributions</a></li>
+      </ul> 
+    </td>
+    <td class="linked"><a>Terms</a>
+      <ul> 
+        <li><a href="../browse/term-list.html">List by Frequency</a></li> 
+        <li><a href="../browse/term-graph.html">Topic Distributions</a></li> 
+       </ul> 
+    </td>
+    <td class="linked"><a>About</a>
+      <ul>
+        <li><a href="http://www.cs.princeton.edu/~blei/lda-c/">LDA</a></li>
+      </ul> 
+    </td>
+    
+    </td>
+    <td></td>
+    <td class="searchbar"> Search&nbsp;&#x25B8;</td>
+    <td class="searchbar"><input type="text" name="search" size="20" onkeypress="handleKeyPress(event)"><span onclick="doSearch()"></span>
+    </td>
+</tr></table>
+</div>
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">b'Asparagales'</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table><tr>
+            <td width="210px">
+                <table class="dark">
+                <tr><td><canvas id="canvas" width="200" height="200"></canvas></td></tr>
+                <tr class="title">
+                    <td>related topics</td>
+                </tr>
+                <tr class="list"><td id="b{system,_number,_math}" onmouseover="highlight(0)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{system,_number,_math}.html'">b'{system, number, math}'</td></tr>
+<tr class="list"><td id="b{year,_time,_son}" onmouseover="highlight(1)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{year,_time,_son}.html'">b'{year, time, son}'</td></tr>
+<tr class="list"><td id="b{language,_work,_write}" onmouseover="highlight(2)" onmouseout="unhighlight()" onclick="window.location.href='../topics/b{language,_work,_write}.html'">b'{language, work, write}'</td></tr>
+
+                </table>
+            </td>
+
+            <td>
+                <table class="light">
+                <tr class="doc"><td>
+                    This page could not be found.
+                </td></tr>
+                </table>
+            </td>
+
+            <td width="25%">
+                <table class="dark">
+                <tr class="title">
+                    <td>related documents</td>
+                </tr>
+                <tr class="list"><td onclick="window.location.href='../docs/b_Adrenal_gland_.html'">b'Adrenal gland'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alismatales_.html'">b'Alismatales'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aloe_.html'">b'Aloe'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Asterales_.html'">b'Asterales'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alligatoridae_.html'">b'Alligatoridae'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antlia_.html'">b'Antlia'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Actinopterygii_.html'">b'Actinopterygii'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Amazonite_.html'">b'Amazonite'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antianginal_.html'">b'Antianginal'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arecales_.html'">b'Arecales'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Astronomer_Royal_.html'">b'Astronomer Royal'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Argo_Navis_.html'">b'Argo Navis'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alliaceae_.html'">b'Alliaceae'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Anaxarchus_.html'">b'Anaxarchus'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abjuration_.html'">b'Abjuration'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Arctic_Circle_.html'">b'Arctic Circle'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Antisymmetric_relation_.html'">b'Antisymmetric relation'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alypius_of_Antioch_.html'">b'Alypius of Antioch'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Albert_Alcibiades,_Margrave_of_Brandenburg-Kulmbach_.html'">b'Albert Alcibiades, Margrave of Brandenburg-Kulmbach'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Agnes_of_Merania_.html'">b'Agnes of Merania'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abaddon_.html'">b'Abaddon'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Albert_of_Mainz_.html'">b'Albert of Mainz'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Aeclanum_.html'">b'Aeclanum'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alger_of_Li\xc3\xa8ge_.html'">b'Alger of Li\xc3\xa8ge'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Agnostida_.html'">b'Agnostida'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Abd\xc3\xbclaziz_.html'">b'Abd\xc3\xbclaziz'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Apuleius_.html'">b'Apuleius'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Applet_.html'">b'Applet'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Alfonso_IV_of_Aragon_.html'">b'Alfonso IV of Aragon'</td></tr>
+<tr class="list"><td onclick="window.location.href='../docs/b_Ababda_.html'">b'Ababda'</td></tr>
+
+                </table>
+            </td>
+        </tr></table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>
