@@ -25,6 +25,18 @@ services:
       - POSTGRES_DB=maildata
     depends_on:
       - db
+  node:
+    image: "node:9"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
 volumes:
   maildiscovery:
 
