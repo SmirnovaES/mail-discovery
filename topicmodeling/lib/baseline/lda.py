@@ -1,4 +1,4 @@
-from topicmodeling.lib.baseline.baselineABC import BaselineABC
+from baselineABC import BaselineABC
 from gensim import models
 
 

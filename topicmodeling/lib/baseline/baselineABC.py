@@ -150,3 +150,8 @@ class BaselineABC():
                 self.docs_terms[i][par[0]] = par[1]
         return self.docs_terms
 
+    def get_id2token(self):
+        return self.dictionary.id2token
+
+    def get_token2id(self):
+        return self.dictionary.token2id
