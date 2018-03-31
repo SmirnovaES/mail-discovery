@@ -11,10 +11,10 @@ import numpy as np
 from gensim import corpora, models
 
 
-class BaselineABC():
+class BaselineABC:
     __metaclass__ = ABCMeta
 
-    class Parser():
+    class Parser:
 
         def __init__(self):
             self.regulars = []
