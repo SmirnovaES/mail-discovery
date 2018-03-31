@@ -15,3 +15,5 @@ class LdaModel(BaselineABC):
             self.topic_terms = self.model.get_topics()
         return self.topic_terms
 
+    def show_topics(self, num_topics=10, num_words=10, log=False, formatted=True):
+        return self.model.show_topics(num_topics, num_words, log, formatted)
