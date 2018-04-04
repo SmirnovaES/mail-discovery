@@ -1,11 +1,13 @@
 from rest_framework import serializers
-from mail.models import Letter
-from datetime import datetime
+from mail.models import mails
+#from datetime import datetime
 
-class LetterSerializer(serializers.ModelSerializer):
+class mailsSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Letter
-    fields = ('id', 'date_rec', 'topic', 'body', 'sender', 'receiver')
+    model = mails
+#    fields = ('Id', 'Date', 'NameFrom', 'AddressFrom', 'NameTo', 'AddressTo', 'Subject', 'Message')
+    fields = ('Date', 'NameFrom', 'AddressFrom', 'NameTo', 'AddressTo', 'Subject', 'Message')
+
 
 #class LetterSerializer(serializers.Serializer):
 #    id = serializers.IntegerField(read_only=True)
@@ -21,16 +23,19 @@ class LetterSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Letter` instance, given the validated data.
         """
-        return Letter.objects.create(**validated_data)
+        return mails.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         """
         Update and return an existing `Letter` instance, given the validated data.
         """
-        instance.date_rec = validated_data.get('date_rec', instance.date_rec)
-        instance.topic = validated_data.get('topic', instance.topic)
-        instance.body = validated_data.get('body', instance.body)
-        instance.sender = validated_data.get('sender', instance.sender)
-        instance.receiver = validated_data.get('receiver', instance.receiver)
+#        instance.Id = validated_data.get('Id', instance.Id)
+        instance.Date = validated_data.get('Date', instance.Date)
+        instance.NameFrom = validated_data.get('NameFrom', instance.NameFrom)
+        instance.AddressFrom = validated_data.get('AddressFrom', instance.AddressFrom)
+        instance.NameTo = validated_data.get('NameTo', instance.NameTo)
+        instance.AddressTo = validated_data.get('AddressTo', instance.AddressTo)
+        instance.Subject = validated_data.get('Subject', instance.Subject)
+        instance.Message = validated_data.get('Message', instance.Message)
         instance.save()
         return instance
