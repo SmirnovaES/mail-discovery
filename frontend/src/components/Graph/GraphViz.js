@@ -36,7 +36,7 @@ class GraphViz extends Component {
 			.force("charge", d3.forceManyBody())
 			.force("center", d3.forceCenter(width / 2, height / 2));
 
-		fetch("http://localhost:8000/miserables.json")
+		fetch("http://localhost:8001/miserables.json")
 			.then(response => response.json())
 			.then(graph => {
 
@@ -49,8 +49,9 @@ class GraphViz extends Component {
 						var values = graph.links.map(function(element) {
 							return element.value;
 						});
-						return 0.3 + 0.7 * d.value/d3.max(values); 
-					});
+						return 0.7 + 0.3 * d.value/d3.max(values); 
+					})
+					.on("click", onLinkClick);
 
 				var node = svg.append("g")
 					.attr("class", "nodes")
@@ -70,7 +71,6 @@ class GraphViz extends Component {
 					.on("mouseout", mouseOut)
 					.on("click", onCircleClick);
 				
-				// add a label to each node
 				var title = node.selectAll("title")
 					.data(graph.nodes)
 					.enter()
@@ -146,19 +146,14 @@ class GraphViz extends Component {
 				function mouseOut() {
 					circle.transition()
 						.duration(500)
-						.style("stroke-opacity", 1);
-					
-					circle.transition()
-						.duration(500)
+						.style("stroke-opacity", 1)
 						.style("fill-opacity", 1);
 					
 					link.transition()
 						.duration(500)
-						.style("fill-opacity", 1);
-					
-					link.transition()
-						.duration(500)
-						.style("fill-opacity", 1);	
+						.style("stroke-opacity", 1)
+						.style("fill-opacity", 1)
+						.style("stroke", "#999");	
 				}
 
 				function onCircleClick(d) {
@@ -166,6 +161,16 @@ class GraphViz extends Component {
 						.duration(200)		
 						.style("opacity", 1);		
 					div.html(d.id + "<br/>"  + d.group)	
+						.style("left", (d3.event.pageX) + "px")		
+						.style("top", (d3.event.pageY - 28) + "px");
+					d3.event.stopPropagation();
+				}
+
+				function onLinkClick(d) {
+					div.transition()		
+						.duration(200)		
+						.style("opacity", 1);		
+					div.html(d.source.id + "<br/>"  + d.target.id)	
 						.style("left", (d3.event.pageX) + "px")		
 						.style("top", (d3.event.pageY - 28) + "px");
 					d3.event.stopPropagation();
