@@ -7,6 +7,21 @@ import MenuRight from './MenuRight'
 
 
 class Graph extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			timeRange : {min : 0, max : 10}
+		};
+		
+		this.handleUserInput = this.handleUserInput.bind(this);
+	}
+
+	handleUserInput(timeRange) {
+		this.setState({
+			timeRange : timeRange
+		});
+	}
+
 	render() {
 		return (
 			<div className='container'>
@@ -18,7 +33,9 @@ class Graph extends Component {
 
 				<div className='row'>
 					<div className='col-md-7 order-3'>	
-						<GraphViz />
+						<GraphViz 
+							timeRange={this.state.timeRange}
+						/>
 					</div>
 
 					<div className='col-md-3 order-0'>
@@ -32,7 +49,10 @@ class Graph extends Component {
 				
 				<div className='row'>
 					<div className='col-md-8 offset-2'>
-						<RangeSlider />
+						<RangeSlider 
+							timeRange={this.state.timeRange}
+							onUserInput={this.handleUserInput}
+						/>
 					</div>
 				</div>
 			</div>
