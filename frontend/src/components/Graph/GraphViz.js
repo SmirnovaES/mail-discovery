@@ -36,7 +36,7 @@ class GraphViz extends Component {
 			.force("charge", d3.forceManyBody())
 			.force("center", d3.forceCenter(width / 2, height / 2));
 
-		fetch("http://localhost:8001/miserables.json")
+		fetch("http://127.0.0.1:8000/letters/2010-04-04,20:10,2019-04-05,12:23/")
 			.then(response => response.json())
 			.then(graph => {
 
