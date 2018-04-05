@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import './GraphViz.css'
 
 class GraphViz extends Component {
@@ -201,7 +202,7 @@ class GraphViz extends Component {
 		}
 	}
 	render() {
-		return  <svg height="665"  viewBox="-300 -300 665 665"></svg>
+		return  <svg id="graph" height="665"  viewBox="-300 -300 665 665"></svg>
 	}
 }
 
