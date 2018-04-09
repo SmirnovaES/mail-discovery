@@ -7,7 +7,10 @@ from mail.models import users
 from mail.serializers import mailsSerializer
 import json
 import numpy as np
-import datetime
+#import datetime
+from datetime import datetime, date
+import calendar
+import re
 
 
 @csrf_exempt
@@ -36,18 +39,23 @@ def letter_detail(request, date_from, time_from, date_before, time_before):
   try:
     ts = time_from.split(':')
     ds = date_from.split('-')
-    date_time_from = datetime.datetime(int(ds[0]), int(ds[1]), int(ds[2]), int(ts[0]), int(ts[1]))
+    date_time_from = datetime(int(ds[0]), int(ds[1]), int(ds[2]), int(ts[0]), int(ts[1]))
     
+    dtf_gm = calendar.timegm(date_time_from.timetuple())
+    dtf = datetime.utcfromtimestamp(dtf_gm)
+
     ts = time_before.split(':')
     ds = date_before.split('-')
-    date_time_before = datetime.datetime(int(ds[0]), int(ds[1]), int(ds[2]), int(ts[0]), int(ts[1]))
+    date_time_before = datetime(int(ds[0]), int(ds[1]), int(ds[2]), int(ts[0]), int(ts[1]))
 
-    letter = mails.objects.filter(Date__range=[date_time_from,date_time_before])
+    dtb_gm = calendar.timegm(date_time_before.timetuple())
+    dtb = datetime.utcfromtimestamp(dtb_gm)
+
+    letter = mails.objects.filter(date__range=[dtf,dtb])
   except mails.DoesNotExist:
     return HttpResponse(status=404)
 
   if request.method == 'GET':
-    
     
     q_set = letter
     
@@ -57,33 +65,39 @@ def letter_detail(request, date_from, time_from, date_before, time_before):
     d = dict()
     s = set()
     for q_elem in q_set:
-      send_rec = (q_elem.AddressFrom, q_elem.AddressTo)
-      s.add(q_elem.AddressFrom)
-      s.add(q_elem.AddressTo)
-      if (d.get(send_rec) == None):
-        d[send_rec] = [1, False] # [num of occurrencies, flag if this send_rec is already in links array]
-      else:
-        d[send_rec][0] += 1
+      adr_to = q_elem.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
+      print(adr_to)
+      for adr in adr_to:      
+        send_rec = (q_elem.addressfrom, adr)
+        s.add(q_elem.addressfrom)
+        s.add(adr)
+        if (d.get(send_rec) == None):
+          d[send_rec] = [1, False] # [num of occurrencies, flag if this send_rec is already in links array]
+        else:
+          d[send_rec][0] += 1
 
     for elem in s:
       data = {}
       data["id"] = elem
-      group = users.objects.filter(Address=elem)[0].Department
-      data["group"] = group
-      nodes.append(data)
+      if len(users.objects.filter(address=elem)) != 0: #сломается запрос фронта, если пользователя нет в базе (todo)
+        group = users.objects.filter(address=elem)[0].department
+        data["group"] = group
+        nodes.append(data)
 
     for q_elem in q_set:
 
       data = {}
-      send_rec = (q_elem.AddressFrom, q_elem.AddressTo)
-      if d[send_rec][1]:
-        continue
+      adr_to = q_elem.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
+      for adr in adr_to:      
+        send_rec = (q_elem.addressfrom, adr)
+        if d[send_rec][1]:
+          continue
       
-      data["source"] = q_elem.AddressFrom
-      data["target"] = q_elem.AddressTo
-      data["value"] = d[send_rec][0]
-      links.append(data)
-      d[send_rec][1] = True
+        data["source"] = q_elem.addressfrom
+        data["target"] = adr
+        data["value"] = d[send_rec][0]
+        links.append(data)
+        d[send_rec][1] = True
     
     data = {}
     data["nodes"] = nodes
