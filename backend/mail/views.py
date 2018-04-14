@@ -66,7 +66,6 @@ def letter_detail(request, date_from, time_from, date_before, time_before):
     s = set()
     for q_elem in q_set:
       adr_to = q_elem.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
-      print(adr_to)
       for adr in adr_to:      
         send_rec = (q_elem.addressfrom, adr)
         s.add(q_elem.addressfrom)
@@ -86,13 +85,13 @@ def letter_detail(request, date_from, time_from, date_before, time_before):
 
     for q_elem in q_set:
 
-      data = {}
       adr_to = q_elem.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
       for adr in adr_to:      
+        data = {}
+	
         send_rec = (q_elem.addressfrom, adr)
         if d[send_rec][1]:
           continue
-      
         data["source"] = q_elem.addressfrom
         data["target"] = adr
         data["value"] = d[send_rec][0]
