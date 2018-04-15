@@ -10,7 +10,7 @@ class Graph extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timeRange : {min : 0, max : 10}
+			timeRange : {min : new Date(0).getTime(), max : new Date().getTime()}
 		};
 		
 		this.handleUserInput = this.handleUserInput.bind(this);
