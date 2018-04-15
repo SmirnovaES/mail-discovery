@@ -23,9 +23,7 @@ class DjangoMigrations(models.Model):
 class mails(models.Model):
     id = models.IntegerField(primary_key=True)
     date = models.DateTimeField(blank=True, null=True)
-    namefrom = models.TextField(blank=True, null=True)
     addressfrom = models.TextField(blank=True, null=True)
-    nameto = models.TextField(blank=True, null=True)
     addressto = models.TextField(blank=True, null=True)
     subject = models.TextField(blank=True, null=True)
     message = models.TextField(blank=True, null=True)
@@ -37,7 +35,6 @@ class mails(models.Model):
 
 class users(models.Model):
     id = models.IntegerField(primary_key=True)
-    name = models.TextField(blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     department = models.TextField(blank=True, null=True)
     datebegin = models.DateTimeField(blank=True, null=True)
