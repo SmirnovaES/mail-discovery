@@ -33,7 +33,7 @@ GraphV.create = (el, data, configuration) => {
     nodes = svg.append("g")
         .attr("class", "nodes");
 
-    fetch("http://localhost:8001/miserables.json")
+    fetch("http://localhost:8000/letters/2001-04-04,13:10,2001-04-04,14:10/")
         .then(response => response.json())
         .then(graph => {
 
@@ -98,7 +98,7 @@ GraphV.create = (el, data, configuration) => {
 
 GraphV.update = (el, data, configuration, chart) => {
     // D3 Code to update the chart
-    fetch("http://localhost:8001/miserables.json")
+    fetch("http://localhost:8000/letters/2001-04-04,12:10,2001-04-04,14:10/")
         .then(response => response.json())
         .then(graph => {
             // // transition
