@@ -98,7 +98,12 @@ GraphV.create = (el, data, configuration) => {
 
 GraphV.update = (el, data, configuration, chart) => {
     // D3 Code to update the chart
-    fetch("http://localhost:8000/letters/2001-04-04,12:10,2001-04-04,14:10/")
+    console.log("http://localhost:8000/letters/" + 
+        dateToJSON(configuration.min) +',' + 
+        dateToJSON(configuration.max) + '/');
+    fetch("http://localhost:8000/letters/" + 
+        dateToJSON(configuration.min) +',' + 
+        dateToJSON(configuration.max) + '/')
         .then(response => response.json())
         .then(graph => {
             // // transition
@@ -178,6 +183,11 @@ GraphV.destroy = () => {
 };
 
 export default GraphV;
+
+function dateToJSON(value) {
+    var d = new Date(value);
+    return d.toJSON().slice(0,10) + ',' + d.toTimeString().slice(0, 5)
+}
 
 function ticked() {
     line
