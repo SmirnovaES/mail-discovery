@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
-import './RangeSlider.css'
+import 'react-input-range/lib/css/index.css';
+
 
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
-
+		this.handleChange = this.handleChange.bind(this);
 		this.state = {
-			value: { min: 2, max: 10 },
-		}
+			value: this.props.timeRange,
+		};
 	}
-	
+
+	handleChange(timeRange) {
+		this.props.onUserInput(
+			timeRange
+		);
+	}
+
 	render() {
+		var dateFormat = require('dateformat');
+		var date = new Date(0);
 		return (
-			<InputRange maxValue={20} minValue={0} value={this.state.value} 
-						onChange={value => this.setState({ value })} />
+			<InputRange 
+				formatLabel={value => `${dateFormat(new Date(value), "mmmm dS, yyyy")}`}
+				maxValue={new Date().getTime()} 
+				minValue={new Date(0).getTime()} 
+				value={this.state.value} 
+				onChange={val => this.setState({value : val})}
+				onChangeComplete={this.handleChange} />
 		)
 	}
 }

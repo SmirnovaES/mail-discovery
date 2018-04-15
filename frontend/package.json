@@ -6,6 +6,7 @@
     "@fortawesome/react-fontawesome": "0.0.18",
     "bootstrap": "^4.0.0",
     "d3": "^5.0.0",
+    "dateformat": "^3.0.3",
     "font-awesome": "^4.7.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
