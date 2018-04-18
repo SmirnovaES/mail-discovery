@@ -25,7 +25,8 @@ GraphV.create = (el, data, configuration) => {
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
         .force("charge", d3.forceManyBody())
-        .force("center", d3.forceCenter(width / 2, height / 2));
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collide", d3.forceCollide().radius(function(d) { return 30; }));
 
     links = svg.append("g")
         .attr("class", "links");
