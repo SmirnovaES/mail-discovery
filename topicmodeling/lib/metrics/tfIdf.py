@@ -1,6 +1,19 @@
-import numpy as np
-from tqdm import tqdm
 from topicmodeling.lib.metrics.metricsABC import MetricsABC
+import numpy as np
+from joblib import Parallel, delayed
+
+
+def tf_idf(obj, word_id, document_id):
+    if obj.docs_words[document_id, word_id] == 0:
+        return 0
+    else:
+        tf = 0.5 + obj.docs_words[document_id, word_id] / obj.docs_words[document_id].max()
+        idf = np.log(obj.docs_words.shape[0] / (obj.docs_words[:, word_id] > 0).sum())
+        return tf * idf
+
+
+def parallel_task(w1, w2, values, smoothing):
+    return np.log((smoothing + np.sum(values[:, w1] * values[:, w2])) / np.sum(values[:, w1]))
 
 
 class TfIdf(MetricsABC):
@@ -8,34 +21,21 @@ class TfIdf(MetricsABC):
         if self.is_calculated[topic_id]:
             return self.metrics[topic_id]
 
-        def tf_idf(word_id, document_id):
-            tf = 0.5 + self.docs_words[document_id, word_id] / self.docs_words[document_id].max()
-            idf = np.log(self.docs_words.shape[0] / (self.docs_words[:, word_id] > 0).sum())
-            return tf * idf
-
         topic_distribution = self.topics_words[topic_id]
-        words_index = np.arange(topic_distribution.size)[topic_distribution > 0]
+        words_index = np.arange(topic_distribution.size)[topic_distribution > 1e-3]
 
-        tf_idf_for_words = np.zeros_like(words_index, dtype=float)
-        for w in tqdm(list(words_index), desc='calculate topic 1/2'):
-            document_index = self.docs_words[:, w]
-            document_index = np.arange(document_index.size)[document_index > 0]
-            for d in document_index:
-                tf_idf_for_words[w] += tf_idf(w, d)
+        tf_idf_values = Parallel(n_jobs=self.proc_num)(
+            delayed(tf_idf)(self, w, d) for d in range(self.docs_words.shape[0])
+                                        for w in words_index
+        )
+        tf_idf_values = np.array(tf_idf_values).reshape((self.docs_words.shape[0], words_index.size))
 
-        for w1 in tqdm(list(words_index), desc='calculate topic 2/2'):
-            for w2 in words_index:
-                if w1 == w2:
-                    continue
-
-                step_sum = self.smoothing
-
-                for d in np.arange(self.docs_words.shape[0]):
-                    if self.docs_words[d, w1] * self.docs_words[d, w2] > 0:
-                        step_sum += tf_idf(w1, d) * tf_idf(w2, d)
-
-                step_sum /= tf_idf_for_words[w1]
-                self.metrics[topic_id] += np.log(step_sum)
+        result = Parallel(n_jobs=self.proc_num)(
+            delayed(parallel_task)(i, j, tf_idf_values, self.smoothing) for i in range(words_index.size)
+                                                                        for j in range(words_index.size)
+                                                                        if i != j
+        )
 
         self.is_calculated[topic_id] = True
+        self.metrics[topic_id] = sum(result)
         return self.metrics[topic_id]

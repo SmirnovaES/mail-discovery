@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from topicmodeling.lib.metrics.coherence import Coherence
 from topicmodeling.lib.metrics.tfIdf import TfIdf
+from os import cpu_count
 
 
 class Visualizer:
@@ -10,7 +11,7 @@ class Visualizer:
         self.topics_words = topics_words
         self.topics_terms = topics_terms
 
-    def run(self, path, metrics='tfIdf'):
+    def run(self, path, metrics='tfIdf', proc_num=cpu_count()):
         def draw(ax, values, names, title):
             index = np.argsort(values, kind='mergesort')
 
@@ -37,9 +38,9 @@ class Visualizer:
                 labelbottom='off')
 
         if metrics == 'coherence':
-            metrics_model = Coherence(self.docs_words, self.topics_words)
+            metrics_model = Coherence(self.docs_words, self.topics_words, proc_num=proc_num)
         elif metrics == 'tfIdf':
-            metrics_model = TfIdf(self.docs_words, self.topics_words)
+            metrics_model = TfIdf(self.docs_words, self.topics_words, proc_num=proc_num)
         else:
             raise ValueError('wrong metrics name: {}'.format(metrics))
 

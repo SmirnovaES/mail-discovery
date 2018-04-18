@@ -9,7 +9,6 @@ import re
 from collections import defaultdict
 import numpy as np
 from gensim import corpora, models
-from tqdm import tqdm
 
 
 class BaselineABC:
@@ -67,7 +66,7 @@ class BaselineABC:
         file = open(self.embedding)
         vec_of_words = []
         emb_words = []
-        for line in tqdm(file, desc='embading'):
+        for line in file:
             nums = line.split()
             emb_words.append(nums[0])
             vec_of_words.append(nums[1:])
@@ -86,12 +85,13 @@ class BaselineABC:
         """Returns result of show_topics of model"""
 
     def extract_corpus(self, path):
+        print('Started extracting corpus')
         docs = []  # all documents
         docs_num_dict = []  # Stores email sender's name and number
         chdir(path)
         names = [i for i in listdir()]
         m = 0
-        for name in tqdm(names, desc='extract_corpus'):
+        for name in names:
             sent = path + str(name) + '/sent'
             try:
                 chdir(sent)
@@ -108,14 +108,15 @@ class BaselineABC:
 
         self.docs_num_dict = dict(docs_num_dict)
         self.docs = docs
+        print('Finished extracting corpus')
 
     def data_processing(self):
+        print('Started data processing')
         self.d = defaultdict(int)
 
         self.texts = []
 
-        for i in tqdm(range(0, len(self.docs_num_dict.items())),
-                      desc='data_processing 1/3'):
+        for i in range(0, len(self.docs_num_dict.items())):
             new_docs_num_dict_1 = []
             for doc in self.docs_num_dict[i][1]:
                 raw = doc.lower()
@@ -136,8 +137,7 @@ class BaselineABC:
             self.docs_num_dict[i][1] = new_docs_num_dict_1
 
         docs_name_dict = []
-        for i in tqdm(range(0, len(self.docs_num_dict.items())),
-                      desc='data_processing 2/3'):
+        for i in range(0, len(self.docs_num_dict.items())):
             temp_dict = defaultdict(int)
             for j in self.docs_num_dict[i][1]:
                 for k in j:
@@ -150,8 +150,7 @@ class BaselineABC:
         temp_texts = self.texts
         self.texts = []
         upper_lim = int(0.20 * num_docs)
-        for doc in tqdm(temp_texts,
-                        desc='data_processing 3/3'):
+        for doc in temp_texts:
             temp_doc = []
             for word in doc:
                 # If the word is in the required interval, we add it to a NEW texts variable
@@ -172,12 +171,13 @@ class BaselineABC:
         self.dictionary = corpora.Dictionary(self.texts)
         self.corpus = [self.dictionary.doc2bow(text) for text in self.texts]
 
+        print('Finished data processing')
+
     def get_docs(self):
         if self.docs_terms is not None:
             return self.docs_terms
         self.docs_terms = np.zeros((len(self.texts), len(self.dictionary)))
-        for i in tqdm(range(self.docs_terms.shape[0]),
-                      desc='get_docs'):
+        for i in range(self.docs_terms.shape[0]):
             temp_dic = self.dictionary.doc2bow(self.texts[i])
             for par in temp_dic:
                 self.docs_terms[i][par[0]] = par[1]

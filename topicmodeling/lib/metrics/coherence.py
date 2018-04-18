@@ -1,5 +1,11 @@
 import numpy as np
+from joblib import Parallel, delayed
 from topicmodeling.lib.metrics.metricsABC import MetricsABC
+
+
+def parallel_task(obj, w1, w2):
+    return np.log((obj.smoothing + (obj.docs_words[:, w1] * obj.docs_words[:, w2] > 0).sum()) /
+                  (obj.docs_words[:, w1] > 0).sum())
 
 
 class Coherence(MetricsABC):
@@ -8,12 +14,14 @@ class Coherence(MetricsABC):
             return self.metrics[topic_id]
 
         topic_distribution = self.topics_words[topic_id]
-        words_index = np.arange(topic_distribution.size)[topic_distribution > 0.01]
-        words_docs_for_topic = (self.docs_words[:, words_index]).T
+        words_index = np.arange(topic_distribution.size)[topic_distribution > 1e-3]
 
-        tmp = np.repeat(words_docs_for_topic[:, :, np.newaxis], words_docs_for_topic.shape[0], axis=-1)
-        tmp = (tmp * words_docs_for_topic.T > 0).sum(axis=1)
-        self.metrics[topic_id] = np.log(tmp / np.diagonal(tmp) + self.smoothing).sum() - np.log(1 + self.smoothing) * words_index.size
+        result = Parallel(n_jobs=self.proc_num)(
+            delayed(parallel_task)(self, words_index[i], words_index[j]) for i in range(words_index.size)
+                                                                         for j in range(words_index.size)
+                                                                         if i != j
+        )
+
         self.is_calculated[topic_id] = True
-
+        self.metrics[topic_id] = sum(result)
         return self.metrics[topic_id]
