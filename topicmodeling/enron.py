@@ -6,14 +6,15 @@ import gc
 
 path = '/home/geras-artem/Desktop/'
 corpus_path = '/home/geras-artem/Desktop/Study/6sem/InPrak/MailDiscoveryML/data/maildir/'
+model_path = '/home/geras-artem/Desktop/ldamodel'
 
 
 def main():
     model = LdaModel()
-    model.load(path='/home/geras-artem/Desktop/ldamodel')
+    model.load(path=model_path)
     model.extract_corpus(corpus_path)
     model.data_processing()
-    # model.build(num_topics=10, passes=20, path='/home/geras-artem/Desktop/ldamodel_part')
+    # model.build(num_topics=10, passes=20, path=model_path)
 
     docs_words = model.get_docs()
     topics_words = model.get_topics()
