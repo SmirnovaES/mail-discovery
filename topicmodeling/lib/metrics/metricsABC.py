@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import numpy as np
 from os import cpu_count
-from time import time
+from time import time, sleep
 
 
 class MetricsABC:
@@ -21,6 +21,7 @@ class MetricsABC:
 
     def calculate_all_topics(self):
         """Calculates metrics for all the topics"""
+        sleep(5)
         for i in range(self.topics_words.shape[0]):
             print('Calculating metrics for {}-th topic'.format(i))
             start = time()
