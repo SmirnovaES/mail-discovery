@@ -8,7 +8,7 @@ from nltk.stem.porter import PorterStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 
 '''
-def stem_tokens(tokens, stemmer):
+def Stem_tokens(tokens, stemmer):
     stemmed = []
     for item in tokens:
         stemmed.append(stemmer.stem(item))
@@ -16,13 +16,13 @@ def stem_tokens(tokens, stemmer):
 '''
 
 
-def tokenize(text):
+def Tokenize(text):
     tokens = nltk.word_tokenize(text)
     lemmatized_tokens = [WordNetLemmatizer().lemmatize(i) for i in tokens]
     return lemmatized_tokens
 
 
-def Vectorizer(path):
+def Vectorize(path, **kwargs):
     token_dict = {}
     for subdir, dirs, files in os.walk(path):
         for file in files:
@@ -39,6 +39,6 @@ def Vectorizer(path):
             token_dict[file] = lowers
 
     # this can take some time
-    tfidf = TfidfVectorizer(tokenizer=tokenize, stop_words='english')
+    tfidf = TfidfVectorizer(tokenizer=tokenize, stop_words='english', **kwargs)
     tfs = tfidf.fit_transform(token_dict.values())
     return tfs, tfidf
