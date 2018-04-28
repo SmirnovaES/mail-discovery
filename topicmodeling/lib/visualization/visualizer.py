@@ -1,8 +1,10 @@
-import numpy as np
+from os import cpu_count
+
 import matplotlib.pyplot as plt
+import numpy as np
+
 from topicmodeling.lib.metrics.coherence import Coherence
 from topicmodeling.lib.metrics.tfIdf import TfIdf
-from os import cpu_count
 
 
 class Visualizer:

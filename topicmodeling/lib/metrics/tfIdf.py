@@ -1,8 +1,8 @@
-from topicmodeling.lib.metrics.metricsABC import MetricsABC
 import numpy as np
 from joblib import Parallel, delayed
-from tqdm import tqdm
 from sklearn.feature_extraction.text import TfidfTransformer
+
+from topicmodeling.lib.metrics.metricsABC import MetricsABC
 
 
 def parallel_task(w1, w2, values, smoothing):

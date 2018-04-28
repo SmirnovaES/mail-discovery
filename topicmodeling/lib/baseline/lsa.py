@@ -1,5 +1,6 @@
-from topicmodeling.lib.baseline.baselineABC import BaselineABC
 from gensim import models
+
+from topicmodeling.lib.baseline.baselineABC import BaselineABC
 
 
 class LsaModel(BaselineABC):

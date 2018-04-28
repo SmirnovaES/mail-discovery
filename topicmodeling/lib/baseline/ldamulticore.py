@@ -1,9 +1,12 @@
-from topicmodeling.lib.baseline.baselineABC import BaselineABC
+import os
+
 from gensim import models
+
+from topicmodeling.lib.baseline.baselineABC import BaselineABC
 
 
 class LdaMulticoreModel(BaselineABC):
-    def build(self, num_topics=10, passes=10, workers=1, path='/home/ldamodel'):
+    def build(self, num_topics=10, passes=10, workers=os.cpu_count(), path='/home/geras-artem/ldamodel'):
         print('Started building model')
         if self.model is None:
             self.model = models.ldamulticore.LdaMulticore(self.corpus, num_topics=num_topics,
