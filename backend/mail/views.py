@@ -11,6 +11,8 @@ import numpy as np
 from datetime import datetime, date
 import calendar
 import re
+from django.db.models import Max
+from django.db.models import Min
 
 
 @csrf_exempt
@@ -22,14 +24,7 @@ def letter_list(request):
     letters = mails.objects.all()
     serializer = mailsSerializer(letters, many=True)
     return JsonResponse(serializer.data, safe=False)
-      
-  elif request.method == 'POST':
-    data = JSONParser().parse(request)
-    serializer = mailsSerializer(data=data)
-    if serializer.is_valid():
-      serializer.save()
-      return JsonResponse(serializer.data, status=201)
-    return JsonResponse(serializer.errors, status=400)
+
 
 @csrf_exempt
 def letter_detail(request, date_from, time_from, date_before, time_before):
@@ -102,19 +97,19 @@ def letter_detail(request, date_from, time_from, date_before, time_before):
     data["nodes"] = nodes
     data["links"] = links
     return JsonResponse(data)
-  
-  #    serializer = LetterSerializer(letter, many=True)
-  #    return JsonResponse(serializer.data, safe=False)
-  
-  elif request.method == 'PUT':
-    data = JSONParser().parse(request)
-    serializer = mailsSerializer(letter, data=data)
-    if serializer.is_valid():
-      serializer.save()
-      return JsonResponse(serializer.data)
-    return JsonResponse(serializer.errors, status=400)
 
-  elif request.method == 'DELETE':
-    letter.delete()
-    return HttpResponse(status=204)
+@csrf_exempt
+def get_date_range(request):
+  """
+  Return date of the first and the last letters in database.
+  """
+  if request.method == 'GET':
+    first_letter_date = mails.objects.all().aggregate(Max('date'))["date__max"]  # 2044-01-04T14:48:58
+    last_letter_date = mails.objects.all().aggregate(Min('date'))["date__min"]
+    first_letter_date = ','.join(str(first_letter_date).split(' '))  # "2044-01-04,14:48:58"
+    last_letter_date = ','.join(str(last_letter_date).split(' '))
+    first_letter_date = ':'.join(first_letter_date.split(':')[:-1])  # "2044-01-04,14:48"
+    last_letter_date = ':'.join(last_letter_date.split(':')[:-1])
+    response_list = [first_letter_date, last_letter_date]
+    return JsonResponse(response_list, safe=False)
 

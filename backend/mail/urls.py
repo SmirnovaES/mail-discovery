@@ -4,5 +4,6 @@ from mail import views
 urlpatterns = [
                url(r'^letters/$', views.letter_list),
                url(r'^letters/(?P<date_from>\S+),(?P<time_from>\S+),(?P<date_before>\S+),(?P<time_before>\S+)/$', views.letter_detail),
+               url(r'^get_date=1/$', views.get_date_range),
                ]
 
