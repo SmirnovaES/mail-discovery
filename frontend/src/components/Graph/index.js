@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import GraphViz from './GraphViz';
 import SearchForms from './SearchForms.js'
 import RangeSlider from './RangeSlider.js'
-import MenuLeft from './MenuLeft'
-import MenuRight from './MenuRight'
+import MenuLeft from './MenuLeft.js'
+import MenuRight from './MenuRight.js'
+
+import ContainerRight from './ContainerRight.js'
 
 
 class Graph extends Component {
@@ -43,7 +45,7 @@ class Graph extends Component {
 					</div>
 
 					<div className='col-md-2 order-10'>
-						<MenuRight />
+						<ContainerRight />
 					</div>
 				</div>
 				
