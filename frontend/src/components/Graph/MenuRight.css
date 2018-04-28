@@ -1,0 +1,17 @@
+#container{
+	width:400px;
+	margin:0px auto;
+	padding:40px 0;
+}
+#scrollbox{
+	float:left;
+	height:300px;
+	overflow:auto; overflow-x:hidden;
+}
+#container > div > p{
+	background:#eee;
+	color:#666;
+	font-family:Arial, sans-serif; font-size:0.75em;
+	padding:5px; margin:0;
+	text-align:rightright;
+}

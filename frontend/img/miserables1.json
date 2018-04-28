@@ -1,0 +1,10 @@
+{
+    "nodes": [
+      {"id": "Dyriel1", "group": 1},
+      {"id": "Mapoleon1", "group": 2}
+      
+    ],
+    "links": [
+      {"source": "Mapoleon1", "target": "Dyriel1", "value": 10}
+    ]
+}
