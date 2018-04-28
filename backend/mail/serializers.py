@@ -5,7 +5,7 @@ from mail.models import mails
 class mailsSerializer(serializers.ModelSerializer):
   class Meta:
     model = mails
-    fields = ('id', 'date', 'namefrom', 'addressfrom', 'nameto', 'addressto', 'subject', 'message')
+    fields = ('id', 'date', 'addressfrom', 'addressto', 'subject', 'message')
 #    fields = ('Date', 'NameFrom', 'AddressFrom', 'NameTo', 'AddressTo', 'Subject', 'Message')
 
 
@@ -31,9 +31,7 @@ class mailsSerializer(serializers.ModelSerializer):
         """
         instance.Id = validated_data.get('id', instance.Id)
         instance.Date = validated_data.get('date', instance.Date)
-        instance.NameFrom = validated_data.get('namefrom', instance.NameFrom)
         instance.AddressFrom = validated_data.get('addressfrom', instance.AddressFrom)
-        instance.NameTo = validated_data.get('nameto', instance.NameTo)
         instance.AddressTo = validated_data.get('addressto', instance.AddressTo)
         instance.Subject = validated_data.get('subject', instance.Subject)
         instance.Message = validated_data.get('message', instance.Message)
