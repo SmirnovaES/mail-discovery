@@ -7,11 +7,54 @@ class MenuLeft extends Component {
 		this.state = {
 			elements: []
 		};
-		var i;
-		for (i = 0; i < 30; i++) {
-			this.state.elements.push('Департамент номер ' + i)
-		}
 	}
+	static departments = {}
+
+	componentDidMount() {
+        fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
+			dateToJSON(this.props.timeRange.min) +'&dateTo=' + 
+			dateToJSON(this.props.timeRange.max) + '/')
+			.then(response => response.json())
+			.then(data => {
+				data.map(
+					function(element) {
+						this.departments[element.group] = element.users.map(
+							function(element) {
+								return element.id;
+							});
+						this.props.users.push(this.departments[element.group]);
+					});
+				this.setState(
+					{elements : 
+						data.map(
+							function(element) {
+								return element.group;
+							})
+					}
+				);
+			});
+    }
+
+    componentDidUpdate() {
+        fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
+			dateToJSON(this.props.timeRange.min) +'&dateTo=' + 
+			dateToJSON(this.props.timeRange.max) + '/')
+			.then(response => response.json())
+			.then(data => {
+				data.map(
+					function(element) {
+						this.departments[element.group] = element.users;
+					});
+				this.setState(
+					{elements : 
+						data.map(
+							function(element) {
+								return element.group;
+							})
+					}
+				);
+			});
+    }
 
 	render() {
 		return (
@@ -19,7 +62,7 @@ class MenuLeft extends Component {
 				<div id="scrollbox" >
 					<div id="content">
 						{this.state.elements.map((department, index) => (
-							<Department key={index} value={department}/>
+							<Department key={index} value={this.departments[department]}/>
 						))}
 					</div>
 				</div>
@@ -39,9 +82,9 @@ class Department extends Component {
 				display : 'none'
 			  }
 		};
-		for (i = 0; i < 3; i++) {
-			this.state.elements.push('Поддепартамент номер ' + i)
-		}
+		this.setState({
+			elements : this.props.value
+		});		
 	};
 
 	changeVisible(e) {
@@ -89,4 +132,20 @@ class Department extends Component {
 			</div>
 		);
 	}
+}
+
+function dateToJSON(value) {
+    var d = new Date(value);
+    return d.toJSON().slice(0,10) + ',' + d.toTimeString().slice(0, 5)
+}
+
+function unique(arr) {
+	var obj = {};
+
+	for (var i = 0; i < arr.length; i++) {
+		var str = arr[i];
+		obj[str] = true; // запомнить строку в виде свойства объекта
+	}
+
+	return Object.keys(obj); // или собрать ключи перебором для IE8-
 }

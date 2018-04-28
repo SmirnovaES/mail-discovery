@@ -11,7 +11,7 @@ class GraphViz extends React.Component {
         this._chart = GraphV.create(
             this._rootNode,
             this.props.data,
-            this.props.config
+            this.props.configuration 
         );
     }
 
@@ -20,7 +20,7 @@ class GraphViz extends React.Component {
         GraphV.update(
            this._rootNode,
            this.props.data,
-           this.props.timeRange,  // временное решение
+           this.props.configuration,
            this._chart
         );
     }

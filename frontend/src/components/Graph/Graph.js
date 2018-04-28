@@ -5,7 +5,6 @@ var d3, svg, width, height, color, div, simulation, links, line, node, nodes, ci
 GraphV.create = (el, data, configuration) => {
     // D3 Code to create the chart
     d3 = require("d3"); 
-        // svg = el.append("svg")
     svg = d3.select("svg")
         .call(d3.zoom().on("zoom", () => svg.attr("transform", d3.event.transform)))
         .on("click", onSvgClick)
@@ -34,7 +33,18 @@ GraphV.create = (el, data, configuration) => {
     nodes = svg.append("g")
         .attr("class", "nodes");
 
-    fetch("http://localhost:8000/letters/2001-04-04,13:10,2001-04-04,14:10/")
+    fetch("http://localhost:8000/letters/",{  
+        method: 'post',  
+        headers: {  
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+        },  
+        body: 
+            "dateFrom="+dateToJSON(configuration.timeRange.min)+"\
+            &dateTo="+dateToJSON(configuration.timeRange.max)+"\
+            &users=["+configuration.users.toString()+"]\
+            &topics=[]\
+            &search_ais="  
+      })
         .then(response => response.json())
         .then(graph => {
 

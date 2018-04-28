@@ -7,10 +7,19 @@ import MenuRight from './MenuRight'
 
 
 class Graph extends Component {
+	static configuration = {
+		timeRange : this.state.timeRange,
+		users : this.state.users,
+		topics : this.state.topics,
+		searchAis : this.state.searchAis
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
-			timeRange : {min : new Date(0).getTime(), max : new Date().getTime()}
+			timeRange : {min : new Date('2001-04-04,13:10').getTime(), max : new Date('2001-04-04,14:10').getTime()},
+			users : [],
+			topics : [],
+			searchAis : ''
 		};
 		
 		this.handleUserInput = this.handleUserInput.bind(this);
@@ -27,19 +36,24 @@ class Graph extends Component {
 			<div className='container'>
 				<div className='row'>
 					<div className='col-md-8 offset-2'>
-						<SearchForms />
+						<SearchForms 
+							searchAis={this.state.searchAis}
+						/>
 					</div>
 				</div>
 
 				<div className='row'>
 					<div className='col-md-7 order-3'>	
 						<GraphViz 
-							timeRange={this.state.timeRange}
+							configuration={this.configuration}
 						/>
 					</div>
 
 					<div className='col-md-3 order-0'>
-						<MenuLeft />
+						<MenuLeft 
+							timeRange={this.state.timeRange}
+							users={this.state.users}
+						/>
 					</div>
 
 					<div className='col-md-2 order-10'>
