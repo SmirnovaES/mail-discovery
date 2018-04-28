@@ -5,12 +5,8 @@ class MenuRight extends Component {
     constructor(props){
         super(props);
         this.state = {
-            elements: []
+            elements: this.props.topics
         };
-        var i;
-        for (i = 0; i < 30; i++) {
-            this.state.elements.push('Тема номер ' + i)
-        }
     }
 
 	render() {
