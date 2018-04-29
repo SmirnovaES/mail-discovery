@@ -23,8 +23,8 @@ def letters_process(request):
     Return date of the first and the last letters in database.
     """
     if request.GET.get('get_date'):
-      first_letter_date = mails.objects.all().aggregate(Max('date'))["date__max"]  # 2044-01-04T14:48:58
-      last_letter_date = mails.objects.all().aggregate(Min('date'))["date__min"]
+      first_letter_date = mails.objects.all().aggregate(Min('date'))["date__min"]  # 2044-01-04T14:48:58
+      last_letter_date = mails.objects.all().aggregate(Max('date'))["date__max"]
       first_letter_date = ','.join(str(first_letter_date).split(' '))  # "2044-01-04,14:48:58"
       last_letter_date = ','.join(str(last_letter_date).split(' '))
       first_letter_date = ':'.join(first_letter_date.split(':')[:-1])  # "2044-01-04,14:48"
