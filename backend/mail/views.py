@@ -5,13 +5,12 @@ from rest_framework.parsers import JSONParser
 from mail.models import mails
 from mail.models import users
 from mail.serializers import mailsSerializer
+from mail.forms import SearchReqForm
+from mail.utils import request_date_to_datetime, get_data
 import json
-import numpy as np
-from datetime import datetime, date
-import calendar
-import re
 from django.db.models import Max
 from django.db.models import Min
+from django.db.models import Q
 from collections import Counter
 
 
@@ -37,14 +36,10 @@ def letters_process(request):
     """
     if request.GET.get('get_departments'):
       date_from,time_from = request.GET['dateFrom'].split(',')
-      yyyy, mm, dd = date_from.split('-')
-      hours, mins = time_from.split(':')
-      date_time_from = datetime(int(yyyy), int(mm), int(dd), int(hours), int(mins))
+      date_time_from = request_date_to_datetime(date_from, time_from)
 
       date_to,time_to = request.GET['dateTo'].split(',')
-      yyyy, mm, dd = date_to.split('-')
-      hours, mins = time_to.split(':')
-      date_time_to = datetime(int(yyyy), int(mm), int(dd), int(hours), int(mins))
+      date_time_to = request_date_to_datetime(date_to, time_to)
       
       letters_in_date_range = mails.objects.filter(date__range=[date_time_from,date_time_to])
 
@@ -54,10 +49,10 @@ def letters_process(request):
         dep = users.objects.filter(address=letter.addressfrom)[0].department
         users_by_dep.setdefault(dep, set({})).add(letter.addressfrom)
         
-        adresses_to = letter.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
-        for adress_to in adresses_to:
-          dep = users.objects.filter(address=adress_to)[0].department
-          users_by_dep.setdefault(dep, set({})).add(adress_to)
+        addresses_to = letter.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
+        for address_to in addresses_to:
+          dep = users.objects.filter(address=address_to)[0].department
+          users_by_dep.setdefault(dep, set({})).add(address_to)
 
       return_list = []
       for dep, emails in users_by_dep.items():
@@ -80,4 +75,23 @@ def letters_process(request):
       ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
       return JsonResponse(ret_list, safe=False)
 
+  """
+  Return letters filtered by given data.
+  TO-DO: add topics filtering
+  """
+  if request.method == 'POST':
+    form = SearchReqForm(request.POST)
+    if form.is_valid():
+      date_to, time_to = form.cleaned_data['dateto'].split(',')
+      date_from, time_from = form.cleaned_data['datefrom'].split(',')
+      users = form.cleaned_data['users'].split(',')
+      searchline = form.cleaned_data['search']
 
+      date_time_from = request_date_to_datetime(date_from, time_from)
+      date_time_to = request_date_to_datetime(date_to, time_to)
+
+      filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to]).filter(
+        Q(addressto__in=users) | Q(addressfrom__in=users)).filter(
+        Q(message__contains=searchline) | Q(subject__contains=searchline))
+
+      return JsonResponse(get_data(filtered_letters, users))
