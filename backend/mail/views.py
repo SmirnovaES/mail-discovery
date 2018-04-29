@@ -12,6 +12,7 @@ import calendar
 import re
 from django.db.models import Max
 from django.db.models import Min
+from collections import Counter
 
 
 @csrf_exempt
@@ -66,5 +67,17 @@ def letters_process(request):
         return_list.append(tmp_dict)
 
       return JsonResponse(return_list, safe=False)
+
+    """
+    Return top 5 users who have letters more than anyone else.
+    """
+    if request.GET.get('get_personal_top'):
+      all_users = []
+      all_users += mails.objects.values_list('addressfrom', flat=True)
+      all_users += mails.objects.values_list('addressto', flat=True)  # contains sublists with addr_to
+      all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]
+      top_users_info = Counter(all_users).most_common(5)
+      ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
+      return JsonResponse(ret_list, safe=False)
 
 
