@@ -80,4 +80,23 @@ def letters_process(request):
       ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
       return JsonResponse(ret_list, safe=False)
 
+  """
+  Return letters containing key words
+  TO-DO: add topics filtration, AIS search
+  """
+  if request.GET.get('search_ais'):
+    key_words = request.GET['words'].split(',')
+
+    filtered_letters = mails.objects
+    if not key_words:
+      filtered_letters = filtered_letters.all().order_by('?')[:5]
+    else:
+      for word in key_words:
+        filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
+                                                   Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
+
+    data = [{"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
+             "topic": "NULL", "summary": letter.message[:300]} for letter in filtered_letters]
+    return JsonResponse(data, safe=False)
+
 
