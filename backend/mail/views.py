@@ -81,3 +81,20 @@ def letters_process(request):
       return JsonResponse(ret_list, safe=False)
 
 
+    """
+    Return text of particular message
+    TO-DO: add topics filtration
+    """
+    if request.GET.get('get_text'):
+      req_source = request.GET['source']
+      req_target = request.GET['target']
+      req_date = request.GET['date']
+      # topic = request.GET['topic']
+
+
+      filtered_letters = mails.objects.filter(addressfrom=req_source)
+      if filtered_letters:
+        data = [{"text": letter.message} for letter in filtered_letters]
+        return JsonResponse(data, safe=False)
+      return JsonResponse({"text:": "sasat"}, safe=False)
+
