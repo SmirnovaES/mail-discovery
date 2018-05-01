@@ -7,27 +7,28 @@ import MenuRight from './MenuRight'
 
 
 class Graph extends Component {
-	static configuration = {
-		timeRange : this.state.timeRange,
-		users : this.state.users,
-		topics : this.state.topics,
-		searchAis : this.state.searchAis
-	}
 	constructor(props) {
 		super(props);
 		this.state = {
 			timeRange : {min : new Date('2001-04-04,13:10').getTime(), max : new Date('2001-04-04,14:10').getTime()},
 			users : [],
 			topics : [],
-			searchAis : ''
+			searchAis : '', 
 		};
 		
-		this.handleUserInput = this.handleUserInput.bind(this);
+		this.handleUserInputTimeRange = this.handleUserInputTimeRange.bind(this);
+		this.handleUserInputUsers = this.handleUserInputUsers.bind(this);
 	}
 
-	handleUserInput(timeRange) {
+	handleUserInputTimeRange(timeRange) {
 		this.setState({
 			timeRange : timeRange
+		});
+	}
+
+	handleUserInputUsers(users) {
+		this.setState({
+			users : users
 		});
 	}
 
@@ -44,15 +45,21 @@ class Graph extends Component {
 
 				<div className='row'>
 					<div className='col-md-7 order-3'>	
-						<GraphViz 
-							configuration={this.configuration}
-						/>
+						{/* <GraphViz 
+							configuration={
+								{timeRange : this.state.timeRange,
+								users : this.state.users,
+								topics : this.state.topics,
+								searchAis : this.state.searchAis}
+							}
+						/> */}
 					</div>
 
 					<div className='col-md-3 order-0'>
 						<MenuLeft 
 							timeRange={this.state.timeRange}
 							users={this.state.users}
+							onUserInput={this.handleUserInputUsers}
 						/>
 					</div>
 
@@ -63,10 +70,10 @@ class Graph extends Component {
 				
 				<div className='row'>
 					<div className='col-md-8 offset-2'>
-						<RangeSlider 
+						{/* <RangeSlider 
 							timeRange={this.state.timeRange}
-							onUserInput={this.handleUserInput}
-						/>
+							onUserInput={this.handleUserInputTimeRange}
+						/> */}
 					</div>
 				</div>
 			</div>

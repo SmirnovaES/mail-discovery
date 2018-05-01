@@ -23,6 +23,7 @@ class MenuLeft extends Component {
 								return element.id;
 							});
 						this.props.users.push(this.departments[element.group]);
+						return element;
 					});
 				this.setState(
 					{elements : 
@@ -44,6 +45,7 @@ class MenuLeft extends Component {
 				data.map(
 					function(element) {
 						this.departments[element.group] = element.users;
+						return element;
 					});
 				this.setState(
 					{elements : 
@@ -62,7 +64,11 @@ class MenuLeft extends Component {
 				<div id="scrollbox" >
 					<div id="content">
 						{this.state.elements.map((department, index) => (
-							<Department key={index} value={this.departments[department]}/>
+							<Department key={index}
+								value={department}
+								users={this.departments[department]}
+								handleChange={this.props.onUserInput}
+							/>
 						))}
 					</div>
 				</div>
@@ -80,10 +86,11 @@ class Department extends Component {
 			elements: [],
 			pStyle : {
 				display : 'none'
-			  }
+			  },
+			value : 'false'
 		};
 		this.setState({
-			elements : this.props.value
+			elements : this.props.users
 		});		
 	};
 
@@ -94,7 +101,18 @@ class Department extends Component {
 		}
 		console.log(e.target.checked + " " + display);
 		this.setState({
-			pStyle: {display : display}
+			pStyle: {display : display},
+		});
+	};
+
+	changeCheckedDepartment(e) {
+		var value = 'false'
+		if (e.target.checked === true) {
+			value = 'true';
+		}
+		console.log(e.target.checked + " " + value);
+		this.setState({
+			value: value
 		});
 	};
 
@@ -105,7 +123,7 @@ class Department extends Component {
 					<div className="input-group-prepend">
 						<div className="input-group-text">
 							<input type="checkbox" aria-label="Checkbox for following text input"
-								onChange={function (e) {console.log(e.target.checked)}}/>
+								onChange={this.changeCheckedDepartment.bind(this)}/>
 						</div>
 					</div>
 					<div className="input-group-text">
@@ -120,8 +138,8 @@ class Department extends Component {
 					<div className="input-group mb-3" style={this.state.pStyle} key={index}>    
 						<div className="input-group-prepend">
 							<div className="input-group-text">
-								<input type="checkbox" aria-label="Checkbox for following text input"
-									onChange={function (e) {console.log(e.target.checked)}}/>
+								<input type="checkbox" value={this.state.value} aria-label="Checkbox for following text input"
+									onChange={function (e, element) {console.log(e.target.checked, element)}}/>
 							</div>
 						</div>
 						<div className="input-group-text">

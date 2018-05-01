@@ -10,16 +10,16 @@ class RangeSlider extends Component {
 		this.state = {
 			value: this.props.timeRange,
 		};
-		this.props.dateFrom = '1999-04-04,14:10';
-		this.props.dateTo = '2002-04-04,14:10';
+		this.dateFrom = '1999-04-04,14:10';
+		this.dateTo = '2002-04-04,14:10';
 	}
 
 	componentDidMount() {
         fetch("http://localhost:8000/letters/?get_date=1")
         .then(response => response.json())
         .then(data => {
-			this.props.dateFrom = data[0];
-			this.props.dateTo = data[1];
+			this.dateFrom = data[0];
+			this.dateTo = data[1];
 		});
     }
 
@@ -35,8 +35,8 @@ class RangeSlider extends Component {
 		return (
 			<InputRange 
 				formatLabel={value => `${dateFormat(new Date(value), "mmmm dS, yyyy")}`}
-				minValue={new Date(this.props.dateFrom).getTime()} 
-				maxValue={new Date(this.props.dateTo).getTime()} 
+				minValue={new Date(this.dateFrom).getTime()} 
+				maxValue={new Date(this.dateTo).getTime()} 
 				value={this.state.value} 
 				onChange={val => this.setState({value : val})}
 				onChangeComplete={this.handleChange} />
