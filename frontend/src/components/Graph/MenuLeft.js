@@ -1,30 +1,31 @@
 import React, { Component } from 'react'
 import './MenuLeft.css'
-
+var departments = {};
+var users = [];
 class MenuLeft extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			elements: []
 		};
+		users = [];
 	}
-	static departments = {}
 
-	componentDidMount() {
+	loadData() {
         fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
 			dateToJSON(this.props.timeRange.min) +'&dateTo=' + 
-			dateToJSON(this.props.timeRange.max) + '/')
+			dateToJSON(this.props.timeRange.max))
 			.then(response => response.json())
 			.then(data => {
-				data.map(
-					function(element) {
-						this.departments[element.group] = element.users.map(
+				data.forEach(
+					function(element, i, arr) {
+						departments[element.group] = element.users.map(
 							function(element) {
 								return element.id;
 							});
-						this.props.users.push(this.departments[element.group]);
-						return element;
-					});
+						users.push(departments[element.group]);
+					}, this);
+				this.props.onUserInput(users);
 				this.setState(
 					{elements : 
 						data.map(
@@ -34,29 +35,15 @@ class MenuLeft extends Component {
 					}
 				);
 			});
-    }
+	}
+	
+	componentWillMount() {
+		this.loadData();
+	}
 
-    componentDidUpdate() {
-        fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
-			dateToJSON(this.props.timeRange.min) +'&dateTo=' + 
-			dateToJSON(this.props.timeRange.max) + '/')
-			.then(response => response.json())
-			.then(data => {
-				data.map(
-					function(element) {
-						this.departments[element.group] = element.users;
-						return element;
-					});
-				this.setState(
-					{elements : 
-						data.map(
-							function(element) {
-								return element.group;
-							})
-					}
-				);
-			});
-    }
+    // componentWillUpdate() {
+    //     this.loadData();
+    // }
 
 	render() {
 		return (
@@ -66,7 +53,7 @@ class MenuLeft extends Component {
 						{this.state.elements.map((department, index) => (
 							<Department key={index}
 								value={department}
-								users={this.departments[department]}
+								users={departments[department]}
 								handleChange={this.props.onUserInput}
 							/>
 						))}
@@ -88,11 +75,14 @@ class Department extends Component {
 				display : 'none'
 			  },
 			value : 'false'
-		};
+		};	
+	};
+
+	componentDidMount() {
 		this.setState({
 			elements : this.props.users
-		});		
-	};
+		});	
+	}
 
 	changeVisible(e) {
 		var display = 'none'

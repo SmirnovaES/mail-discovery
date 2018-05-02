@@ -24,8 +24,8 @@ GraphV.create = (el, data, configuration) => {
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
         .force("charge", d3.forceManyBody())
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collide", d3.forceCollide().radius(function(d) { return 30; }));
+        .force("center", d3.forceCenter(width / 2, height / 2));
+        // .force("collide", d3.forceCollide().radius(function(d) { return 30; }));
 
     links = svg.append("g")
         .attr("class", "links");
@@ -39,13 +39,19 @@ GraphV.create = (el, data, configuration) => {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
         },  
         body: 
-            "dateFrom="+dateToJSON(configuration.timeRange.min)+"\
-            &dateTo="+dateToJSON(configuration.timeRange.max)+"\
-            &users=["+configuration.users.toString()+"]\
-            &topics=[]\
-            &search_ais="  
-      })
-        .then(response => response.json())
+            "datefrom="+dateToJSON(configuration.timeRange.min)+"\
+            &dateto="+dateToJSON(configuration.timeRange.max)+"\
+            &users="+configuration.users.toString()+"\
+            &topics=q\
+            &search=q"  
+         })
+        .then(response => 
+            {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
         .then(graph => {
 
             var lineData = links
@@ -103,19 +109,34 @@ GraphV.create = (el, data, configuration) => {
             graph.links.forEach(function(d) {
                 linkedByIndex[d.source.index + "," + d.target.index] = 1;
             });
+        })
+        .catch(function(error) {
+            console.log(error);
         });
     
 };
 
 GraphV.update = (el, data, configuration, chart) => {
     // D3 Code to update the chart
-    console.log("http://localhost:8000/letters/" + 
-        dateToJSON(configuration.min) +',' + 
-        dateToJSON(configuration.max) + '/');
-    fetch("http://localhost:8000/letters/" + 
-        dateToJSON(configuration.min) +',' + 
-        dateToJSON(configuration.max) + '/')
-        .then(response => response.json())
+    fetch("http://localhost:8000/letters/",{  
+        method: 'post',  
+        headers: {  
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+        },  
+        body: 
+            "datefrom="+dateToJSON(configuration.timeRange.min)+
+            "&dateto="+dateToJSON(configuration.timeRange.max)+
+            "&users="+configuration.users.toString()+
+            "&topics=q"+
+            "&search=q"  
+         })
+        .then(response => 
+            {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
         .then(graph => {
             // // transition
             // var t = d3.transition()
@@ -186,6 +207,9 @@ GraphV.update = (el, data, configuration, chart) => {
             node = node.merge(nodeData);
             circle = node.selectAll("circle");
             title = node.selectAll("text"); 
+        })
+        .catch(function(error) {
+            console.log(error);
         });
 };
 
