@@ -47,14 +47,14 @@ class Graph extends Component {
 
 				<div className='row'>
 					<div className='col-md-7 order-3'>	
-						{/* <GraphViz 
+						<GraphViz 
 							configuration={
 								{timeRange : this.state.timeRange,
 								users : this.state.users,
 								topics : this.state.topics,
 								searchAis : this.state.searchAis}
 							}
-						/> */}
+						/>
 					</div>
 
 					<div className='col-md-3 order-0'>
@@ -72,10 +72,10 @@ class Graph extends Component {
 				
 				<div className='row'>
 					<div className='col-md-8 offset-2'>
-						{/* <RangeSlider 
+						<RangeSlider 
 							timeRange={this.state.timeRange}
 							onUserInput={this.handleUserInputTimeRange}
-						/> */}
+						/>
 					</div>
 				</div>
 			</div>
