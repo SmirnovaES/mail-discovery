@@ -5,15 +5,11 @@ from rest_framework.parsers import JSONParser
 from mail.models import mails
 from mail.models import users
 from mail.serializers import mailsSerializer
-import json
-import numpy as np
 from datetime import datetime, date
-import calendar
-import re
 from django.db.models import Max
 from django.db.models import Min
 from collections import Counter
-
+from mail.utils import request_date_to_datetime
 
 @csrf_exempt
 def letters_process(request):
@@ -88,11 +84,12 @@ def letters_process(request):
     if request.GET.get('get_text'):
       req_source = request.GET['source']
       req_target = request.GET['target']
-      req_date = request.GET['date']
+      date,time = request.GET['date'].split(',')
+      req_date = request_date_to_datetime(date, time)
       # topic = request.GET['topic']
 
 
-      filtered_letters = mails.objects.filter(addressfrom=req_source)
+      filtered_letters = mails.objects.filter(addressfrom=req_source).filter(addressto__contains=req_target).filter(date=req_date)
       if filtered_letters:
         data = [{"text": letter.message} for letter in filtered_letters]
         return JsonResponse(data, safe=False)
