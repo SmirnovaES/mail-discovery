@@ -12,6 +12,7 @@ import calendar
 import re
 from django.db.models import Max
 from django.db.models import Min
+from django.db.models import Q
 from collections import Counter
 
 
@@ -95,8 +96,14 @@ def letters_process(request):
         filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
                                                    Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
 
-    data = [{"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
-             "topic": "NULL", "summary": letter.message[:300]} for letter in filtered_letters]
+    data = []
+    for letter in filtered_letters:
+      addresses_to = letter.addressto.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()
+
+      date = ','.join(str(letter.date).split(' '))
+      date = ':'.join(date.split(':')[:-1])
+      data.append({"source": letter.addressfrom, "target": addresses_to[0], "date": date,
+             "topic": "NULL", "summary": letter.message[:300]})
     return JsonResponse(data, safe=False)
 
 
