@@ -75,6 +75,25 @@ def letters_process(request):
       ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
       return JsonResponse(ret_list, safe=False)
 
+    """
+    Return letters containing key words
+    TO-DO: add topics filtration, AIS search
+    """
+    if request.GET.get('search_ais'):
+      key_words = request.GET['words'].split(',')
+
+      filtered_letters = mails.objects
+      if not key_words:
+        filtered_letters = filtered_letters.all().order_by('?')[:5]
+      else:
+        for word in key_words:
+          filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
+                                                   Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
+
+      data = [{"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
+             "topic": "NULL", "summary": letter.message[:300]} for letter in filtered_letters]
+      return JsonResponse(data, safe=False)
+
   """
   Return letters filtered by given data.
   TO-DO: add topics filtering
@@ -84,14 +103,13 @@ def letters_process(request):
     if form.is_valid():
       date_to, time_to = form.cleaned_data['dateto'].split(',')
       date_from, time_from = form.cleaned_data['datefrom'].split(',')
-      users = form.cleaned_data['users'].split(',')
+      all_users = form.cleaned_data['users'].split(',')
       searchline = form.cleaned_data['search']
-
       date_time_from = request_date_to_datetime(date_from, time_from)
       date_time_to = request_date_to_datetime(date_to, time_to)
 
       filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to]).filter(
-        Q(addressto__in=users) | Q(addressfrom__in=users)).filter(
+        Q(addressto__in=all_users) | Q(addressfrom__in=all_users)).filter(
         Q(message__contains=searchline) | Q(subject__contains=searchline))
 
-      return JsonResponse(get_data(filtered_letters, users))
+      return JsonResponse(get_data(filtered_letters, all_users))
