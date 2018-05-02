@@ -22,7 +22,8 @@ GraphV.create = (el, data, configuration) => {
     color = d3.scaleOrdinal(d3["schemeCategory10"]);
 
     simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("link", d3.forceLink().id(function(d) { return d.id; })
+            .distance(30).strength(0.1))
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceCenter(width / 2, height / 2));
         // .force("collide", d3.forceCollide().radius(function(d) { return 30; }));
@@ -307,7 +308,7 @@ function onSvgClick(event) {
 }
 
 function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    if (!d3.event.active) simulation.alphaTarget(0).restart();
     d.fx = d.x;
     d.fy = d.y;
 }
