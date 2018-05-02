@@ -103,13 +103,13 @@ def letters_process(request):
     if form.is_valid():
       date_to, time_to = form.cleaned_data['dateto'].split(',')
       date_from, time_from = form.cleaned_data['datefrom'].split(',')
-      all_users = form.cleaned_data['users'].split(',')
+      users_all = form.cleaned_data['users'].split(',')
       searchline = form.cleaned_data['search']
       date_time_from = request_date_to_datetime(date_from, time_from)
       date_time_to = request_date_to_datetime(date_to, time_to)
 
       filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to]).filter(
-        Q(addressto__in=all_users) | Q(addressfrom__in=all_users)).filter(
+        Q(addressto__in=users_all) | Q(addressfrom__in=users_all)).filter(
         Q(message__contains=searchline) | Q(subject__contains=searchline))
 
-      return JsonResponse(get_data(filtered_letters, all_users))
+      return JsonResponse(get_data(filtered_letters, users))
