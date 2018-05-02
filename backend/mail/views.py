@@ -24,6 +24,19 @@ def letters_process(request):
     if request.GET.get('get_date'):
       first_letter_date = mails.objects.all().aggregate(Min('date'))["date__min"]  # 2044-01-04T14:48:58
       last_letter_date = mails.objects.all().aggregate(Max('date'))["date__max"]
+      
+      # if first letter's year is less then 1991, change it to 1991
+      if str(first_letter_date).split('-')[0] < '1991':
+        fixed_first_letter_date = str(first_letter_date).split('-')
+        fixed_first_letter_date[0] = '1991'
+        first_letter_date = '-'.join(fixed_first_letter_date)
+      
+      # if last letter's year is greater then 2018, change it to 2018
+      if str(last_letter_date).split('-')[0] > '2018':
+        fixed_last_letter_date = str(last_letter_date).split('-')
+        fixed_last_letter_date[0] = '2018'
+        last_letter_date = '-'.join(fixed_last_letter_date)
+      
       first_letter_date = ','.join(str(first_letter_date).split(' '))  # "2044-01-04,14:48:58"
       last_letter_date = ','.join(str(last_letter_date).split(' '))
       first_letter_date = ':'.join(first_letter_date.split(':')[:-1])  # "2044-01-04,14:48"
