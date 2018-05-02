@@ -6,12 +6,12 @@ from topicmodeling.lib.baseline.baselineABC import BaselineABC
 
 
 class LdaMulticoreModel(BaselineABC):
-    def build(self, num_topics=10, passes=10, workers=os.cpu_count(), path='/home/geras-artem/ldamodel'):
+    def build(self, num_topics=10, passes=10, workers=os.cpu_count(), path='/home/elena'):
         print('Started building model')
         if self.model is None:
             self.model = models.ldamulticore.LdaMulticore(self.corpus, num_topics=num_topics,
                                                   id2word=self.dictionary, passes=passes, workers=workers)
-        self.model.save(path)
+#        self.model.save(path)
         print('Finished building model')
         return self.model
 

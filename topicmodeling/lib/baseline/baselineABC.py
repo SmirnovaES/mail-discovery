@@ -60,7 +60,7 @@ class BaselineABC:
         return self.docs_terms, self.count_vectorizer
 
     def do_processing(self):
-        self.vectorize(min_df=1e-3, max_df=0.2)
+        self.vectorize(min_df=1e-3, max_df=0.8)
         self.corpus = [matutils.scipy2sparse(doc) for doc in self.docs_terms]
         self.dictionary = corpora.Dictionary([list(self.count_vectorizer.get_feature_names())])
 
