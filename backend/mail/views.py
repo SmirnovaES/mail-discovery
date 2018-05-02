@@ -77,13 +77,22 @@ def letters_process(request):
       return JsonResponse(return_list, safe=False)
 
     """
-    Return top 5 users who have letters more than anyone else.
+    Return top 5 users who have letters more than anyone else in a given period of time.
     """
     if request.GET.get('get_personal_top'):
+      
+      date_from,time_from = request.GET['dateFrom'].split(',')
+      date_time_from = request_date_to_datetime(date_from, time_from)
+      
+      date_to,time_to = request.GET['dateTo'].split(',')
+      date_time_to = request_date_to_datetime(date_to, time_to)
+      
       all_users = []
-      all_users += mails.objects.values_list('addressfrom', flat=True)
-      all_users += mails.objects.values_list('addressto', flat=True)  # contains sublists with addr_to
-      all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]
+      
+      all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressfrom', flat=True)
+
+      all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressto', flat=True)  # contains sublists with addr_to
+      all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]  # flat 2D list into 1D
       top_users_info = Counter(all_users).most_common(5)
       ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
       return JsonResponse(ret_list, safe=False)
