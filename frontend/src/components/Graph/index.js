@@ -3,7 +3,6 @@ import GraphViz from './GraphViz';
 import SearchForms from './SearchForms.js'
 import RangeSlider from './RangeSlider.js'
 import MenuLeft from './MenuLeft.js'
-import MenuRight from './MenuRight.js'
 
 import ContainerRight from './ContainerRight.js'
 
