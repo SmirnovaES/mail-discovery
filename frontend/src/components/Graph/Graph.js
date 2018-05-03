@@ -1,6 +1,6 @@
 const GraphV = {};
 
-var d3, svg, width, height, color, div, simulation, links, line, node, nodes, circle, title, linkedByIndex;
+var d3, svg, width, height, color, div, simulation, links, line, title, node, nodes, circle, linkedByIndex;
 
 GraphV.create = (el, data, configuration) => {
     // D3 Code to create the chart
@@ -40,11 +40,11 @@ GraphV.create = (el, data, configuration) => {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
         },  
         body: 
-            "datefrom="+dateToJSON(configuration.timeRange.min)+"\
-            &dateto="+dateToJSON(configuration.timeRange.max)+"\
-            &users="+configuration.users.toString()+"\
-            &topics=q\
-            &search=q"  
+            "datefrom="+dateToJSON(configuration.timeRange.min)+
+            "&dateto="+dateToJSON(configuration.timeRange.max)+
+            "&users="+configuration.users.toString()+
+            "&topics=q"+
+            "&search=q"  
          })
         .then(response => 
             {

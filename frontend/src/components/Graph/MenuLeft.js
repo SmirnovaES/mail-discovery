@@ -23,7 +23,7 @@ class MenuLeft extends Component {
 							function(element) {
 								return element.id;
 							});
-						users.push(departments[element.group]);
+						users = users.concat(departments[element.group]);
 					}, this);
 				this.props.onUserInput(users);
 				this.setState(
@@ -68,7 +68,6 @@ export default MenuLeft
 class Department extends Component {
 	constructor(props){
 		super(props);
-		var i;
 		this.state = {
 			elements: [],
 			pStyle : {
@@ -106,19 +105,23 @@ class Department extends Component {
 		});
 	};
 
+	changeCheckedUser(e, element) {
+		if (e.target.checked === true) {
+			users.push(element)
+		} else {
+			users = users.filter(item => item !== element)
+		}
+		this.props.handleChange(users);
+		console.log(users);
+	};
+
 	render() {
 		return (
 			<div>
 				<div className="input-group mb-3">
-					<div className="input-group-prepend">
-						<div className="input-group-text">
-							<input type="checkbox" aria-label="Checkbox for following text input"
-								onChange={this.changeCheckedDepartment.bind(this)}/>
-						</div>
-					</div>
 					<div className="input-group-text">
 						<label>
-							<input type="checkbox" value="false"
+							<input type="checkbox"
 								onChange={this.changeVisible.bind(this)}/>
 								{this.props.value}
 						</label>
@@ -128,8 +131,9 @@ class Department extends Component {
 					<div className="input-group mb-3" style={this.state.pStyle} key={index}>    
 						<div className="input-group-prepend">
 							<div className="input-group-text">
-								<input type="checkbox" value={this.state.value} aria-label="Checkbox for following text input"
-									onChange={function (e, element) {console.log(e.target.checked, element)}}/>
+								<input type="checkbox" aria-label="Checkbox for following text input"
+									onChange={(e) => this.changeCheckedUser.bind(this)(e, element)}
+									defaultChecked />
 							</div>
 						</div>
 						<div className="input-group-text">
@@ -145,15 +149,4 @@ class Department extends Component {
 function dateToJSON(value) {
     var d = new Date(value);
     return d.toJSON().slice(0,10) + ',' + d.toTimeString().slice(0, 5)
-}
-
-function unique(arr) {
-	var obj = {};
-
-	for (var i = 0; i < arr.length; i++) {
-		var str = arr[i];
-		obj[str] = true; // запомнить строку в виде свойства объекта
-	}
-
-	return Object.keys(obj); // или собрать ключи перебором для IE8-
 }

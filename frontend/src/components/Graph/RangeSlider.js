@@ -31,7 +31,6 @@ class RangeSlider extends Component {
 
 	render() {
 		var dateFormat = require('dateformat');
-		var date = new Date(0);
 		return (
 			<InputRange 
 				formatLabel={value => `${dateFormat(new Date(value), "mmmm dS, yyyy")}`}
