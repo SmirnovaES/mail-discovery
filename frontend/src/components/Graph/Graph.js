@@ -1,6 +1,6 @@
 const GraphV = {};
 
-var d3, svg, width, height, color, div, simulation, links, line, node, nodes, circle, title, linkedByIndex;
+var d3, svg, width, height, color, div, simulation, links, line, title, node, nodes, circle, linkedByIndex;
 
 GraphV.create = (el, data, configuration) => {
     // D3 Code to create the chart
@@ -22,7 +22,8 @@ GraphV.create = (el, data, configuration) => {
     color = d3.scaleOrdinal(d3["schemeCategory10"]);
 
     simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("link", d3.forceLink().id(function(d) { return d.id; })
+            .distance(30).strength(0.1))
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceCenter(width / 2, height / 2));
         // .force("collide", d3.forceCollide().radius(function(d) { return 30; }));
@@ -39,11 +40,11 @@ GraphV.create = (el, data, configuration) => {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
         },  
         body: 
-            "datefrom="+dateToJSON(configuration.timeRange.min)+"\
-            &dateto="+dateToJSON(configuration.timeRange.max)+"\
-            &users="+configuration.users.toString()+"\
-            &topics=q\
-            &search=q"  
+            "datefrom="+dateToJSON(configuration.timeRange.min)+
+            "&dateto="+dateToJSON(configuration.timeRange.max)+
+            "&users="+configuration.users.toString()+
+            "&topics=q"+
+            "&search=q"  
          })
         .then(response => 
             {
@@ -307,7 +308,7 @@ function onSvgClick(event) {
 }
 
 function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    if (!d3.event.active) simulation.alphaTarget(0).restart();
     d.fx = d.x;
     d.fy = d.y;
 }

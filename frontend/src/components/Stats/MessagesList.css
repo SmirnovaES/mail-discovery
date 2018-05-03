@@ -1,0 +1,6 @@
+#scrolling{
+	width: 303px;
+	float:left;
+	height:400px;
+	overflow:auto; overflow-x:hidden;
+}

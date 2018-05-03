@@ -31,6 +31,19 @@ def letters_process(request):
     if request.GET.get('get_date'):
       first_letter_date = mails.objects.all().aggregate(Min('date'))["date__min"]  # 2044-01-04T14:48:58
       last_letter_date = mails.objects.all().aggregate(Max('date'))["date__max"]
+      
+      # if first letter's year is less then 1991, change it to 1991
+      if str(first_letter_date).split('-')[0] < '1991':
+        fixed_first_letter_date = str(first_letter_date).split('-')
+        fixed_first_letter_date[0] = '1991'
+        first_letter_date = '-'.join(fixed_first_letter_date)
+      
+      # if last letter's year is greater then 2018, change it to 2018
+      if str(last_letter_date).split('-')[0] > '2018':
+        fixed_last_letter_date = str(last_letter_date).split('-')
+        fixed_last_letter_date[0] = '2018'
+        last_letter_date = '-'.join(fixed_last_letter_date)
+      
       first_letter_date = ','.join(str(first_letter_date).split(' '))  # "2044-01-04,14:48:58"
       last_letter_date = ','.join(str(last_letter_date).split(' '))
       first_letter_date = ':'.join(first_letter_date.split(':')[:-1])  # "2044-01-04,14:48"
@@ -65,19 +78,28 @@ def letters_process(request):
       for dep, emails in users_by_dep.items():
         tmp_dict = {}
         tmp_dict['group'] = dep
-        tmp_dict['users'] = [{'id' : email} for email in emails]
+        tmp_dict['users'] = [{'id' : email} for email in list(emails)[:100]]
         return_list.append(tmp_dict)
 
       return JsonResponse(return_list, safe=False)
 
     """
-    Return top 5 users who have letters more than anyone else.
+    Return top 5 users who have letters more than anyone else in a given period of time.
     """
     if request.GET.get('get_personal_top'):
+      
+      date_from,time_from = request.GET['dateFrom'].split(',')
+      date_time_from = request_date_to_datetime(date_from, time_from)
+      
+      date_to,time_to = request.GET['dateTo'].split(',')
+      date_time_to = request_date_to_datetime(date_to, time_to)
+      
       all_users = []
-      all_users += mails.objects.values_list('addressfrom', flat=True)
-      all_users += mails.objects.values_list('addressto', flat=True)  # contains sublists with addr_to
-      all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]
+      
+      all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressfrom', flat=True)
+
+      all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressto', flat=True)  # contains sublists with addr_to
+      all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]  # flat 2D list into 1D
       top_users_info = Counter(all_users).most_common(5)
       ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
       return JsonResponse(ret_list, safe=False)
