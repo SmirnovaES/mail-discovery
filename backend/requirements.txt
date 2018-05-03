@@ -3,3 +3,6 @@ psycopg2
 djangorestframework
 numpy
 django-cors-headers
+gensim
+nltk
+sklearn

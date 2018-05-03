@@ -1,4 +1,8 @@
 from datetime import datetime
+import psycopg2
+from psycopg2.extensions import AsIs
+from topicmodeling.lib.baseline.lda import LdaModel
+from topicmodeling.output.gettopics import getTopics
 
 def request_date_to_datetime(date, time):
     yyyy, mm, dd = date.split('-')
@@ -44,3 +48,17 @@ def get_data(letters, users):
 
     data = {"nodes": nodes, "links": links}
     return data
+
+
+def lst2pgarr(alist):
+    return '{' + ','.join(str(e) for e in alist) + '}'
+
+
+def create_topics_table(texts):
+    conn = psycopg2.connect("dbname='maildata' user='maildiscovery' host='0.0.0.0' port='5432' password='mailpass'")
+    cur = conn.cursor()
+    cur.execute('drop table if exists topics')
+    cur.execute('create table ml_topics (Id integer, Probs decimal[], Topics text[])')
+
+    conn.commit()
+    cur.close()

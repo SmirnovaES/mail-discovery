@@ -4,18 +4,25 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from mail.models import mails
 from mail.models import users
+from mail.models import ml_topics
 from mail.serializers import mailsSerializer
 from mail.forms import SearchReqForm
-from mail.utils import request_date_to_datetime, get_data
+from mail.utils import request_date_to_datetime, get_data, create_topics_table
 import json
 from django.db.models import Max
 from django.db.models import Min
 from django.db.models import Q
 from collections import Counter
 
+import nltk
+from topicmodeling.lib.baseline.lda import LdaModel
+from topicmodeling.output.gettopics import getTopics
+
+latest_letters = mails.objects.all()
 
 @csrf_exempt
 def letters_process(request):
+  global latest_letters
   if request.method == 'GET':
     
     """
@@ -94,6 +101,30 @@ def letters_process(request):
              "topic": "NULL", "summary": letter.message[:300]} for letter in filtered_letters]
       return JsonResponse(data, safe=False)
 
+
+    if request.GET.get('get_topics'):
+      nltk.download('punkt')
+      nltk.download('wordnet')
+      texts = [letter.message for letter in latest_letters.all()]
+      ids = [letter.id for letter in latest_letters.all()]
+      if len(texts) > 100:
+        texts = texts[:100]
+        ids = ids[:100]
+      ml_topics.objects.all().delete()
+      print('table cleared, num of texts is %d' % len(texts))
+      topics_info = getTopics(source=texts)
+      topics = [words[0] + ' ' + words[1] + ' ' + words[2] for words in topics_info[0]]
+      for i in range(len(topics_info[1])):
+        print(i)
+        curr_Id = ids[i]
+        curr_probs = topics_info[1][i]
+        values = [curr_Id, curr_probs, topics]
+        new_val = ml_topics(id=curr_Id, probs='{' + ','.join(str(e) for e in curr_probs) + '}', topics='{' + ','.join(str(e) for e in topics) + '}')
+        new_val.save()
+
+      topics = ml_topics.objects.get(pk=ids[0])["topics"]
+      return JsonResponse(topics, safe=False)
+
   """
   Return letters filtered by given data.
   TO-DO: add topics filtering
@@ -112,4 +143,5 @@ def letters_process(request):
         Q(addressto__in=users_all) | Q(addressfrom__in=users_all)).filter(
         Q(message__contains=searchline) | Q(subject__contains=searchline))
 
+      latest_letters = filtered_letters
       return JsonResponse(get_data(filtered_letters, users))
