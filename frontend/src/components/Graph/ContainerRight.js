@@ -25,8 +25,17 @@ class ContainerRight extends Component {
         
 
         fetch(API + DEFAULT_QUERY)
-            .then(response => response.json())
-            .then(data => this.setState({ topics: data, isDataLoading: false }));
+            .then(response => 
+            {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })            
+            .then(data => this.setState({ topics: data, isDataLoading: false }))
+            .catch(function(error) {
+                console.log(error);
+            })
     }
 
 	render() {
