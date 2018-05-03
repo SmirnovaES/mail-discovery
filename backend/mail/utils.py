@@ -3,7 +3,7 @@ import psycopg2
 from psycopg2.extensions import AsIs
 from topicmodeling.lib.baseline.lda import LdaModel
 from topicmodeling.output.gettopics import getTopics
-
+from django.db import connection
 def request_date_to_datetime(date, time):
     yyyy, mm, dd = date.split('-')
     hours, minutes = time.split(':')
@@ -54,11 +54,17 @@ def lst2pgarr(alist):
     return '{' + ','.join(str(e) for e in alist) + '}'
 
 
-def create_topics_table(texts):
-    conn = psycopg2.connect("dbname='maildata' user='maildiscovery' host='0.0.0.0' port='5432' password='mailpass'")
-    cur = conn.cursor()
-    cur.execute('drop table if exists topics')
-    cur.execute('create table ml_topics (Id integer, Probs decimal[], Topics text[])')
-
-    conn.commit()
-    cur.close()
+def create_topics_table(texts, ids):
+    with connection.cursor() as cur:
+        cur.execute('drop table if exists topics')
+        cur.execute('create table ml_topics (Id integer, Probs decimal[], Topics text[])')
+        row = cur.fetchone()
+        topics_info = getTopics(source=texts)
+        insert_statement = 'insert into ml_topics (%s) values %s'
+        topics = [words[0] + ' ' + words[1] + ' ' + words[2] for words in topics_info[0]]
+        columns = ['Id', 'Probs', 'Topics']
+        for i in range(len(topics_info[1])):
+            cur_Id = ids[i]
+            cur_probs = topics_info[1][i]
+            values = [cur_Id, lst2pgarr(cur_probs), lst2pgarr(topics)]
+            cur.execute(insert_statement, (AsIs(','.join(columns)), tuple(values)))

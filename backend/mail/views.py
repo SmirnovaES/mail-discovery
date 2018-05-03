@@ -122,7 +122,7 @@ def letters_process(request):
         new_val = ml_topics(id=curr_Id, probs='{' + ','.join(str(e) for e in curr_probs) + '}', topics='{' + ','.join(str(e) for e in topics) + '}')
         new_val.save()
 
-      topics = ml_topics.objects.get(pk=ids[0])["topics"]
+      topics = ml_topics.objects.get(pk=ids[0]).topics
       return JsonResponse(topics, safe=False)
 
   """
@@ -138,6 +138,7 @@ def letters_process(request):
       searchline = form.cleaned_data['search']
       date_time_from = request_date_to_datetime(date_from, time_from)
       date_time_to = request_date_to_datetime(date_to, time_to)
+
 
       filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to]).filter(
         Q(addressto__in=users_all) | Q(addressfrom__in=users_all)).filter(
