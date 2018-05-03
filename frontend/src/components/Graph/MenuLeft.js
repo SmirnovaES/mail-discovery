@@ -6,7 +6,8 @@ class MenuLeft extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			elements: []
+			elements: [],
+			localTimeRange: this.props.timeRange
 		};
 		users = [];
 	}
@@ -41,9 +42,14 @@ class MenuLeft extends Component {
 		this.loadData();
 	}
 
-    // componentWillUpdate() {
-    //     this.loadData();
-    // }
+    componentWillUpdate() {
+		if (this.state.localTimeRange !== this.props.timeRange) {
+			this.loadData();
+			this.setState({
+				localTimeRange: this.props.timeRange
+			});
+		}
+    }
 
 	render() {
 		return (
