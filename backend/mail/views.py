@@ -71,7 +71,7 @@ def letters_process(request):
       for dep, emails in users_by_dep.items():
         tmp_dict = {}
         tmp_dict['group'] = dep
-        tmp_dict['users'] = [{'id' : email} for email in emails[:100]]
+        tmp_dict['users'] = [{'id' : email} for email in list(emails)[:100]]
         return_list.append(tmp_dict)
 
       return JsonResponse(return_list, safe=False)
