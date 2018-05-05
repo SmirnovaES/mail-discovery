@@ -68,3 +68,11 @@ def create_topics_table(texts, ids):
             cur_probs = topics_info[1][i]
             values = [cur_Id, lst2pgarr(cur_probs), lst2pgarr(topics)]
             cur.execute(insert_statement, (AsIs(','.join(columns)), tuple(values)))
+
+
+def get_topic_indices(topics, probs, threshold):
+    indices = []
+    for i in range(len(topics)):
+        if float(probs[i]) > threshold:
+            indices.append(i)
+    return indices
