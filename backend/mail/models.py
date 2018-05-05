@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.contrib.postgres.fields import ArrayField
 
 class DjangoMigrations(models.Model):
     app = models.CharField(max_length=255)
@@ -43,3 +43,12 @@ class users(models.Model):
     class Meta:
         managed = False
         db_table = 'users'
+
+class ml_topics(models.Model):
+    id = models.IntegerField(primary_key=True)
+    probs = ArrayField(models.DecimalField(max_digits=5, decimal_places=2))
+    topics = ArrayField(models.TextField())
+
+    class Meta:
+        managed = False
+        db_table = 'ml_topics'

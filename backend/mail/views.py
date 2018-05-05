@@ -1,21 +1,25 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
 from mail.models import mails
 from mail.models import users
-from mail.serializers import mailsSerializer
+from mail.models import ml_topics
 from mail.forms import SearchReqForm
-from mail.utils import request_date_to_datetime, get_data
-import json
+from mail.utils import request_date_to_datetime, get_data, create_topics_table, get_topic_indices
 from django.db.models import Max
 from django.db.models import Min
 from django.db.models import Q
 from collections import Counter
 
+import nltk
+from topicmodeling.output.gettopics import getTopics
+
+latest_letters = mails.objects.all()
+TOPIC_MODELING_THRESHOLD = 0.1
+
 
 @csrf_exempt
 def letters_process(request):
+  global latest_letters
   if request.method == 'GET':
     
     """
@@ -98,27 +102,53 @@ def letters_process(request):
       return JsonResponse(ret_list, safe=False)
 
     """
-    Return letters containing key words
-    TO-DO: add topics filtration, AIS search
+    Return letters containing key words from letters on graph
     """
     if request.GET.get('search_ais'):
       key_words = request.GET['words'].split(',')
 
-      filtered_letters = mails.objects
+      filtered_letters = latest_letters
       if not key_words:
         filtered_letters = filtered_letters.all().order_by('?')[:5]
       else:
         for word in key_words:
           filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
                                                    Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
+      data = []
+      topics_arr = ml_topics.objects.all()[0].topics
+      for letter in filtered_letters:
+        probs = ml_topics.objects.filter(id=letter.id)
+        topics = [topics_arr[i] for i in range(len(probs)) if probs[i] > TOPIC_MODELING_THRESHOLD]
+        data.append({"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
+             "topic": ','.join(topics), "summary": letter.message[:300]})
 
-      data = [{"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
-             "topic": "NULL", "summary": letter.message[:300]} for letter in filtered_letters]
       return JsonResponse(data, safe=False)
+
+    """
+    Return topics counted by topic-modeling.
+    """
+    if request.GET.get('get_topics'):
+      nltk.download('punkt')
+      nltk.download('wordnet')
+      texts = [letter.message for letter in latest_letters.all()]
+      ids = [letter.id for letter in latest_letters.all()]
+      if len(texts) > 100:
+        texts = texts[:100]
+        ids = ids[:100]
+      ml_topics.objects.all().delete()
+      topics_info = getTopics(source=texts)
+      topics = [words[0] + ' ' + words[1] + ' ' + words[2] for words in topics_info[0]]
+      for i in range(len(topics_info[1])):
+        curr_Id = ids[i]
+        curr_probs = topics_info[1][i]
+        new_val = ml_topics(id=curr_Id, probs='{' + ','.join(str(e) for e in curr_probs) + '}', topics='{' + ','.join(str(e) for e in topics) + '}')
+        new_val.save()
+
+      topics = ml_topics.objects.get(pk=ids[0]).topics
+      return JsonResponse(topics, safe=False)
 
   """
   Return letters filtered by given data.
-  TO-DO: add topics filtering
   """
   if request.method == 'POST':
     form = SearchReqForm(request.POST)
@@ -126,12 +156,35 @@ def letters_process(request):
       date_to, time_to = form.cleaned_data['dateto'].split(',')
       date_from, time_from = form.cleaned_data['datefrom'].split(',')
       users_all = form.cleaned_data['users'].split(',')
-      searchline = form.cleaned_data['search']
+      topics = form.cleaned_data['topics'].split(',')
+      key_words = form.cleaned_data['search'].split(',')
       date_time_from = request_date_to_datetime(date_from, time_from)
       date_time_to = request_date_to_datetime(date_to, time_to)
 
+      topics_filter = ml_topics.objects
+      topics_arr = topics_filter.all()[0].topics
+      probs_arr = [obj.probs for obj in topics_filter.all()] #Decimal(0.953424)
       filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to]).filter(
-        Q(addressto__in=users_all) | Q(addressfrom__in=users_all)).filter(
-        Q(message__contains=searchline) | Q(subject__contains=searchline))
+        Q(addressto__in=users_all) | Q(addressfrom__in=users_all))
 
+      for word in key_words:
+          filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
+                                                     Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
+
+      id_for_topics = []
+      for i in range(len(probs_arr)):
+        topic_found = False
+        indices = get_topic_indices(topics_arr, probs_arr[i], TOPIC_MODELING_THRESHOLD)
+        for ind in indices:
+            if topic_found:
+                break
+            for topic in topics:
+                if topic in topics_arr[ind]:
+                    id_for_topics.append(topics_filter.all()[i].id)
+                    topic_found = True
+                if topic_found:
+                    break
+      if id_for_topics:
+        filtered_letters = filtered_letters.filter(id__in=id_for_topics)
+      latest_letters = filtered_letters
       return JsonResponse(get_data(filtered_letters, users))
