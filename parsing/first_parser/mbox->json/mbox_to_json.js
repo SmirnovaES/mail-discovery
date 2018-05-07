@@ -3,7 +3,7 @@
 var MailParser  = require('mailparser').MailParser;
 var fs					= require('fs');
 var Mbox        = require('node-mbox');
-var argv				= require('yargs')
+var argv                = require('yargs')
 									.alias('i', 'input')
 									.alias('o', 'output')
 									.demand(['i'])
