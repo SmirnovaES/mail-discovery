@@ -43,8 +43,8 @@ GraphV.create = (el, data, configuration) => {
             "datefrom="+dateToJSON(configuration.timeRange.min)+
             "&dateto="+dateToJSON(configuration.timeRange.max)+
             "&users="+configuration.users.toString()+
-            "&topics=q"+
-            "&search=q"  
+            "&topics=gas"+
+            "&search=NULLVALUEMAILDISCOVERYAIS"
          })
         .then(response => 
             {
@@ -128,8 +128,8 @@ GraphV.update = (el, data, configuration, chart) => {
             "datefrom="+dateToJSON(configuration.timeRange.min)+
             "&dateto="+dateToJSON(configuration.timeRange.max)+
             "&users="+configuration.users.toString()+
-            "&topics=q"+
-            "&search=q"  
+            "&topics=gas"+
+            "&search=NULLVALUEMAILDISCOVERYAIS"  
          })
         .then(response => 
             {

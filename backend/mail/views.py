@@ -15,11 +15,16 @@ from topicmodeling.output.gettopics import getTopics
 
 latest_letters = mails.objects.all()
 TOPIC_MODELING_THRESHOLD = 0.1
-
+first_entry = True
 
 @csrf_exempt
 def letters_process(request):
   global latest_letters
+  global first_entry
+  if first_entry:
+    ml_topics.objects.all().delete()
+    first_entry = False
+
   if request.method == 'GET':
     
     """
@@ -59,7 +64,6 @@ def letters_process(request):
       date_time_to = request_date_to_datetime(date_to, time_to)
       
       letters_in_date_range = mails.objects.filter(date__range=[date_time_from,date_time_to])
-
       users_by_dep = {}
 
       for letter in letters_in_date_range:
@@ -109,7 +113,7 @@ def letters_process(request):
 
       filtered_letters = latest_letters
       if not key_words:
-        filtered_letters = filtered_letters.all().order_by('?')[:5]
+        filtered_letters = filtered_letters.all()[:5]
       else:
         for word in key_words:
           filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
@@ -117,8 +121,8 @@ def letters_process(request):
       data = []
       topics_arr = ml_topics.objects.all()[0].topics
       for letter in filtered_letters:
-        probs = ml_topics.objects.filter(id=letter.id)
-        topics = [topics_arr[i] for i in range(len(probs)) if probs[i] > TOPIC_MODELING_THRESHOLD]
+        probs = [obj.probs for obj in ml_topics.objects.filter(id=letter.id)]
+        topics = [topics_arr[i] for i in range(len(probs)) if float(probs[0][i]) > TOPIC_MODELING_THRESHOLD]
         data.append({"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
              "topic": ','.join(topics), "summary": letter.message[:300]})
 
@@ -132,9 +136,9 @@ def letters_process(request):
       nltk.download('wordnet')
       texts = [letter.message for letter in latest_letters.all()]
       ids = [letter.id for letter in latest_letters.all()]
-      if len(texts) > 100:
-        texts = texts[:100]
-        ids = ids[:100]
+      if len(texts) > 1000:
+        texts = texts[:1000]
+        ids = ids[:1000]
       ml_topics.objects.all().delete()
       topics_info = getTopics(source=texts)
       topics = [words[0] + ' ' + words[1] + ' ' + words[2] for words in topics_info[0]]
@@ -161,15 +165,32 @@ def letters_process(request):
       date_time_from = request_date_to_datetime(date_from, time_from)
       date_time_to = request_date_to_datetime(date_to, time_to)
 
-      topics_filter = ml_topics.objects
-      topics_arr = topics_filter.all()[0].topics
-      probs_arr = [obj.probs for obj in topics_filter.all()] #Decimal(0.953424)
-      filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to]).filter(
-        Q(addressto__in=users_all) | Q(addressfrom__in=users_all))
 
+      filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to])
+
+      id_for_addresses = []
+      for letter in filtered_letters:
+        addresses_to = letter.addressto.split(',')
+        for address in addresses_to:
+          if address in users_all:
+            id_for_addresses.append(letter.id)
+            break
+        if letter.addressfrom in users_all:
+          id_for_addresses.append(letter.id)
+
+      filtered_letters = filtered_letters.filter(id__in=id_for_addresses)
       for word in key_words:
+          if word=="NULLVALUEMAILDISCOVERYAIS":
+            break
           filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
                                                      Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
+
+      topics_filter = ml_topics.objects
+      topics_arr = []
+      probs_arr = []
+      if topics_filter.all():
+        topics_arr = topics_filter.all()[0].topics
+        probs_arr = [obj.probs for obj in topics_filter.all()]  # Decimal(0.953424)
 
       id_for_topics = []
       for i in range(len(probs_arr)):
@@ -180,8 +201,13 @@ def letters_process(request):
                 break
             for topic in topics:
                 if topic in topics_arr[ind]:
-                    id_for_topics.append(topics_filter.all()[i].id)
-                    topic_found = True
+                    pos = topics_arr[ind].find(topic)
+                    if (pos == 0 and topics_arr[ind][len(topic)] == ' ') or \
+                            (len(topics_arr[ind]) == pos + len(topic) and
+                             topics_arr[ind][pos - 1] == ' ') or (topics_arr[ind][pos - 1] == ' '
+                              and topics_arr[ind][pos + len(topic)] == ' '):
+                      id_for_topics.append(topics_filter.all()[i].id)
+                      topic_found = True
                 if topic_found:
                     break
       if id_for_topics:
