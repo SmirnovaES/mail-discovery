@@ -2,9 +2,8 @@ import json
 import re
 import psycopg2
 from psycopg2.extensions import AsIs
-import dateutil
 
-useful = ['id', 'from', 'to', 'date', 'subject', 'message']
+useful = ['Id', 'AddressFrom', 'AddressTo', 'Date', 'Subject', 'Message']
 useless = ['attachments', 'headers', 'html', 'messageId', 'priority', 'recievedDate',
            'references', 'replyTo']
 
@@ -18,38 +17,25 @@ def get_data(file_name):
     for key in useless:
         file[0].pop(key, 0)
 
-    letters = list()
+    letters = []
     for i in range(len(json_file)):
         cur_letter = dict.fromkeys(useful)
-        cur_letter['id'] = i
-        cur_letter['from'] = file[i]['from'][0]['address']
-        cur_letter['to'] = file[i]['to'][0]['address']
-        cur_letter['date'] = file[i]['date']
-        cur_letter['subject'] = file[i]['subject']
+        cur_letter['Id'] = i
+        cur_letter['AddressFrom'] = file[i]['from'][0]['address'].lower()
+        cur_letter['AddressTo'] = file[i]['to'][0]['address'].lower()
+        cur_letter['Date'] = file[i]['date']
+        cur_letter['Subject'] = file[i]['subject']
 
         if 'text' in file[i].keys():
-            cur_letter['message'] = file[i]['text']
+            cur_letter['Message'] = file[i]['text'].replace('\r', '\n').strip()
         else:
             # delete html tags
             cleanr = re.compile('<.*?>')
-            cur_letter['message'] = re.sub(cleanr, '', file[i]['html'])
+            cur_letter['Message'] = re.sub(cleanr, '', file[i]['html']).replace('\r', '\n').strip()
 
         letters.append(cur_letter)
 
     return letters
-
-
-def convert_key(key):
-    converter = {
-        'id': 'Id',
-        'from': 'AddressFrom',
-        'to': 'AddressTo',
-        'date': 'Date',
-        'subject': 'Subject',
-        'message': 'Message'
-    }
-    return converter[key]
-
 
 
 def fill_table(data):
@@ -70,8 +56,7 @@ def fill_table(data):
         insert_statement = 'insert into mails (%s) values %s'
         print('Filling started!')
         for i in range(len(data)):
-            #data[i]['Date'] = dateutil.parser.parse(data[i]['Date'])
-            values = [data[i][key] for key in data[0].keys()]
+            values = [data[i][key] for key in columns]
             cur.execute(insert_statement, (AsIs(','.join(columns)), tuple(values)))
         print('Filling finished!')
 
