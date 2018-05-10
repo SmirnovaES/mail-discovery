@@ -136,9 +136,6 @@ def letters_process(request):
       nltk.download('wordnet')
       texts = [letter.message for letter in latest_letters.all()]
       ids = [letter.id for letter in latest_letters.all()]
-      if len(texts) > 1000:
-        texts = texts[:1000]
-        ids = ids[:1000]
       ml_topics.objects.all().delete()
       topics_info = getTopics(source=texts)
       topics = [words[0] + ' ' + words[1] + ' ' + words[2] for words in topics_info[0]]
