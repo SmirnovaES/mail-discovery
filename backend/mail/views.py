@@ -148,6 +148,31 @@ def letters_process(request):
       topics = ml_topics.objects.get(pk=ids[0]).topics
       return JsonResponse(topics, safe=False)
 
+    """
+    Return top-5 most popular topics for letters diplayed on the graph.
+    """
+    if request.GET.get('get_topic_top'):
+
+      import operator
+      topics_num = 10
+
+      topics_list = ml_topics.objects.values_list('topics', flat=True)[0]  # it can fail, if the table is empty
+
+      num_letters_by_topic = [0] * topics_num  # number of letters with topic
+      total_prob_by_topic = dict.fromkeys(list(range(topics_num)), 0.0)
+
+      probs_for_letters = ml_topics.objects.values_list('probs', flat=True)
+      for prob_list in probs_for_letters:
+        for i in range(topics_num):
+          total_prob_by_topic[i] += prob_list[i]
+          if prob_list[i] > 0.0:
+            num_letters_by_topic[i] += 1
+
+      sorted_total_prob = sorted(total_prob_by_topic.items(), key=operator.itemgetter(1), reverse=True)
+
+      ret_list = [{'value' : num_letters_by_topic[elem[0]], 'label' : topics_list[elem[0]]} for elem in sorted_total_prob[:5]]
+      return JsonResponse(ret_list, safe=False)
+
   """
   Return letters filtered by given data.
   """
