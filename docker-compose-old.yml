@@ -1,0 +1,41 @@
+version: "3"
+services: 
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=maildiscovery
+      - POSTGRES_PASSWORD=mailpass
+      - POSTGRES_NAME=maildata
+      - POSTGRES_DB=maildata
+    volumes:
+      - maildiscovery:/var/lib/postgresql/data
+
+  web:
+    build: ./backend
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_USER=maildiscovery
+      - POSTGRES_PASSWORD=mailpass
+      - POSTGRES_DB=maildata
+    depends_on:
+      - db
+  node:
+    build: ./frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: "npm start"
+    depends_on:
+      - db
+volumes:
+  maildiscovery:
+
