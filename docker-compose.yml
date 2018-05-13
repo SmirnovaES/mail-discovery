@@ -1,4 +1,8 @@
 version: "3"
+networks:
+  isolation-network:
+    driver: bridge
+    
 services: 
   db:
     image: postgres
@@ -11,6 +15,8 @@ services:
       - POSTGRES_DB=maildata
     volumes:
       - maildiscovery:/var/lib/postgresql/data
+    networks:
+      - isolation-network
 
   web:
     build: ./backend
@@ -25,6 +31,9 @@ services:
       - POSTGRES_DB=maildata
     depends_on:
       - db
+    networks:
+      - isolation-network
+
   node:
     build: ./frontend
     working_dir: /app
@@ -36,6 +45,9 @@ services:
     command: "npm start"
     depends_on:
       - db
+      - web
+    networks:
+      - isolation-network
 volumes:
   maildiscovery:
 
