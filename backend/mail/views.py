@@ -112,6 +112,7 @@ def letters_process(request):
       key_words = request.GET['words'].split(',')
 
       filtered_letters = latest_letters
+
       if not key_words:
         filtered_letters = filtered_letters.all()[:5]
       else:
@@ -121,9 +122,13 @@ def letters_process(request):
       data = []
       topics_arr = ml_topics.objects.all()[0].topics
       for letter in filtered_letters:
-        probs = [obj.probs for obj in ml_topics.objects.filter(id=letter.id)]
-        topics = [topics_arr[i] for i in range(len(probs)) if float(probs[0][i]) > TOPIC_MODELING_THRESHOLD]
-        data.append({"source": letter.addressfrom, "target": letter.addressto, "date": letter.date,
+        address = letter.addressto.replace('\n', ' ').replace('\t', ' ').replace(',', ' ').split()[0]
+        probs = ml_topics.objects.filter(id=letter.id)[0].probs
+        topics = [topics_arr[i] for i in range(len(probs)) if float(probs[i]) > TOPIC_MODELING_THRESHOLD]
+
+        form_date = ','.join(str(letter.date).split(' '))  # "2044-01-04,14:48:58"
+        form_date = ':'.join(form_date.split(':')[:-1])
+        data.append({"source": letter.addressfrom, "target": address, "date": form_date,
              "topic": ','.join(topics), "summary": letter.message[:300]})
 
       return JsonResponse(data, safe=False)
@@ -173,6 +178,41 @@ def letters_process(request):
       ret_list = [{'value' : num_letters_by_topic[elem[0]], 'label' : topics_list[elem[0]]} for elem in sorted_total_prob[:5]]
       return JsonResponse(ret_list, safe=False)
 
+    """
+    Return text of particular message
+    """
+    if request.GET.get('get_text'):
+      req_source = request.GET['source']
+      req_target = request.GET['target']
+      date, time = request.GET['date'].split(',')
+      req_date = request_date_to_datetime(date, time)
+      topic = request.GET['topic']
+
+      id_for_topics = []
+      topics_filter = ml_topics.objects
+      topics_arr = []
+      probs_arr = []
+      if topics_filter.all():
+        topics_arr = topics_filter.all()[0].topics
+        probs_arr = [obj.probs for obj in topics_filter.all()]  # Decimal(0.953424)
+      for i in range(len(probs_arr)):
+        indices = get_topic_indices(topics_arr, probs_arr[i], TOPIC_MODELING_THRESHOLD)
+        for ind in indices:
+          if topics_arr[ind] == topic:
+            id_for_topics.append(topics_filter.all()[i].id)
+            break
+
+
+      filtered_letters = mails.objects.filter(addressfrom=req_source).filter(addressto__contains=req_target).filter(
+        date=req_date)
+      if id_for_topics:
+        filtered_letters = filtered_letters.filter(id__in=id_for_topics)
+      if filtered_letters:
+        data = [{"text": letter.message} for letter in filtered_letters]
+        return JsonResponse(data, safe=False)
+      else:
+        print("ERROR: no such letters!\n")
+
   """
   Return letters filtered by given data.
   """
@@ -192,7 +232,7 @@ def letters_process(request):
 
       id_for_addresses = []
       for letter in filtered_letters:
-        addresses_to = letter.addressto.split(',')
+        addresses_to = letter.addressto.replace('\n', ' ').replace('\t', ' ').replace(',', ' ').split()
         for address in addresses_to:
           if address in users_all:
             id_for_addresses.append(letter.id)
@@ -215,23 +255,31 @@ def letters_process(request):
         probs_arr = [obj.probs for obj in topics_filter.all()]  # Decimal(0.953424)
 
       id_for_topics = []
+      #THIS CODE IS FOR CASE OF 'topic' CONTAINS IN TOPIC='word1 word2 word3' MEANS THAT topic=word_i
+      # for i in range(len(probs_arr)):
+      #   topic_found = False
+      #   indices = get_topic_indices(topics_arr, probs_arr[i], TOPIC_MODELING_THRESHOLD)
+      #   for ind in indices:
+      #       if topic_found:
+      #           break
+      #       for topic in topics:
+      #           if topic in topics_arr[ind]:
+      #               pos = topics_arr[ind].find(topic)
+      #               if (pos == 0 and topics_arr[ind][len(topic)] == ' ') or \
+      #                       (len(topics_arr[ind]) == pos + len(topic) and
+      #                        topics_arr[ind][pos - 1] == ' ') or (topics_arr[ind][pos - 1] == ' '
+      #                         and topics_arr[ind][pos + len(topic)] == ' '):
+      #                 id_for_topics.append(topics_filter.all()[i].id)
+      #                 topic_found = True
+      #           if topic_found:
+      #               break
       for i in range(len(probs_arr)):
-        topic_found = False
         indices = get_topic_indices(topics_arr, probs_arr[i], TOPIC_MODELING_THRESHOLD)
         for ind in indices:
-            if topic_found:
-                break
-            for topic in topics:
-                if topic in topics_arr[ind]:
-                    pos = topics_arr[ind].find(topic)
-                    if (pos == 0 and topics_arr[ind][len(topic)] == ' ') or \
-                            (len(topics_arr[ind]) == pos + len(topic) and
-                             topics_arr[ind][pos - 1] == ' ') or (topics_arr[ind][pos - 1] == ' '
-                              and topics_arr[ind][pos + len(topic)] == ' '):
-                      id_for_topics.append(topics_filter.all()[i].id)
-                      topic_found = True
-                if topic_found:
-                    break
+          if topics_arr[ind] in topics:
+            id_for_topics.append(topics_filter.all()[i].id)
+            break
+
       if id_for_topics:
         filtered_letters = filtered_letters.filter(id__in=id_for_topics)
       latest_letters = filtered_letters
