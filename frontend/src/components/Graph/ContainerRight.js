@@ -4,9 +4,6 @@ import MenuRight from './MenuRight.js'
 const API = 'http://localhost:8000/letters/?get_topics=';
 const DEFAULT_QUERY = '1';
 
-//FOR DEBUG
-const QUERY = 'http://localhost:8001/topics.json'
-
 class ContainerRight extends Component {
     constructor(props){
         super(props);
