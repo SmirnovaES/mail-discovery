@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 class BaselineABC:
     __metaclass__ = ABCMeta
 
-    def __init__(self, sourse=None, lemmatizer=WordNetLemmatizer()):
+    def __init__(self, sourсe=None, lemmatizer=WordNetLemmatizer()):
         self.docs = list()
         self.texts = list()
         self.corpus = list()
@@ -25,12 +25,12 @@ class BaselineABC:
         self.count_vectorizer = None
         self.lemmatizer = lemmatizer
 
-        if isinstance(sourse, str):
-            self.extract_corpus(path=sourse)
-        elif isinstance(sourse, list):
-            self.texts = sourse
+        if isinstance(sourсe, str):
+            self.extract_corpus(path=sourсe)
+        elif isinstance(sourсe, list):
+            self.texts = sourсe
         else:
-            raise ValueError('Invalid value of sourse: {}'.format(sourse))
+            raise ValueError('Invalid value of sourse: {}'.format(sourсe))
 
     def tokenize(self, text):
         tokens = nltk.word_tokenize(text)

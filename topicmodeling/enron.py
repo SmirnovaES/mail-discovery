@@ -12,7 +12,7 @@ model_path = '/home/geras-artem/Desktop/ldamodel_part1'
 
 
 def main():
-    model = LdaMulticoreModel(path=part_path)
+    model = LdaMulticoreModel(sourse=part_path)
     model.load(path=model_path)
     # model.build(num_topics=10, passes=20, workers=8, path=model_path)
 
@@ -23,7 +23,7 @@ def main():
     del model
     gc.collect()
 
-    Visualizer(docs_words, topics_words, topics_top_terms).run(path, metrics='coherence', proc_num=1)
+    Visualizer(docs_words, topics_words, topics_top_terms).run(path)
 
 if __name__ == '__main__':
     main()
