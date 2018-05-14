@@ -13,7 +13,7 @@ class MenuLeft extends Component {
 	}
 
 	loadData() {
-        fetch("http://web:8000/letters/?get_departments=1&dateFrom=" + 
+        fetch("http://35.202.93.3:8000/letters/?get_departments=1&dateFrom=" + 
 			dateToJSON(this.props.timeRange.min) +'&dateTo=' + 
 			dateToJSON(this.props.timeRange.max))
 			.then(response => response.json())
