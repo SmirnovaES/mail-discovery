@@ -8,7 +8,7 @@ class Search extends Component {
 		super();
 		
 		this.state = {
-			searchText: 'room yesterday day meeting',
+			searchText: '',
 			searchResults: null,
 			isDataLoading: false
 		}
