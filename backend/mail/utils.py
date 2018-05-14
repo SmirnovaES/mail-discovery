@@ -10,15 +10,19 @@ def request_date_to_datetime(date, time):
     return datetime(int(yyyy), int(mm), int(dd), int(hours), int(minutes))
 
 
-def get_data(letters, users):
+def get_data(letters, users, allowed_users):
     nodes = []
     links = []
 
     num_of_letters = dict()
     curr_users = set()
     for letter in letters:
+        if letter.addressfrom not in allowed_users:
+            continue
         addresses_to = letter.addressto.replace('\n', ' ').replace('\t', ' ').replace(',', ' ').split()
         for address in addresses_to:
+            if address not in allowed_users:
+                continue
             send_rec = (letter.addressfrom, address)
             curr_users.add(letter.addressfrom)
             curr_users.add(address)
@@ -33,10 +37,13 @@ def get_data(letters, users):
         nodes.append(data)
 
     for letter in letters:
+        if letter.addressfrom not in allowed_users:
+            continue
         addresses_to = letter.addressto.replace('\n', ' ').replace('\t', ' ').replace(',', ' ').split()
         for address in addresses_to:
             data = {}
-
+            if address not in allowed_users:
+                continue
             send_rec = (letter.addressfrom, address)
             if num_of_letters[send_rec][1]:
                 continue

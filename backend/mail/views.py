@@ -230,17 +230,6 @@ def letters_process(request):
 
       filtered_letters = mails.objects.filter(date__range=[date_time_from, date_time_to])
 
-      id_for_addresses = []
-      for letter in filtered_letters:
-        addresses_to = letter.addressto.replace('\n', ' ').replace('\t', ' ').replace(',', ' ').split()
-        for address in addresses_to:
-          if address in users_all:
-            id_for_addresses.append(letter.id)
-            break
-        if letter.addressfrom in users_all:
-          id_for_addresses.append(letter.id)
-
-      filtered_letters = filtered_letters.filter(id__in=id_for_addresses)
       for word in key_words:
           if word=="NULLVALUEMAILDISCOVERYAIS":
             break
@@ -283,4 +272,4 @@ def letters_process(request):
       if id_for_topics:
         filtered_letters = filtered_letters.filter(id__in=id_for_topics)
       latest_letters = filtered_letters
-      return JsonResponse(get_data(filtered_letters, users))
+      return JsonResponse(get_data(filtered_letters, users, users_all))
