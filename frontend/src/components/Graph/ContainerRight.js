@@ -17,7 +17,7 @@ class ContainerRight extends Component {
 		this.setState( {isClicked: true, isDataLoading: true });
 		
 
-		fetch('http://35.202.93.3:8000/letters/?get_topics=1')
+		fetch('http://localhost:8000/letters/?get_topics=1')
 			.then(response => 
 			{
 				if (!response.ok) {
