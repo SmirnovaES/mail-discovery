@@ -135,6 +135,7 @@ STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
+    '35.202.93.3:3000',
 )
 
 CORS_ALLOW_METHODS = (
