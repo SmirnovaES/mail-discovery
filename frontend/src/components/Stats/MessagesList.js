@@ -7,13 +7,25 @@ class MessagesList extends Component {
 	render() {
 		if (this.props.isDataLoading) {
 			return (
-				<p>Loading...</p>
+				<div className="container">
+					<div className="card">
+						<div className="card-body">
+							<div className="card-text text-center">Loading...</div>
+						</div>
+					</div>
+				</div>
 			);
 		}
 
 		if (this.props.messages.length === 0) {
 			return (
-				<p>Nothing has been found...</p>
+				<div className="container">
+					<div className="card">
+						<div className="card-body">
+							<div className="card-text text-center">Nothing has been found...</div>
+						</div>
+					</div>
+				</div>
 			);
 		}
 
@@ -101,28 +113,28 @@ class MessageItem extends Component {
 				<span aria-hidden="true">&times;</span>
 			</button>
 					
-			<dl class="row">
-				<dt class="col-sm-2">
-					<p class="font-italic"> From </p>
+			<dl className="row">
+				<dt className="col-sm-2">
+					<p className="font-italic"> From </p>
 				</dt>
 
-				<dd class="col-sm-10">
+				<dd className="col-sm-10">
 					{this.props.value["source"]}
 				</dd>
 				
-				<dt class="col-sm-2">
-					<p class="font-italic">To</p>
+				<dt className="col-sm-2">
+					<p className="font-italic">To</p>
 				</dt>
-				<dd class="col-sm-10">{this.props.value["target"]}</dd>
+				<dd className="col-sm-10">{this.props.value["target"]}</dd>
 
-				<dd class="col-sm-10"> 
-					<p class="font-weight-bold">
+				<dd className="col-sm-10"> 
+					<p className="font-weight-bold">
 						{dateFormat(date, "default")}
 					</p> 
 				</dd>
 			</dl>
 
-			<p class="font-weight-light">
+			<p className="font-weight-light">
 				{this.state.data["text"]}
 			</p>
 		</Modal>

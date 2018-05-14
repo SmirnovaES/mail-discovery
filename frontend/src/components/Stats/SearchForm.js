@@ -12,7 +12,7 @@ class SearchForm extends Component {
 				<div className='container'>
 					<form>
 						<div className='input-group'>
-							<input ref="searchForm" class='form-control' type="text" placeholder='Search' box-shadow="none"/>
+							<input ref="searchForm" className='form-control' type="text" placeholder='Search' box-shadow="none"/>
 							
 							<div className='input-group-btn'>
 							<button onClick={this.onButtonClick.bind(this)} className='btn btn-default' type='button'>
