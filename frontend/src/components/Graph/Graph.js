@@ -34,7 +34,7 @@ GraphV.create = (el, data, configuration) => {
     nodes = svg.append("g")
         .attr("class", "nodes");
 
-    fetch("http://localhost:8000/letters/",{  
+    fetch("http://35.202.93.3:8000/letters/",{  
         method: 'post',  
         headers: {  
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
@@ -119,7 +119,7 @@ GraphV.create = (el, data, configuration) => {
 
 GraphV.update = (el, data, configuration, chart) => {
     // D3 Code to update the chart
-    fetch("http://localhost:8000/letters/",{  
+    fetch("http://35.202.93.3:8000/letters/",{  
         method: 'post',  
         headers: {  
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
