@@ -37,7 +37,7 @@ class Graph extends Component {
 		return (
 			<div className='container'>
 				<div className='row'>
-					<div className='col-md-8 offset-2'>
+					<div className='col-md-6 offset-3'>
 						<SearchForms 
 							searchAis={this.state.searchAis}
 						/>
@@ -45,7 +45,7 @@ class Graph extends Component {
 				</div>
 
 				<div className='row'>
-					<div className='col-md-7 order-3'>	
+					<div className='col-md-6 order-3'>	
 						<GraphViz 
 							configuration={
 								{timeRange : this.state.timeRange,
@@ -64,7 +64,7 @@ class Graph extends Component {
 						/>
 					</div>
 
-					<div className='col-md-2 order-10'>
+					<div className='col-md-3 order-9'>
 						<ContainerRight />
 					</div>
 				</div>

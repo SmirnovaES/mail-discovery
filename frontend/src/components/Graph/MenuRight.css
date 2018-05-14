@@ -1,9 +1,10 @@
 #container{
-	width:400px;
+	width: 100%;
 	margin:0px auto;
 	padding:40px 0;
 }
 #scrollbox{
+	width: 100%;
 	float:left;
 	height:300px;
 	overflow:auto; overflow-x:hidden;
