@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 class SearchForm extends Component {
-	onButtonClick() {
-		this.props.update(ReactDOM.findDOMNode(this.refs.searchForm).value)
-	}
+	constructor(props) {
+    	super(props);
+    	this.state = {
+    		value: ''
+    	};
+
+    	this.handleChange = this.handleChange.bind(this);
+    	this.handleSubmit = this.handleSubmit.bind(this);
+  	}
+
+  	handleChange(event) {
+    	this.setState({value: event.target.value});
+  	}
+
+  	handleSubmit(event) {
+    	this.props.update(this.state.value)
+    	event.preventDefault();
+  	}
 
 	render() {
 		return (
 			<div>
 				<div className='container'>
-					<form>
+					<form onSubmit={this.handleSubmit}>
 						<div className='input-group'>
-							<input ref="searchForm" className='form-control' type="text" placeholder='Search' box-shadow="none"/>
-							
-							<div className='input-group-btn'>
-							<button onClick={this.onButtonClick.bind(this)} className='btn btn-default' type='button'>
+							<input type="text" className='form-control' placeholder='Search' value={this.state.value} onChange={this.handleChange} />
+       						<button className='btn btn-default' type='submit'>
 								<span className='fa fa-search'></span>
 							</button>
-							</div>
-						</div>
-					</form>
+       					</div>
+      				</form>
 				</div>
 			</div>	
 		)

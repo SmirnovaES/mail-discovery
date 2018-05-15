@@ -5,12 +5,13 @@ class ContainerRight extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			isClicked: false,
 			topics: [],
-			isDataLoading: false,
+			isClicked: false,
+			isDataLoading: false
 		};
 
 		this.handleClick = this.handleClick.bind(this);
+		this.updateSelectedTopics = this.updateSelectedTopics.bind(this)
 	}
 
 	handleClick() {
@@ -31,8 +32,12 @@ class ContainerRight extends Component {
 			})
 	}
 
+	updateSelectedTopics(newSelectedTopics) {
+		this.props.update(newSelectedTopics)	
+	}
+
 	render() {
-		const { topics, isDataLoading, isClicked } = this.state;
+		const { topics, isClicked, isDataLoading } = this.state;
 
 		if (!isClicked) {
 			return (
@@ -59,12 +64,12 @@ class ContainerRight extends Component {
 		return (
 			<div className="container w-100">
 				<div className="container">
-					<button onClick={this.handleClick} type="button" class="btn btn-light">
+					<button onClick={this.handleClick} type="button" className="btn btn-light">
 							Start Topic Modeling
 					</button>
 				</div>
 
-				<MenuRight topics={topics}/>
+				<MenuRight topics={topics} update={this.updateSelectedTopics} />
 			</div>
 		);
 	}
