@@ -33,6 +33,10 @@ class Graph extends Component {
 		});
 	}
 
+	updateTopics(newTopics) {
+		this.setState({ topics : newTopics })
+	}
+
 	render() {
 		return (
 			<div className='container'>
@@ -65,7 +69,7 @@ class Graph extends Component {
 					</div>
 
 					<div className='col-md-3 order-9'>
-						<ContainerRight />
+						<ContainerRight  update={this.updateTopics.bind(this)}/>
 					</div>
 				</div>
 				

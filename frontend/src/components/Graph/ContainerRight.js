@@ -29,6 +29,8 @@ class ContainerRight extends Component {
 			.catch(function(error) {
 				console.log(error);
 			})
+
+		this.props.update(this.state.topics)
 	}
 
 	render() {
