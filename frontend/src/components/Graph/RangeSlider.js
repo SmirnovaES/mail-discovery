@@ -14,14 +14,27 @@ class RangeSlider extends Component {
 		this.dateTo = '2002-04-04,14:10';
 	}
 
-	// componentDidMount() {
-    //     fetch("http://localhost:8000/letters/?get_date=1")
-    //     .then(response => response.json())
-    //     .then(data => {
-	// 		this.dateFrom = data[0];
-	// 		this.dateTo = data[1];
-	// 	});
-    // }
+	loadData() {
+		if (!this.props.readyToLoad.date) {
+			return false;
+		}
+		this.props.loadData()
+			.then(data => {
+				this.dateFrom = data[0];
+				this.dateTo = data[1];
+				var readyToLoad = this.props.readyToLoad;
+				readyToLoad.date = false;
+				readyToLoad.user = true;
+				this.props.onChangeLoading(readyToLoad);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+	}
+
+	componentDidMount() {
+        this.loadData();
+    }
 
 	handleChange(timeRange) {
 		this.props.onUserInput(

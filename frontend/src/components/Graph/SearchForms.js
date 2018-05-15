@@ -1,36 +1,42 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-class SearchForms extends Component {
+class SearchForm extends Component {
+	constructor(props) {
+    	super(props);
+    	this.state = {
+    		value: ''
+    	};
+
+    	this.handleChange = this.handleChange.bind(this);
+    	this.handleSubmit = this.handleSubmit.bind(this);
+  	}
+
+  	handleChange(event) {
+    	this.setState({value: event.target.value});
+  	}
+
+  	handleSubmit(event) {
+    	this.props.onUserInput(this.state.value)
+    	event.preventDefault();
+  	}
+
 	render() {
 		return (
 			<div>
 				<div className='container'>
-					<form>
+					<form onSubmit={this.handleSubmit}>
 						<div className='input-group'>
-							<input className='form-control' type="text" placeholder='Search' box-shadow="none"/>
-							
-							<div className='input-group-btn'>
-							<button className='btn btn-default' type='button'>
+							<input type="text" className='form-control' placeholder='Search by topic' value={this.state.value} onChange={this.handleChange} />
+       						<button className='btn btn-default' type='submit'>
 								<span className='fa fa-search'></span>
 							</button>
-							</div>
-						</div>
-					</form>
-
-					<form>
-						<div className='input-group'>
-							<input className='form-control' type="text" placeholder='Find user' />
-							<div className='input-group-btn'>
-							<button className='btn btn-default' type='button'>
-								<span className='fa fa-search'></span>
-							</button>
-							</div>
-						</div>
-					</form>
+       					</div>
+      				</form>
 				</div>
 			</div>	
 		)
 	}
 }
 
-export default SearchForms
+export default SearchForm
