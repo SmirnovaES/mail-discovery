@@ -36,14 +36,20 @@ class Graph extends Component {
 		});
 	}
 	handleUserInputTimeRange(timeRange) {
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.user = true;
 		this.setState({
-			timeRange : timeRange
+			timeRange : timeRange,
+			readyToLoad : readyToLoad
 		});
 	}
 
 	handleUserInputUsers(users) {
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.graph = true;
 		this.setState({
-			users : users
+			users : users,
+			readyToLoad : readyToLoad
 		});
 	}
 
