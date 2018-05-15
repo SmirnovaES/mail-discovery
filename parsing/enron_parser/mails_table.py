@@ -55,6 +55,25 @@ def get_info(cur_string, key):
             pdt_index = cur_piece.find('(')
             cur_piece = cur_piece[:pdt_index].strip()
 
+        if key == 'AddressFrom':
+            index = cur_piece.find('<')
+            if index >= 0:
+                if cur_piece[index + 1] == '.':
+                    cur_piece = cur_piece[:index - 1] + cur_piece[index + 1:-2]
+
+        if key == 'AddressTo':
+            users_to = cur_piece.strip().replace('\n', ' ').replace('\t', ' ').split(',')
+            cur_piece = ''
+            for user in users_to:
+                user = user.strip()
+                index = user.find('<')
+                if index >= 0:
+                    if user[index + 1] == '.':
+                        user = user[:index - 1] + user[index + 1:-2]
+                cur_piece += user
+                cur_piece += ','
+            cur_piece = cur_piece[:-1]
+
         return cur_piece.strip()
 
 
@@ -74,6 +93,19 @@ def get_factor(limit):
         return 0
     else:
         return 1
+
+
+def is_valid_letter(cur_string):
+    if (get_info(cur_string, 'AddressTo') == '' or get_info(cur_string, 'AddressFrom') == ''
+            or get_info(cur_string, 'Message') == '' or get_info(cur_string, 'AddressFrom').find('@') == -1 or
+               get_info(cur_string, 'AddressFrom').find('<') >= 0 or get_info(cur_string, 'AddressFrom').find(' ')):
+        return False
+
+    users_to = get_info(cur_string, 'AddressTo').replace('\n', ' ').replace('\t', ' ').split(',')
+    for user in users_to:
+        if user.find('@') == -1 or user.find('<') > -1 or user.find(' ') > -1:
+            return False
+    return True
 
 
 def create_mails_table(file_name, limit=0):
@@ -124,6 +156,7 @@ def create_mails_table(file_name, limit=0):
             cur_max_id += 1
 
         print('Filling finished!')
+        file_obj.close()
 
     finally:
         conn.commit()
