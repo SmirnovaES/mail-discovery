@@ -4,8 +4,10 @@ from topicmodeling.lib.baseline.baselineABC import BaselineABC
 
 
 class LdaModel(BaselineABC):
-    def build(self, num_topics=10, passes=10, path='/home/ldamodel'):
+    def build(self, num_topics=None, passes=10, workers=None, path='/home/geras-artem/ldamodel'):
         print('Started building model')
+        if num_topics is None:
+            num_topics = self.num_topics
         if self.model is None:
             self.model = models.ldamodel.LdaModel(self.corpus, num_topics=num_topics,
                                                   id2word=self.dictionary, passes=passes)

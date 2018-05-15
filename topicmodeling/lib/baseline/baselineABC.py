@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 class BaselineABC:
     __metaclass__ = ABCMeta
 
-    def __init__(self, sourсe=None, lemmatizer=WordNetLemmatizer()):
+    def __init__(self, source=None, lemmatizer=WordNetLemmatizer()):
         self.docs = list()
         self.texts = list()
         self.corpus = list()
@@ -23,17 +23,18 @@ class BaselineABC:
         self.dictionary = None
         self.model = None
         self.count_vectorizer = None
+        self.num_topics = None
         self.lemmatizer = lemmatizer
 
-        if isinstance(sourсe, str):
-            self.extract_corpus(path=sourсe)
-        elif isinstance(sourсe, list):
-            self.texts = sourсe
+        if isinstance(source, str):
+            self.extract_corpus(path=source)
+        elif isinstance(source, list):
+            self.texts = source
         else:
-            raise ValueError('Invalid value of sourse: {}'.format(sourсe))
+            raise ValueError('Invalid value of source: {}'.format(source))
 
     def tokenize(self, text):
-        text = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', "", text))
+        text = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', "", text)
         tokens = nltk.word_tokenize(text)
         lemmatized_tokens = [self.lemmatizer.lemmatize(token) for token in tokens]
         return lemmatized_tokens
@@ -60,10 +61,22 @@ class BaselineABC:
         self.docs_terms = self.count_vectorizer.fit_transform(self.texts)
         return self.docs_terms, self.count_vectorizer
 
+    def count_num_topics(self):
+        if self.num_topics is None:
+            self.num_topics = self.docs_terms.sum(axis=0) > 100
+            self.num_topics = self.num_topics.sum() / 200
+            self.num_topics = np.min([30, self.num_topics])
+            self.num_topics = np.max([3, self.num_topics])
+
     def do_processing(self):
-        self.vectorize(min_df=1e-3, max_df=0.2)
+        self.vectorize(min_df=1e-3, max_df=1.)
         self.corpus = [matutils.scipy2sparse(doc) for doc in self.docs_terms]
         self.dictionary = corpora.Dictionary([list(self.count_vectorizer.get_feature_names())])
+        self.count_num_topics()
+
+    @abstractmethod
+    def build(self, num_topics=None, passes=10, workers=os.cpu_count(), path='/home/geras-artem/ldamodel'):
+        """Builds the selected model"""
 
     @abstractmethod
     def get_topics(self):
