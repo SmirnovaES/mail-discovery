@@ -17,15 +17,7 @@ class ContainerRight extends Component {
 	handleClick() {
 		this.setState( {isClicked: true, isDataLoading: true });
 		
-
-		fetch('http://localhost:8000/letters/?get_topics=1')
-			.then(response => 
-			{
-				if (!response.ok) {
-					throw Error(response.statusText);
-				}
-				return response.json();
-			})
+		this.props.loadData()
 			.then(data => this.setState({ topics: data, isDataLoading: false }))
 			.catch(function(error) {
 				console.log(error);

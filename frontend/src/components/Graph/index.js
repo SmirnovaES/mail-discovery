@@ -98,6 +98,12 @@ class Graph extends Component {
 		if (search === '') {
 			search = 'NULLVALUEMAILDISCOVERYAIS';
 		}
+		var topics = this.state.topics;
+		if (topics.length === 0) {
+			topics = 'gas';
+		} else {
+			topics = topics.join(',');
+		}
 		var dataGraph = fetch("http://localhost:8000/letters/",{  
 			method: 'post',  
 			headers: {  
@@ -107,7 +113,7 @@ class Graph extends Component {
 				"datefrom="+dateToJSON(this.state.timeRange.min)+
 				"&dateto="+dateToJSON(this.state.timeRange.max)+
 				"&users="+this.state.users.toString()+
-				"&topics=gas"+
+				"&topics="+topics+
 				"&search="+search  
 			})
 			.then(response => 
@@ -122,10 +128,27 @@ class Graph extends Component {
 					return response.json();
 				});
 		return dataGraph;
-  }
+	}
+	
+	loadTopics() {
+		var dataTopics = fetch('http://localhost:8000/letters/?get_topics=1')
+			.then(response => 
+			{
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			});
+		return dataTopics;
+	}
 
 	updateTopics(newTopics) {
-		this.setState({ topics : newTopics })
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.graph = true;
+		this.setState({
+			topics : newTopics,
+			readyToLoad : readyToLoad
+		});
 	}
 
 	render() {
@@ -161,7 +184,9 @@ class Graph extends Component {
 					</div>
 
 					<div className='col-md-3 order-9'>
-						<ContainerRight  update={this.updateTopics}/>
+						<ContainerRight  
+							update={this.updateTopics}
+							loadData={this.loadTopics}/>
 					</div>
 				</div>
 				
