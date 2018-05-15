@@ -10,8 +10,9 @@ class GraphViz extends React.Component {
         // D3 Code to create the chart
         this._chart = GraphV.create(
             this._rootNode,
-            this.props.data,
-            this.props.configuration 
+            this.props.loadData,
+            this.props.readyToLoad,
+            this.props.onChangeLoading
         );
     }
 
@@ -19,8 +20,9 @@ class GraphViz extends React.Component {
         // D3 Code to update the chart
         GraphV.update(
            this._rootNode,
-           this.props.data,
-           this.props.configuration,
+           this.props.loadData,
+           this.props.readyToLoad,
+           this.props.onChangeLoading,
            this._chart
         );
     }

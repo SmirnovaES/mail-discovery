@@ -2,21 +2,23 @@ import React, { Component } from 'react'
 import './MenuLeft.css'
 var departments = {};
 var users = [];
+var elements = [];
 class MenuLeft extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			elements: [],
-			localTimeRange: this.props.timeRange
+			// elements: [],
+			// localTimeRange: this.props.timeRange
 		};
+		elements = [];
 		users = [];
 	}
 
 	loadData() {
-        fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
-			dateToJSON(this.props.timeRange.min) +'&dateTo=' + 
-			dateToJSON(this.props.timeRange.max))
-			.then(response => response.json())
+		if (!this.props.readyToLoad.user) {
+			return false;
+		}
+        this.props.loadData()
 			.then(data => {
 				data.forEach(
 					function(element, i, arr) {
@@ -27,14 +29,20 @@ class MenuLeft extends Component {
 						users = users.concat(departments[element.group]);
 					}, this);
 				this.props.onUserInput(users);
-				this.setState(
-					{elements : 
+				elements = 
 						data.map(
 							function(element) {
 								return element.group;
-							})
-					}
-				);
+							});
+				
+
+				var readyToLoad = this.props.readyToLoad;
+				readyToLoad.user = false;
+				readyToLoad.graph = true;
+				this.props.onChangeLoading(readyToLoad);
+			})
+			.catch(function(error) {
+				console.log(error);
 			});
 	}
 	
@@ -43,12 +51,13 @@ class MenuLeft extends Component {
 	}
 
     componentWillUpdate() {
-		if (this.state.localTimeRange !== this.props.timeRange) {
-			this.loadData();
-			this.setState({
-				localTimeRange: this.props.timeRange
-			});
-		}
+		// if (this.state.localTimeRange !== this.props.timeRange) {
+		// 	this.loadData();
+		// 	this.setState({
+		// 		localTimeRange: this.props.timeRange
+		// 	});
+		// }
+		this.loadData();
     }
 
 	render() {
@@ -56,7 +65,7 @@ class MenuLeft extends Component {
 			<div id="container">
 				<div id="scrollbox" >
 					<div id="content">
-						{this.state.elements.map((department, index) => (
+						{elements.map((department, index) => (
 							<Department key={index}
 								value={department}
 								users={departments[department]}
