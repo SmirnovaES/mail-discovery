@@ -3,7 +3,6 @@ import GraphViz from './GraphViz';
 import SearchForms from './SearchForms.js'
 import RangeSlider from './RangeSlider.js'
 import MenuLeft from './MenuLeft.js'
-
 import ContainerRight from './ContainerRight.js'
 
 
@@ -11,7 +10,8 @@ class Graph extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timeRange : {min : new Date('2001-04-04,13:10').getTime(), max : new Date('2001-04-04,14:10').getTime()},
+			timeRange : {min : new Date('2001-04-04,13:10').getTime(), 
+						max : new Date('2001-04-04,14:10').getTime()},
 			users : [],
 			topics : [],
 			searchAis : '',
@@ -33,11 +33,29 @@ class Graph extends Component {
 		this.updateTopics = this.updateTopics.bind(this);
 	}
 
+	componentDidMount() {
+		console.log(this.props.users);
+        this.setState({
+			timeRange : this.props.timeRange,
+			users : this.props.users,
+			topics : this.props.topics,
+			searchAis : this.props.searchAis
+		})
+	}
+	
+	componentWillUnmount() {
+		this.props.updateTimeRange(this.state.timeRange);
+		this.props.updateUsers(this.state.users);
+		this.props.updateSearchText(this.state.searchAis);
+		this.props.updateTopics(this.state.topics);
+    }
+
 	handleComponentLoading(readyToLoad) {
 		this.setState({
 			readyToLoad : readyToLoad
 		});
 	}
+
 	handleUserInputTimeRange(timeRange) {
 		var readyToLoad = this.state.readyToLoad;
 		readyToLoad.user = true;

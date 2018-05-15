@@ -1,16 +1,16 @@
+import React from 'react'
 import Main from './Main.js'
-import Graph from './Graph'
-import Stats from './Stats'
+import UnionPage from './UnionPage'
 
 const routes = [{
 	path: '/',
 	component: Main,
 }, {
 	path: '/graph',
-	component: Graph,
+	component: () => <UnionPage flag={1}/>,
 }, {
 	path: '/stats',
-	component: Stats,
+	component: () => <UnionPage flag={0}/>,
 },
 ];
 

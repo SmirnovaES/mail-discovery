@@ -39,7 +39,7 @@ class Piechart extends Component {
                     <g transform={translate}>
                         {pie.map((d, i) => this.arcGenerator(d, i))}
                     </g>
-                    <text x="90" y="245" font-family="sans-serif" font-size="20px" fill="black">The most popular themes</text>
+                    <text x="90" y="245" fontFamily="sans-serif" fontSize="20px" fill="black">The most popular themes</text>
                 </svg>
             </div>
         )

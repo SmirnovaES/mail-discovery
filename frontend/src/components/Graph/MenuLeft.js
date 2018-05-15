@@ -20,13 +20,23 @@ class MenuLeft extends Component {
 		}
         this.props.loadData()
 			.then(data => {
+				if (this.props.users.length !== 0) {
+					users = this.props.users;
+				}
 				data.forEach(
 					function(element, i, arr) {
 						departments[element.group] = element.users.map(
 							function(element) {
 								return element.id;
 							});
-						users = users.concat(departments[element.group]);
+						// if (this.props.users.length !== 0) {
+						// 	departments[element.group] = departments[element.group]
+						// 	.filter((value) => users.indexOf(value) > -1);
+						// }
+							// в списке пользователей есть лишние пользователи, которых я убрал на статистике
+						if (this.props.users.length === 0) {
+							users = users.concat(departments[element.group]);
+						}
 					}, this);
 				this.props.onUserInput(users);
 				elements = 
@@ -47,6 +57,7 @@ class MenuLeft extends Component {
 	}
 	
 	componentWillMount() {
+		if (this.props.users.length === 0)
 		this.loadData();
 	}
 
@@ -159,9 +170,4 @@ class Department extends Component {
 			</div>
 		);
 	}
-}
-
-function dateToJSON(value) {
-    var d = new Date(value);
-    return d.toJSON().slice(0,10) + ',' + d.toTimeString().slice(0, 5)
 }
