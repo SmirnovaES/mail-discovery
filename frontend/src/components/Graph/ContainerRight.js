@@ -26,7 +26,7 @@ class ContainerRight extends Component {
 				}
 				return response.json();
 			})
-			.then(data => this.setState({ topics: data, selectedTopics: data, isDataLoading: false }))
+			.then(data => this.setState({ topics: data, isDataLoading: false }))
 			.catch(function(error) {
 				console.log(error);
 			})
