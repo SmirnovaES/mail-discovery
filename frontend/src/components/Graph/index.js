@@ -19,6 +19,7 @@ class Graph extends Component {
 		
 		this.handleUserInputTimeRange = this.handleUserInputTimeRange.bind(this);
 		this.handleUserInputUsers = this.handleUserInputUsers.bind(this);
+		this.updateTopics = this.updateTopics.bind(this);
 	}
 
 	handleUserInputTimeRange(timeRange) {
@@ -69,7 +70,7 @@ class Graph extends Component {
 					</div>
 
 					<div className='col-md-3 order-9'>
-						<ContainerRight  update={this.updateTopics.bind(this)}/>
+						<ContainerRight  update={this.updateTopics}/>
 					</div>
 				</div>
 				
