@@ -15,7 +15,7 @@ class Header extends Component {
 						
 						<div className="collapse navbar-collapse">
 							<ul className="navbar-nav ml-auto">
-								<li className="nav-item active">
+								<li className="nav-item">
 									<Link className="nav-link" to="/">Main</Link>
 								</li>
 								<li className="nav-item">

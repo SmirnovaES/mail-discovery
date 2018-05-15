@@ -23,11 +23,14 @@ class Graph extends Component {
 		
 		this.handleUserInputTimeRange = this.handleUserInputTimeRange.bind(this);
 		this.handleUserInputUsers = this.handleUserInputUsers.bind(this);
+
 		this.handleUserInputSearchText = this.handleUserInputSearchText.bind(this);
 		this.handleComponentLoading = this.handleComponentLoading.bind(this);
 		this.loadGraph = this.loadGraph.bind(this);
 		this.loadUsers = this.loadUsers.bind(this);
 		this.loadDate = this.loadDate.bind(this);
+
+		this.updateTopics = this.updateTopics.bind(this);
 	}
 
 	handleComponentLoading(readyToLoad) {
@@ -52,6 +55,7 @@ class Graph extends Component {
 			readyToLoad : readyToLoad
 		});
 	}
+
 
 	handleUserInputSearchText(newText) {
 		this.setState({searchAis: newText});
@@ -118,13 +122,17 @@ class Graph extends Component {
 					return response.json();
 				});
 		return dataGraph;
+  }
+
+	updateTopics(newTopics) {
+		this.setState({ topics : newTopics })
 	}
 
 	render() {
 		return (
 			<div className='container'>
 				<div className='row'>
-					<div className='col-md-8 offset-2'>
+					<div className='col-md-6 offset-3'>
 						<SearchForms 
 							searchAis={this.state.searchAis}
 							onUserInput={this.handleUserInputSearchText}
@@ -133,7 +141,7 @@ class Graph extends Component {
 				</div>
 
 				<div className='row'>
-					<div className='col-md-7 order-3'>	
+					<div className='col-md-6 order-3'>	
 						<GraphViz 
 							readyToLoad={this.state.readyToLoad}
 							onChangeLoading={this.handleComponentLoading}
@@ -152,8 +160,8 @@ class Graph extends Component {
 						/>
 					</div>
 
-					<div className='col-md-2 order-10'>
-						<ContainerRight />
+					<div className='col-md-3 order-9'>
+						<ContainerRight  update={this.updateTopics}/>
 					</div>
 				</div>
 				

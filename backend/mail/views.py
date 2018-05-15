@@ -169,7 +169,7 @@ def letters_process(request):
       probs_for_letters = ml_topics.objects.values_list('probs', flat=True)
       for prob_list in probs_for_letters:
         for i in range(topics_num):
-          total_prob_by_topic[i] += prob_list[i]
+          total_prob_by_topic[i] += float(prob_list[i])
           if prob_list[i] > 0.0:
             num_letters_by_topic[i] += 1
 
