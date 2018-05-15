@@ -77,8 +77,9 @@ function loadData(loadGraph, readyToLoad, onChangeLoading) {
             circle = node.selectAll("circle");
             title = node.selectAll("text"); 
 
-            readyToLoad.graph = false;
-            onChangeLoading(readyToLoad);
+            var readyToLoad1 = readyToLoad;
+            readyToLoad1.graph = false;
+            onChangeLoading(readyToLoad1);
         })
         .catch(function(error) {
             console.log(error);
@@ -105,10 +106,10 @@ GraphV.create = (el, loadGraph, readyToLoad, onChangeLoading) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; })
-            .distance(30).strength(0.1))
-        .force("charge", d3.forceManyBody())
-        .force('x', d3.forceX())
-        .force('y', d3.forceY())
+            .distance(50).strength(0.1))
+        .force("charge", d3.forceManyBody().strength(-40))
+        .force('X', d3.forceX().x(function(d) { return d.x }))
+        .force('Y', d3.forceY().y(function(d) { return d.y }))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
 

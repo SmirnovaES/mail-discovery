@@ -62,14 +62,13 @@ class Graph extends Component {
 	}
 
 	loadDate() {
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.date = false;
+		this.setState({readyToLoad : readyToLoad});
 		var dataDate = fetch("http://localhost:8000/letters/?get_date=1")
         .then(response => {
 			if (!response.ok) {
 				throw Error(response.statusText);
-			} else {
-				var readyToLoad = this.state.readyToLoad;
-				readyToLoad.date = false;
-				this.setState({readyToLoad : readyToLoad});
 			}
 			return response.json();
 		});
@@ -77,17 +76,16 @@ class Graph extends Component {
 	}
 
 	loadUsers() {
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.user = false;
+		this.setState({readyToLoad : readyToLoad});
 		var dataUsers = fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
 			dateToJSON(this.state.timeRange.min) +'&dateTo=' + 
 			dateToJSON(this.state.timeRange.max))
 			.then(response => {
 				if (!response.ok) {
 					throw Error(response.statusText);
-				} else {
-					var readyToLoad = this.state.readyToLoad;
-					readyToLoad.user = false;
-					this.setState({readyToLoad : readyToLoad});
-				}
+				} 
 				return response.json();
 			});
 		return dataUsers;
@@ -104,6 +102,9 @@ class Graph extends Component {
 		} else {
 			topics = topics.join(',');
 		}
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.graph = false;
+		this.setState({readyToLoad : readyToLoad});
 		var dataGraph = fetch("http://localhost:8000/letters/",{  
 			method: 'post',  
 			headers: {  
@@ -120,10 +121,6 @@ class Graph extends Component {
 				{
 					if (!response.ok) {
 						throw Error(response.statusText);
-					} else {
-						var readyToLoad = this.state.readyToLoad;
-						readyToLoad.graph = false;
-						this.setState({readyToLoad : readyToLoad});
 					}
 					return response.json();
 				});

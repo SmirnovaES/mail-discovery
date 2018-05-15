@@ -38,7 +38,7 @@ class MenuLeft extends Component {
 
 				var readyToLoad = this.props.readyToLoad;
 				readyToLoad.user = false;
-				readyToLoad.graph = true;
+				//readyToLoad.graph = true; изменил в onUserInput
 				this.props.onChangeLoading(readyToLoad);
 			})
 			.catch(function(error) {
