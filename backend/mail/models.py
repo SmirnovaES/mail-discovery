@@ -37,8 +37,8 @@ class users(models.Model):
     id = models.IntegerField(primary_key=True)
     address = models.TextField(blank=True, null=True)
     department = models.TextField(blank=True, null=True)
-    datebegin = models.DateTimeField(blank=True, null=True)
-    dateend = models.DateTimeField(blank=True, null=True)
+    #datebegin = models.DateTimeField(blank=True, null=True)
+    #dateend = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
