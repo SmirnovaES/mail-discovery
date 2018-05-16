@@ -40,7 +40,6 @@ class Piechart extends Component {
                 translate = `translate(${this.state.x}, ${this.state.y})`;
 
             return (
-                <div id="svg2">
                     <svg height="500" viewBox="50 -100 300 400">
                         <g transform={translate}>
                             {pie.map((d, i) => this.arcGenerator(d, i))}
@@ -49,7 +48,6 @@ class Piechart extends Component {
                             users
                         </text>
                     </svg>
-                </div>
             )
         }
         else {
