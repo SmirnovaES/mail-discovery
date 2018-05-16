@@ -6,12 +6,7 @@ var elements = [];
 class MenuLeft extends Component {
 	constructor(props){
 		super(props);
-		this.state = {
-			// elements: [],
-			// localTimeRange: this.props.timeRange
-		};
 		elements = [];
-		users = [];
 	}
 
 	loadData() {
@@ -20,35 +15,28 @@ class MenuLeft extends Component {
 		}
         this.props.loadData()
 			.then(data => {
-				if (this.props.users.length !== 0) {
-					users = this.props.users;
-				}
 				data.forEach(
 					function(element, i, arr) {
 						departments[element.group] = element.users.map(
 							function(element) {
 								return element.id;
 							});
-						// if (this.props.users.length !== 0) {
-						// 	departments[element.group] = departments[element.group]
-						// 	.filter((value) => users.indexOf(value) > -1);
-						// }
-							// в списке пользователей есть лишние пользователи, которых я убрал на статистике
 						if (this.props.users.length === 0) {
 							users = users.concat(departments[element.group]);
 						}
 					}, this);
-				this.props.onUserInput(users);
 				elements = 
 						data.map(
 							function(element) {
 								return element.group;
 							});
-				
-
 				var readyToLoad = this.props.readyToLoad;
 				readyToLoad.user = false;
-				//readyToLoad.graph = true; изменил в onUserInput
+				if (this.props.users.length === 0) {
+					this.props.onUserInput(users);
+				} else {
+					readyToLoad.graph = true;
+				}
 				this.props.onChangeLoading(readyToLoad);
 			})
 			.catch(function(error) {
@@ -57,17 +45,11 @@ class MenuLeft extends Component {
 	}
 	
 	componentWillMount() {
-		if (this.props.users.length === 0)
+		users = this.props.users;
 		this.loadData();
 	}
 
     componentWillUpdate() {
-		// if (this.state.localTimeRange !== this.props.timeRange) {
-		// 	this.loadData();
-		// 	this.setState({
-		// 		localTimeRange: this.props.timeRange
-		// 	});
-		// }
 		this.loadData();
     }
 
@@ -94,6 +76,7 @@ class Department extends Component {
 		super(props);
 		this.state = {
 			elements: [],
+			checked: [],
 			pStyle : {
 				display : 'none'
 			  },
@@ -103,8 +86,14 @@ class Department extends Component {
 
 	componentDidMount() {
 		this.setState({
-			elements : this.props.users
+			elements : this.props.users,
+			checked: this.props.users.map((value) => users.indexOf(value) > -1)
 		});	
+		// if (this.props.value==='k') {
+		// 	console.log(this.props.users);
+		// 	console.log(users);
+		// 	console.log(this.props.users.map((value) => users.indexOf(value) > -1));
+		// }
 	}
 
 	changeVisible(e) {
@@ -112,7 +101,6 @@ class Department extends Component {
 		if (e.target.checked === true) {
 			display = 'flex';
 		}
-		console.log(e.target.checked + " " + display);
 		this.setState({
 			pStyle: {display : display},
 		});
@@ -123,20 +111,21 @@ class Department extends Component {
 		if (e.target.checked === true) {
 			value = 'true';
 		}
-		console.log(e.target.checked + " " + value);
 		this.setState({
 			value: value
 		});
 	};
 
-	changeCheckedUser(e, element) {
+	changeCheckedUser(e, element, index) {
 		if (e.target.checked === true) {
 			users.push(element)
 		} else {
 			users = users.filter(item => item !== element)
 		}
+		var copyChecked = this.state.checked;
+		copyChecked[index] = !copyChecked[index];
+		this.setState({checked:copyChecked});
 		this.props.handleChange(users);
-		console.log(users);
 	};
 
 	render() {
@@ -152,8 +141,9 @@ class Department extends Component {
 				{this.state.elements.map((element, index) => (
 					<div style={this.state.pStyle} key={index}>   
 						<div className="form-check" key={index}>
-							<input type="checkbox" className="form-check-input" id={index} defaultChecked="true" 
-									onChange={(e) => this.changeCheckedUser.bind(this)(e, element)} />
+							<input type="checkbox" className="form-check-input" id={index} 
+									checked={this.state.checked[index]} 
+									onChange={(e) => this.changeCheckedUser.bind(this)(e, element, index)} />
 							<label className="form-check-label" htmlFor={index}> {element} </label>
 						</div>
 					</div>

@@ -49,6 +49,7 @@ class Stats extends Component {
 			timeRange : timeRange,
 			readyToLoad : readyToLoad
 		});
+		this.props.updateTimeRange(timeRange);
 	}
 
 	handleUserInputUsers(users) {
@@ -58,11 +59,13 @@ class Stats extends Component {
 			users : users,
 			readyToLoad : readyToLoad
 		});
+		this.props.updateUsers(users);
 	}
 
 
 	handleUserInputSearchText(newText) {
 		this.setState({searchAis: newText});
+		this.props.updateSearchText(newText);
 	}
 
 	loadDate() {
@@ -114,9 +117,10 @@ class Stats extends Component {
 			topics : newTopics,
 			readyToLoad : readyToLoad
 		});
+		this.props.updateTopics(newTopics);
 	}
 
-	componentDidMount() {
+	componentWillMount() {
         this.setState({
 			timeRange : this.props.timeRange,
 			users : this.props.users,
@@ -124,13 +128,7 @@ class Stats extends Component {
 			searchAis : this.props.searchAis
 		})
 	}
-	
-	componentWillUnmount() {
-		this.props.updateTimeRange(this.state.timeRange);
-		this.props.updateUsers(this.state.users);
-		this.props.updateSearchText(this.state.searchAis);
-		this.props.updateTopics(this.state.topics);
-	}
+
 	
 	render() {
 		return (

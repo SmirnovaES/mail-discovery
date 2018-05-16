@@ -23,7 +23,7 @@ class UnionPage extends React.Component {
 	}
 
 	updateUsers(newUsers) {
-		_users = newUsers;
+        _users = newUsers;
     }
 
     updateSearchText(newSearchAis) {
