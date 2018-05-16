@@ -70,7 +70,11 @@ class Graph extends Component {
 
 
 	handleUserInputSearchText(newText) {
-		this.setState({searchAis: newText});
+		var readyToLoad = this.state.readyToLoad;
+		readyToLoad.graph = true;
+		this.setState({
+			searchAis: newText,
+			readyToLoad : readyToLoad});
 		this.props.updateSearchText(newText);
 	}
 

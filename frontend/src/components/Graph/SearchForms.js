@@ -26,7 +26,7 @@ class SearchForm extends Component {
 				<div className='container'>
 					<form onSubmit={this.handleSubmit}>
 						<div className='input-group'>
-							<input type="text" className='form-control' placeholder='Search by topic' value={this.state.value} onChange={this.handleChange} />
+							<input type="text" className='form-control' placeholder='Search' value={this.state.value} onChange={this.handleChange} />
        						<button className='btn btn-default' type='submit'>
 								<span className='fa fa-search'></span>
 							</button>
