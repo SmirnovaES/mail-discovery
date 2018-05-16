@@ -130,9 +130,9 @@ class Stats extends Component {
 	}
 
 	
-	render() {
+	render() {	
 		return (
-			<div>
+			<div className="container">
 				<div className='row'>
 					<div className='col-md-3 order-0'>
 						<MenuLeft 
@@ -143,28 +143,21 @@ class Stats extends Component {
 								onChangeLoading={this.handleComponentLoading}
 								loadData={this.loadUsers}
 							/>
+						
 						<ContainerRight  
 							update={this.handleUserInputTopics}
 							loadData={this.loadTopics}/>
 					</div>
 
 					<div className='col-md-3 order-9'>
-						<Search/>
+						<Search update={this.handleUserInputSearchText}/>
 					</div>
 
 					<div className='col-md-6 order-3'>
-						<div className="PieChart1">
-							<PieChart1/>
-						</div>
-					</div>
-
-					{/* <div className="PieChart2">
-						<div className='col-md-4 offset-8'>
-							<PieChart2/>
-						</div>
-					</div> */}
-					
+						<PieChart1/>
+					</div>	
 				</div>
+				
 				<div className='row'>
 					<div className='col-md-6 offset-3'>
 						<RangeSlider 

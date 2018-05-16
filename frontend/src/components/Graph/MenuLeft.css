@@ -4,9 +4,10 @@
 #scrollbox{
 	width: 100%;
 	margin-top: 10px;
-	float:left;
-	height:250px;
-	overflow:auto; overflow-x:hidden;
+	float: left;
+	height: 250px;
+	overflow:auto; 
+	overflow-x:hidden;
 }
 label > input {display: none;}
 label:hover {cursor: pointer; text-decoration: underline;}

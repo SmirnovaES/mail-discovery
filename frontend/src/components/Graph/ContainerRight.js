@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import MenuRight from './MenuRight.js'
 
+import './ContainerRight.css'
+
 class ContainerRight extends Component {
 	constructor(props){
 		super(props);
@@ -33,17 +35,19 @@ class ContainerRight extends Component {
 
 		if (!isClicked) {
 			return (
-				<div className="container w-100">
-					<button onClick={this.handleClick} type="button" className="btn btn-light">
+				<div className="container">
+					<div className="text-center">
+						<button onClick={this.handleClick} type="button" className="btn btn-light">
 							Start Topic Modeling
-					</button>
+						</button>
+					</div>
 				</div>
 			);
 		}
 
 		if (isDataLoading) {
 			return (
-				<div className="container w-100">
+				<div className="container">
 					<div className="card">
 						<div className="card-body">
 							<div className="card-text text-center">Loading...</div>
@@ -54,8 +58,8 @@ class ContainerRight extends Component {
 		}
 
 		return (
-			<div className="container w-100">
-				<div className="container">
+			<div className="container">
+				<div className="container text-center">
 					<button onClick={this.handleClick} type="button" className="btn btn-light">
 							Start Topic Modeling
 					</button>

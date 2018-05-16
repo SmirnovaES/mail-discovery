@@ -15,6 +15,7 @@ class Search extends Component {
 	}
 
 	updateSearchText(newText) {
+		this.props.update(newText);
 		this.setState({searchText: newText});
 	}
 
