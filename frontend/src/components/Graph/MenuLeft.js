@@ -73,17 +73,15 @@ class MenuLeft extends Component {
 
 	render() {
 		return (
-			<div id="container">
+			<div className="container">
 				<div id="scrollbox" >
-					<div id="content">
-						{elements.map((department, index) => (
-							<Department key={index}
-								value={department}
-								users={departments[department]}
-								handleChange={this.props.onUserInput}
-							/>
-						))}
-					</div>
+					{elements.map((department, index) => (
+						<Department key={index}
+							value={department}
+							users={departments[department]}
+							handleChange={this.props.onUserInput}
+						/>
+					))}
 				</div>
 			</div>
 		);
@@ -144,26 +142,19 @@ class Department extends Component {
 	render() {
 		return (
 			<div>
-				<div className="input-group mb-3">
-					<div className="input-group-text">
-						<label>
-							<input type="checkbox"
-								onChange={this.changeVisible.bind(this)}/>
-								{this.props.value}
-						</label>
-					</div>     
-				</div>
+				
+				<dt><label>
+					<input type="checkbox"
+						onChange={this.changeVisible.bind(this)}/>
+						{this.props.value}
+				</label></dt>
+					
 				{this.state.elements.map((element, index) => (
-					<div className="input-group mb-3" style={this.state.pStyle} key={index}>    
-						<div className="input-group-prepend">
-							<div className="input-group-text">
-								<input type="checkbox" aria-label="Checkbox for following text input"
-									onChange={(e) => this.changeCheckedUser.bind(this)(e, element)}
-									defaultChecked />
-							</div>
-						</div>
-						<div className="input-group-text">
-							{element}
+					<div style={this.state.pStyle} key={index}>   
+						<div className="form-check" key={index}>
+							<input type="checkbox" className="form-check-input" id={index} defaultChecked="true" 
+									onChange={(e) => this.changeCheckedUser.bind(this)(e, element)} />
+							<label className="form-check-label" htmlFor={index}> {element} </label>
 						</div>
 					</div>
 				))}

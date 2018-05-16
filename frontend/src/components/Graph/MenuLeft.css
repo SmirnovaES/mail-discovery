@@ -1,19 +1,12 @@
-#container{
-	width:400px;
-	margin:0px auto;
-	padding:40px 0;
+.container{
+	margin-top: 10px;
 }
 #scrollbox{
-	float:right;
-	height:300px;
+	width: 100%;
+	margin-top: 10px;
+	float:left;
+	height:250px;
 	overflow:auto; overflow-x:hidden;
 }
-#container > div > p{
-	background:#eee;
-	color:#666;
-	font-family:Arial, sans-serif; font-size:0.75em;
-	padding:5px; margin:0;
-	text-align:rightright;
-} 
 label > input {display: none;}
 label:hover {cursor: pointer; text-decoration: underline;}

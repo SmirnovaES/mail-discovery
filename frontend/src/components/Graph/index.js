@@ -30,11 +30,10 @@ class Graph extends Component {
 		this.loadUsers = this.loadUsers.bind(this);
 		this.loadDate = this.loadDate.bind(this);
 
-		this.updateTopics = this.updateTopics.bind(this);
+		this.handleUserInputTopics = this.handleUserInputTopics.bind(this);
 	}
 
 	componentDidMount() {
-		console.log(this.props.users);
         this.setState({
 			timeRange : this.props.timeRange,
 			users : this.props.users,
@@ -157,7 +156,7 @@ class Graph extends Component {
 		return dataTopics;
 	}
 
-	updateTopics(newTopics) {
+	handleUserInputTopics(newTopics) {
 		var readyToLoad = this.state.readyToLoad;
 		readyToLoad.graph = true;
 		this.setState({
@@ -200,13 +199,13 @@ class Graph extends Component {
 
 					<div className='col-md-3 order-9'>
 						<ContainerRight  
-							update={this.updateTopics}
+							update={this.handleUserInputTopics}
 							loadData={this.loadTopics}/>
 					</div>
 				</div>
 				
 				<div className='row'>
-					<div className='col-md-8 offset-2'>
+					<div className='col-md-6 offset-3'>
 						<RangeSlider 
 							timeRange={this.state.timeRange}
 							onUserInput={this.handleUserInputTimeRange}
