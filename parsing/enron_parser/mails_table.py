@@ -98,7 +98,7 @@ def get_factor(limit):
 def is_valid_letter(cur_string):
     if (get_info(cur_string, 'AddressTo') == '' or get_info(cur_string, 'AddressFrom') == ''
             or get_info(cur_string, 'Message') == '' or get_info(cur_string, 'AddressFrom').find('@') == -1 or
-               get_info(cur_string, 'AddressFrom').find('<') >= 0 or get_info(cur_string, 'AddressFrom').find(' ')):
+               get_info(cur_string, 'AddressFrom').find('<') >= 0 or get_info(cur_string, 'AddressFrom').find(' ') >= 0):
         return False
 
     users_to = get_info(cur_string, 'AddressTo').replace('\n', ' ').replace('\t', ' ').split(',')
@@ -139,15 +139,15 @@ def create_mails_table(file_name, limit=0):
             cur_string = get_string(line)
             letter = dict.fromkeys(useful)
 
+            if not is_valid_letter(cur_string):
+                continue
+
             for key in useful:
                 if key == 'Id':
                     letter['Id'] = cur_max_id
 
                 else:
                     letter[key] = get_info(cur_string, key)
-
-            if letter['AddressTo'] == '' or letter['AddressFrom'] == '' or letter['Message'] == '':
-                continue
 
             columns = letter.keys()
             values = [letter[column] for column in columns]
