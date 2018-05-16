@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './MenuRight.css'
 
 var selectedTopics = [];
 
@@ -26,19 +25,17 @@ class MenuRight extends Component {
 
 	render() {
 		return (
-			<div id="container">
+			<div className="container">
 				<div id="scrollbox" >
-					<div id="content">
 						{this.state.topics.map((topic, key) => (
-							<div className="form-check" key={key}>
-								<input type="checkbox" className="form-check-input" id={key} defaultChecked="treu" 
-										onChange={(e) => this.handleChecked.bind(this)(e, topic)} />
-								<label className="form-check-label" htmlFor={key}> {topic} </label>
+							<div className="form-check" key={"topic" + key}>
+								<input type="checkbox" className="form-check-input" id={"topic" + key} 
+									defaultChecked onChange={(e) => this.handleChecked.bind(this)(e, topic)} />
+								<label className="form-check-label" htmlFor={"topic" + key}> {topic} </label>
 							</div>
 						))}
 					</div>
 				</div>
-			</div>
 		);
 	}
 }

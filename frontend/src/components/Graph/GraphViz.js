@@ -36,7 +36,7 @@ class GraphViz extends React.Component {
     }
 
     render() {
-        return <svg height="665"  viewBox="-300 -300 665 665" ref={this._setRef.bind(this)} />
+        return <svg height="500"  viewBox="-300 -300 665 665" ref={this._setRef.bind(this)} />
     }
 }
 

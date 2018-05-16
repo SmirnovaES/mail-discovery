@@ -10,7 +10,8 @@ class Piechart extends Component {
         this.state = {isReady: false, dateFrom: '2001-04-04,13:10', dateTo: '2001-04-04,14:10' };
         fetch("http://localhost:8000/letters/?get_personal_top=1&dateFrom=" +
 			dateToJSON(this.state.dateFrom) +'&dateTo=' +
-			dateToJSON(this.state.dateTo))
+			dateToJSON(this.state.dateTo) + 
+            '&words=work')
 			.then(response => response.json())
 			.then(top => {
 			    console.log('ups');
@@ -18,12 +19,7 @@ class Piechart extends Component {
         this.pie = d3.pie().value((d) => d.value);
         this.colors = d3.schemeCategory10;
         this.setState( {isReady: true, x: 200, y: 100, outerRadius: 130, innerRadius: 50,
-          data: top/*: [  {value: 12, label: 'John'},
-                   {value: 13, label: 'Peter'},
-                   {value: 21, label: 'Anna'},
-                   {value: 11, label: 'Maria'},
-                   {value: 27, label: 'Vlad'}
-                   ]*/});
+          data: top});
 
     });
     }
@@ -45,7 +41,7 @@ class Piechart extends Component {
 
             return (
                 <div id="svg2">
-                    <svg width="350" height="300" viewBox="100 -50 300 300">
+                    <svg height="500" viewBox="50 -100 300 400">
                         <g transform={translate}>
                             {pie.map((d, i) => this.arcGenerator(d, i))}
                         </g>

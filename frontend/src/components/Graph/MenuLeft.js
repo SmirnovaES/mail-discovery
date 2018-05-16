@@ -150,11 +150,11 @@ class Department extends Component {
 				</label></dt>
 					
 				{this.state.elements.map((element, index) => (
-					<div style={this.state.pStyle} key={index}>   
-						<div className="form-check" key={index}>
-							<input type="checkbox" className="form-check-input" id={index} defaultChecked="true" 
-									onChange={(e) => this.changeCheckedUser.bind(this)(e, element)} />
-							<label className="form-check-label" htmlFor={index}> {element} </label>
+					<div style={this.state.pStyle} key={"user" + index}>   
+						<div className="form-check" key={"user" + index}>
+							<input type="checkbox" className="form-check-input" id={"user" + index} 
+								defaultChecked onChange={(e) => this.changeCheckedUser.bind(this)(e, element)} />
+							<label className="form-check-label" htmlFor={"user" + index}> {element} </label>
 						</div>
 					</div>
 				))}
