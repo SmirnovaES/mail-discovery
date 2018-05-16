@@ -84,8 +84,30 @@ def letters_process(request):
 
       return JsonResponse(return_list, safe=False)
 
+    # OLD VERSION
+    # """
+    # Return top 5 users who have letters more than anyone else in a given period of time.
+    # """
+    # if request.GET.get('old_get_personal_top'):
+
+    #  date_from,time_from = request.GET['dateFrom'].split(',')
+    #  date_time_from = request_date_to_datetime(date_from, time_from)
+
+    #  date_to,time_to = request.GET['dateTo'].split(',')
+    #  date_time_to = request_date_to_datetime(date_to, time_to)
+
+    #  all_users = []
+
+    #  all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressfrom', flat=True)
+
+    #  all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressto', flat=True)  # contains groups of several ddressto
+    #  all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]  # flat 2D list into 1D
+    #  top_users_info = Counter(all_users).most_common(5)
+    #  ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
+    #  return JsonResponse(ret_list, safe=False)
+
     """
-    Return top 5 users who have letters more than anyone else in a given period of time.
+    Return top 5 users who have letters more than anyone else in a given period of time among letters that meet search request.
     """
     if request.GET.get('get_personal_top'):
       
@@ -94,12 +116,23 @@ def letters_process(request):
       
       date_to,time_to = request.GET['dateTo'].split(',')
       date_time_to = request_date_to_datetime(date_to, time_to)
+
+      key_words = request.GET['words'].split(',')
+
+      filtered_letters = latest_letters
+
+      if not key_words:
+        filtered_letters = filtered_letters.all()[:5]
+      else:
+        for word in key_words:
+          filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
+          											 Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
       
       all_users = []
       
-      all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressfrom', flat=True)
-
-      all_users += mails.objects.filter(date__range=[date_time_from,date_time_to]).values_list('addressto', flat=True)  # contains sublists with addr_to
+      all_users += filtered_letters.filter(date__range=[date_time_from,date_time_to]).values_list('addressfrom', flat=True)
+      
+      all_users += filtered_letters.filter(date__range=[date_time_from,date_time_to]).values_list('addressto', flat=True)  # contains groups of several ddressto
       all_users = [item for sublist in all_users for item in sublist.replace('\n',' ').replace('\t', ' ').replace(',', ' ').split()]  # flat 2D list into 1D
       top_users_info = Counter(all_users).most_common(5)
       ret_list = [{'value' : user_info[1], 'label' : user_info[0]} for user_info in top_users_info]
@@ -153,21 +186,57 @@ def letters_process(request):
       topics = ml_topics.objects.get(pk=ids[0]).topics
       return JsonResponse(topics, safe=False)
 
+    # OLD VERSION
+    # """
+    # Return top-5 most popular topics for letters diplayed on the graph.
+    # """
+    # if request.GET.get('old_get_topic_top'):
+
+    #   import operator
+    #   topics_num = 10
+
+    #   topics_list = ml_topics.objects.values_list('topics', flat=True)[0]  # it can fail, if the table is empty
+
+    #   num_letters_by_topic = [0] * topics_num  # number of letters with topic
+    #   total_prob_by_topic = dict.fromkeys(list(range(topics_num)), 0.0)
+
+    #   probs_for_letters = ml_topics.objects.values_list('probs', flat=True)
+    #   for prob_list in probs_for_letters:
+    #     for i in range(topics_num):
+    #       total_prob_by_topic[i] += float(prob_list[i])
+    #       if prob_list[i] > 0.0:
+    #         num_letters_by_topic[i] += 1
+
+    #   sorted_total_prob = sorted(total_prob_by_topic.items(), key=operator.itemgetter(1), reverse=True)
+
+    #   ret_list = [{'value' : num_letters_by_topic[elem[0]], 'label' : topics_list[elem[0]]} for elem in sorted_total_prob[:5]]
+    #   return JsonResponse(ret_list, safe=False)
+
     """
-    Return top-5 most popular topics for letters diplayed on the graph.
+    Return top-5 most popular topics for letters diplayed on the graph among letters that meet search request.
     """
     if request.GET.get('get_topic_top'):
+
+      key_words = request.GET['words'].split(',')
+      filtered_letters = latest_letters
+      if not key_words:
+        filtered_letters = filtered_letters.all()[:5]
+      else:
+        for word in key_words:
+          filtered_letters = filtered_letters.filter(Q(message__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word) |
+                                                     Q(subject__iregex=r"^.*[,.!? \t\n]%s[,.!? \t\n].*$" % word))
+      filtered_search_ids = filtered_letters.values_list('id', flat=True)
 
       import operator
       topics_num = 10
 
-      topics_list = ml_topics.objects.values_list('topics', flat=True)[0]  # it can fail, if the table is empty
+      topics_list_search = ml_topics.objects.filter(id__in=filtered_search_ids).values_list('topics', flat=True)[0]  # it can fail, if the table is empty
 
       num_letters_by_topic = [0] * topics_num  # number of letters with topic
       total_prob_by_topic = dict.fromkeys(list(range(topics_num)), 0.0)
 
-      probs_for_letters = ml_topics.objects.values_list('probs', flat=True)
-      for prob_list in probs_for_letters:
+      probs_for_letters_search = ml_topics.objects.filter(id__in=filtered_search_ids).values_list('probs', flat=True)
+      for prob_list in probs_for_letters_search:
         for i in range(topics_num):
           total_prob_by_topic[i] += float(prob_list[i])
           if prob_list[i] > 0.0:
@@ -175,7 +244,7 @@ def letters_process(request):
 
       sorted_total_prob = sorted(total_prob_by_topic.items(), key=operator.itemgetter(1), reverse=True)
 
-      ret_list = [{'value' : num_letters_by_topic[elem[0]], 'label' : topics_list[elem[0]]} for elem in sorted_total_prob[:5]]
+      ret_list = [{'value' : num_letters_by_topic[elem[0]], 'label' : topics_list_search[elem[0]]} for elem in sorted_total_prob[:5]]
       return JsonResponse(ret_list, safe=False)
 
     """
