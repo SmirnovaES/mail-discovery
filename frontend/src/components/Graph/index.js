@@ -197,7 +197,8 @@ class Graph extends Component {
 					<div className='col-md-3 order-9'>
 						<ContainerRight  
 							update={this.handleUserInputTopics}
-							loadData={this.loadTopics}/>
+							loadData={this.loadTopics}
+							topics={this.state.topics}/>
 					</div>
 				</div>
 				

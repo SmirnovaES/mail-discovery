@@ -146,7 +146,8 @@ class Stats extends Component {
 						
 						<ContainerRight  
 							update={this.handleUserInputTopics}
-							loadData={this.loadTopics}/>
+							loadData={this.loadTopics}
+							topics={this.state.topics}/>
 					</div>
 
 					<div className='col-md-3 order-9'>

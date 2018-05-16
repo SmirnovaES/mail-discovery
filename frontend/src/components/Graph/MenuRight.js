@@ -5,12 +5,10 @@ var selectedTopics = [];
 class MenuRight extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			topics: this.props.topics
-		};
 
-		selectedTopics = this.props.topics;
+		selectedTopics = this.props.selectedTopics;
 		this.handleChecked = this.handleChecked.bind(this);
+		this.isChecked = this.isChecked.bind(this)
 	}
 
 	handleChecked(e, topic) {
@@ -23,14 +21,18 @@ class MenuRight extends Component {
 		this.props.update(selectedTopics)
 	}
 
+	isChecked(topic) {
+		return selectedTopics.some(item => item === topic)
+	}
+
 	render() {
 		return (
 			<div className="container">
 				<div id="scrollbox" >
-						{this.state.topics.map((topic, key) => (
+						{this.props.topics.map((topic, key) => (
 							<div className="form-check" key={"topic" + key}>
 								<input type="checkbox" className="form-check-input" id={"topic" + key} 
-									defaultChecked onChange={(e) => this.handleChecked.bind(this)(e, topic)} />
+									checked={this.isChecked(topic)} onChange={(e) => this.handleChecked(e, topic)} />
 								<label className="form-check-label" htmlFor={"topic" + key}> {topic} </label>
 							</div>
 						))}
