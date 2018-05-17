@@ -75,14 +75,15 @@ class Piechart extends Component {
 
 
             return (
-                <div id="svg2">
-                    <svg height="500" viewBox="50 -100 300 400">
+                <div>
+                    <svg height="400" viewBox="50 -100 300 400">
+                        <text x="100" y="-50" fontFamily="sans-serif" fontSize="20px" fill="black">The most active
+                            users
+                        </text>
+
                         <g transform={translate}>
                             {pie.map((d, i) => this.arcGenerator(d, i))}
                         </g>
-                        <text x="100" y="250" fontFamily="sans-serif" fontSize="20px" fill="black">The most active
-                            users
-                        </text>
                     </svg>
                     {legend}
                 </div>
