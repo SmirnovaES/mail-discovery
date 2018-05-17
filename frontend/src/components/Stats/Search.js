@@ -23,7 +23,7 @@ class Search extends Component {
 		this.setState({isDataLoading: true})
 		var words = this.state.searchText.split(' ').join(',')
 
-		fetch('http://localhost:8000/letters/?search_ais=1&words=' + words)
+		fetch('http://35.202.93.3:8000/letters/?search_ais=1&words=' + words)
 			.then(response => response.json())
 			.then(data => this.setState({ searchResults: data, isDataLoading: false }));
 	}

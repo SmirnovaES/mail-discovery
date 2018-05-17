@@ -61,7 +61,7 @@ class MessageItem extends Component {
 	loadData() {
 		var query = this.props.value
 
-		fetch('http://localhost:8000/letters/?get_text=1&source=' 
+		fetch('http://35.202.93.3:8000/letters/?get_text=1&source=' 
 				+ query["source"] + '&target=' + query["target"] 
 				+ '&date=' + query["date"] + '&topic=' + query["topic"])
 			.then(response => response.json())
