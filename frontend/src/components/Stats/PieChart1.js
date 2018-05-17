@@ -1,25 +1,48 @@
 import React, { Component } from 'react';
 import { LabeledArc } from './Arc.js';
+import './index.css'
+
 
 class Piechart extends Component {
-    constructor() {
+    constructor(props) {
         super();
+        this.request(props);
 
         var d3 = require("d3");
 
-        this.state = {isReady: false, dateFrom: '2001-04-04,13:10', dateTo: '2001-04-04,14:10' };
+
+
+    }
+
+    request(props){
+        var d3 = require("d3");
+        this.state = {isReady: false, dateRange: props.date, search: props.search} ;
+
         fetch("http://localhost:8000/letters/?get_personal_top=1&dateFrom=" +
-			dateToJSON(this.state.dateFrom) +'&dateTo=' +
-			dateToJSON(this.state.dateTo) + 
-            '&words=work')
+			dateToJSON(this.state.dateRange.min) +'&dateTo=' +
+			dateToJSON(this.state.dateRange.max) +
+            '&words=' + this.state.search.split(" ").join(","))
 			.then(response => response.json())
 			.then(top => {
 			    console.log('ups');
 
+			    var sum = 0;
+                var users = [];
+                var i;
+
+                for(i=0; i < 5; i++){
+                    sum += top[i].value;
+                    users.push(top[i].label) ;
+                }
+
+                for(i=0; i < 5; i++){
+                    top[i].label = Math.round(100 * (top[i].value / sum))  + '%';
+                }
+
         this.pie = d3.pie().value((d) => d.value);
         this.colors = d3.schemeCategory10;
         this.setState( {isReady: true, x: 200, y: 100, outerRadius: 130, innerRadius: 50,
-          data: top});
+          data: top, users: users});
 
     });
     }
@@ -34,12 +57,25 @@ class Piechart extends Component {
         );
     }
 
+    componentWillReceiveProps/*: function*/(nextProps) {
+    this.setState({
+        /*date: nextProps.date > this.props.date,*/
+        search: nextProps.search > this.props.search
+        });
+    this.request(nextProps);
+    console.log('rrr');
+    }
+
     render() {
+        console.log('zzz')
         if (this.state.isReady) {
             let pie = this.pie(this.state.data),
                 translate = `translate(${this.state.x}, ${this.state.y})`;
+            let legend = this.state.users.map((entry, i)=>{return <div><td className={"color_box"} style={{background:this.colors[i]}}></td><td>{entry}</td></div>})
+
 
             return (
+                <div id="svg2">
                     <svg height="500" viewBox="50 -100 300 400">
                         <g transform={translate}>
                             {pie.map((d, i) => this.arcGenerator(d, i))}
@@ -48,6 +84,8 @@ class Piechart extends Component {
                             users
                         </text>
                     </svg>
+                    {legend}
+                </div>
             )
         }
         else {
@@ -62,3 +100,4 @@ function dateToJSON(value) {
 }
 
 export default Piechart;
+

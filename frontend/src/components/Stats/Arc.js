@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Arc extends Component {
     constructor() {
         super();
@@ -45,6 +44,7 @@ class LabeledArc extends Arc {
                       textAnchor="middle">
                     {this.props.data.data.label}
                 </text>
+
             </g>
         );
     }

@@ -130,7 +130,8 @@ class Stats extends Component {
 	}
 
 	
-	render() {	
+	render() {
+		console.log('mmm');
 		return (
 			<div className="container">
 				<div className='row'>
@@ -155,7 +156,7 @@ class Stats extends Component {
 					</div>
 
 					<div className='col-md-6 order-3'>
-						<PieChart1/>
+						<PieChart1 search={this.state.searchAis} date={this.state.timeRange}/>
 					</div>	
 				</div>
 				
