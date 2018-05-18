@@ -34,7 +34,6 @@ class BaselineABC:
             raise ValueError('Invalid value of source: {}'.format(source))
 
     def tokenize(self, text):
-        text = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', "", text)
         tokens = nltk.word_tokenize(text)
         lemmatized_tokens = [self.lemmatizer.lemmatize(token) for token in tokens]
         return lemmatized_tokens
@@ -42,6 +41,8 @@ class BaselineABC:
     @staticmethod
     def preprocess(text):
         text = text.lower()
+        text = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', "", text)
+        text = re.sub(r"\S*@\S*\s?", '', text)
         allow = string.ascii_letters + string.whitespace
         text = re.sub('[^%s]' % allow, '', text)
         return text
