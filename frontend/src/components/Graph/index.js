@@ -10,8 +10,8 @@ class Graph extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timeRange : {min : new Date('2001-04-04,13:10').getTime(), 
-						max : new Date('2001-04-04,14:10').getTime()},
+			timeRange : {min : new Date('2001-04-04 13:10').getTime(), 
+						max : new Date('2001-04-04 14:10').getTime()},
 			users : [],
 			topics : [],
 			searchAis : '',

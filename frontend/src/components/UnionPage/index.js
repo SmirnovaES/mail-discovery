@@ -2,8 +2,8 @@ import React from 'react'
 import Graph from '../Graph'
 import Stats from '../Stats'
 
-var _timeRange = {min : new Date('2001-04-04,13:10').getTime(), 
-						max : new Date('2001-04-04,14:10').getTime()};
+var _timeRange = {min : new Date('2001-04-04 13:10').getTime(), 
+						max : new Date('2001-04-04 14:10').getTime()};
 var _users = [];
 var _topics = [];
 var _searchAis = '';
