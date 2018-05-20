@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
+var dateFrom = '1999-04-04,14:10';
+var dateTo = '2002-04-04,14:10';
 
 class RangeSlider extends Component {
 	constructor(props) {
@@ -10,8 +12,6 @@ class RangeSlider extends Component {
 		this.state = {
 			value: this.props.timeRange,
 		};
-		this.dateFrom = '1999-04-04,14:10';
-		this.dateTo = '2002-04-04,14:10';
 	}
 
 	loadData() {
@@ -20,8 +20,8 @@ class RangeSlider extends Component {
 		}
 		this.props.loadData()
 			.then(data => {
-				this.dateFrom = data[0];
-				this.dateTo = data[1];
+				dateFrom = data[0];
+				dateTo = data[1];
 				var readyToLoad = this.props.readyToLoad;
 				readyToLoad.date = false;
 				readyToLoad.user = true;
@@ -47,8 +47,8 @@ class RangeSlider extends Component {
 		return (
 			<InputRange 
 				formatLabel={value => `${dateFormat(new Date(value), "mmmm dS, yyyy")}`}
-				minValue={new Date(this.dateFrom).getTime()} 
-				maxValue={new Date(this.dateTo).getTime()} 
+				minValue={new Date(dateFrom).getTime()} 
+				maxValue={new Date(dateTo).getTime()} 
 				value={this.state.value} 
 				onChange={val => this.setState({value : val})}
 				onChangeComplete={this.handleChange} />

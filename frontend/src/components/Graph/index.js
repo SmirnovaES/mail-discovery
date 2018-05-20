@@ -34,11 +34,15 @@ class Graph extends Component {
 	}
 
 	componentWillMount() {
+		if (!this.props.readyToLoad.date) {
+			this.props.readyToLoad.graph = true;
+		}
         this.setState({
 			timeRange : this.props.timeRange,
 			users : this.props.users,
 			topics : this.props.topics,
-			searchAis : this.props.searchAis
+			searchAis : this.props.searchAis,
+			readyToLoad : this.props.readyToLoad
 		})
 	}
 
@@ -46,6 +50,7 @@ class Graph extends Component {
 		this.setState({
 			readyToLoad : readyToLoad
 		});
+		this.props.updateReadyToLoad(readyToLoad);
 	}
 
 	handleUserInputTimeRange(timeRange) {

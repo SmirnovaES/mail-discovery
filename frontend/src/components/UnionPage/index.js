@@ -7,6 +7,10 @@ var _timeRange = {min : new Date('2001-04-04,13:10').getTime(),
 var _users = [];
 var _topics = [];
 var _searchAis = '';
+var _readyToLoad = 
+				{'graph' : false,
+				'user' : false,
+				'date' : true} 
 
 class UnionPage extends React.Component {
     constructor(props) {
@@ -15,9 +19,14 @@ class UnionPage extends React.Component {
 		this.updateTimeRange = this.updateTimeRange.bind(this);
 		this.updateUsers = this.updateUsers.bind(this);
 		this.updateSearchText = this.updateSearchText.bind(this);
-		this.updateTopics = this.updateTopics.bind(this);
+        this.updateTopics = this.updateTopics.bind(this);
+        this.updateReadyToLoad = this.updateReadyToLoad.bind(this);
     }
-	
+    
+    updateReadyToLoad(readyToLoad) {
+		_readyToLoad = readyToLoad;
+    }
+    
 	updateTimeRange(newTimeRange) {
 		_timeRange = newTimeRange;
 	}
@@ -41,10 +50,12 @@ class UnionPage extends React.Component {
                 users={_users}
                 topics={_topics}
                 searchAis={_searchAis}
+                readyToLoad={_readyToLoad}
                 updateTimeRange={this.updateTimeRange}
                 updateUsers={this.updateUsers}
                 updateSearchText={this.updateSearchText}
                 updateTopics={this.updateTopics}
+                updateReadyToLoad={this.updateReadyToLoad}
                 />
         } else {
             return <Stats 
@@ -52,10 +63,13 @@ class UnionPage extends React.Component {
                 users={_users}
                 topics={_topics}
                 searchAis={_searchAis}
+                readyToLoad={_readyToLoad}
                 updateTimeRange={this.updateTimeRange}
                 updateUsers={this.updateUsers}
                 updateSearchText={this.updateSearchText}
-                updateTopics={this.updateTopics}/>
+                updateTopics={this.updateTopics}
+                updateReadyToLoad={this.updateReadyToLoad}
+                />
         }
     }
 }

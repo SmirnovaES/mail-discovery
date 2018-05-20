@@ -6,7 +6,6 @@ var elements = [];
 class MenuLeft extends Component {
 	constructor(props){
 		super(props);
-		elements = [];
 	}
 
 	loadData() {

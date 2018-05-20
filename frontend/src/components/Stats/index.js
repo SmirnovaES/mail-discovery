@@ -40,6 +40,7 @@ class Stats extends Component {
 		this.setState({
 			readyToLoad : readyToLoad
 		});
+		this.props.updateReadyToLoad(readyToLoad);
 	}
 
 	handleUserInputTimeRange(timeRange) {
@@ -125,7 +126,8 @@ class Stats extends Component {
 			timeRange : this.props.timeRange,
 			users : this.props.users,
 			topics : this.props.topics,
-			searchAis : this.props.searchAis
+			searchAis : this.props.searchAis,
+			readyToLoad : this.props.readyToLoad
 		})
 	}
 
