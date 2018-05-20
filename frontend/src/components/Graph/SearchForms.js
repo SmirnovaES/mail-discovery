@@ -4,7 +4,7 @@ class SearchForm extends Component {
 	constructor(props) {
     	super(props);
     	this.state = {
-    		value: ''
+    		value: this.props.searchAis
     	};
 
     	this.handleChange = this.handleChange.bind(this);

@@ -41,7 +41,8 @@ class Search extends Component {
 	render() {
 		return (
 			<div>
-				<SearchForm update={this.updateSearchText.bind(this)}/>
+				<SearchForm update={this.updateSearchText.bind(this)}
+							searchAis={this.props.searchAis}/>
 
 				<MessagesList messages={this.state.searchResults} isDataLoading={this.state.isDataLoading}/>				
 			</div>	

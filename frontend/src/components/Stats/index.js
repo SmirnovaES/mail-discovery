@@ -154,7 +154,8 @@ class Stats extends Component {
 					</div>
 
 					<div className='col-md-3 order-9'>
-						<Search update={this.handleUserInputSearchText}/>
+						<Search update={this.handleUserInputSearchText}
+								searchAis={this.state.searchAis}/>
 					</div>
 
 					<div className='col-md-6 order-3'>
