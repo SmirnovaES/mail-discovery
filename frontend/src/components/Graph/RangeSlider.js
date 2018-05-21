@@ -45,13 +45,15 @@ class RangeSlider extends Component {
 	render() {
 		var dateFormat = require('dateformat');
 		return (
-			<InputRange 
-				formatLabel={value => `${dateFormat(new Date(value), "mmmm dS, yyyy")}`}
-				minValue={new Date(dateFrom).getTime()} 
-				maxValue={new Date(dateTo).getTime()} 
-				value={this.state.value} 
-				onChange={val => this.setState({value : val})}
-				onChangeComplete={this.handleChange} />
+			<div className="container">
+				<InputRange 
+					formatLabel={value => `${dateFormat(new Date(value), "mmmm dS, yyyy")}`}
+					minValue={new Date(dateFrom).getTime()} 
+					maxValue={new Date(dateTo).getTime()} 
+					value={this.state.value} 
+					onChange={val => this.setState({value : val})}
+					onChangeComplete={this.handleChange} />
+			</div>
 		)
 	}
 }

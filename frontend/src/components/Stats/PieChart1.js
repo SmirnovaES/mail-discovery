@@ -9,9 +9,6 @@ class Piechart extends Component {
         this.request(props);
 
         var d3 = require("d3");
-
-
-
     }
 
     request(props){
@@ -22,9 +19,14 @@ class Piechart extends Component {
 			dateToJSON(this.state.dateRange.min) +'&dateTo=' +
 			dateToJSON(this.state.dateRange.max) +
             '&words=' + this.state.search.split(" ").join(","))
-			.then(response => response.json())
+			.then(response => 
+                {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                })
 			.then(top => {
-			    console.log('ups');
 
 			    var sum = 0;
                 var users = [];
@@ -44,7 +46,10 @@ class Piechart extends Component {
         this.setState( {isReady: true, x: 200, y: 100, outerRadius: 130, innerRadius: 50,
           data: top, users: users});
 
-    });
+    })
+    .catch(function(error) {
+            console.log(error);
+        });
     }
 
     arcGenerator(d, i) {
@@ -63,11 +68,9 @@ class Piechart extends Component {
         search: nextProps.search > this.props.search
         });
     this.request(nextProps);
-    console.log('rrr');
     }
 
     render() {
-        console.log('zzz')
         if (this.state.isReady) {
             let pie = this.pie(this.state.data),
                 translate = `translate(${this.state.x}, ${this.state.y})`;
@@ -90,7 +93,15 @@ class Piechart extends Component {
             )
         }
         else {
-            return ('ups')
+            return (
+                <div>
+                    <svg height="400" viewBox="50 -100 300 400">
+                        <text x="150" y="-50" fontFamily="sans-serif" fontSize="20px" fill="black">
+                            Loading...
+                        </text>
+                    </svg>
+                </div>
+            )
         }
     }
 }

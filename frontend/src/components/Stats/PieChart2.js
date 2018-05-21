@@ -13,33 +13,39 @@ class Piechart extends Component {
 
     request2(props){
         var d3 = require("d3");
-        this.state = {isReady: false}
+        this.state = {isReady: false, search: props.search}
         fetch("http://localhost:8000/letters/?get_topic_top=1" +
             '&words=' + this.state.search.split(" ").join(","))
-            .then(response => response.json())
+            .then(response => 
+                {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                })
             .then(topicTop => {
-                console.log('ups');
+                var sum = 0;
+        		var themes = [];
+        		var i;
 
-        var sum = 0;
-		var themes = [];
-		var i;
+        		for(i=0; i < 5; i++){
+        		    sum += topicTop[i].value;
+        		    themes.push(topicTop[i].label) ;
+                }
 
-		for(i=0; i < 5; i++){
-		    sum += topicTop[i].value;
-		    themes.push(topicTop[i].label) ;
-        }
+                for(i=0; i < 5; i++){
+        		    topicTop[i].label = Math.round(100 * (topicTop[i].value / sum))  + '%';
+                }
 
-        for(i=0; i < 5; i++){
-		    topicTop[i].label = Math.round(100 * (topicTop[i].value / sum))  + '%';
-        }
-
-                this.pie = d3.pie().value((d) => d.value);
-                this.colors = d3.schemeCategory10;
-                this.setState({
-                    isReady: true, x: 200, y: 100, outerRadius: 130, innerRadius: 50,
-                    data: topicTop, themes
-                });
-
+                        this.pie = d3.pie().value((d) => d.value);
+                        this.colors = d3.schemeCategory10;
+                        this.setState({
+                            isReady: true, x: 200, y: 100, outerRadius: 130, innerRadius: 50,
+                            data: topicTop, themes
+                        });
+            })
+            .catch(function(error) {
+                console.log(error);
             });
     }
 
@@ -59,7 +65,6 @@ class Piechart extends Component {
         search: nextProps.search > this.props.search
         });
     this.request2(nextProps);
-    console.log('rrr');
     }
 
 
@@ -71,12 +76,12 @@ class Piechart extends Component {
 
 
             return (
-                <div id="svg2">
-                    <svg width="350" height="300" viewBox="100 -50 300 300">
+                <div>
+                    <svg height="400" viewBox="50 -100 300 400">
                         <g transform={translate}>
                             {pie.map((d, i) => this.arcGenerator(d, i))}
                         </g>
-                        <text x="90" y="245" font-family="sans-serif" font-size="20px" fill="black">The most popular
+                        <text x="80" y="-50" font-family="sans-serif" font-size="20px" fill="black">The most popular
                             themes
                         </text>
                     </svg>
@@ -84,9 +89,16 @@ class Piechart extends Component {
                 </div>
             )
         }
-
         else {
-            return ('ups')
+            return (
+                <div>
+                    <svg height="400" viewBox="50 -100 300 400">
+                        <text x="150" y="-50" fontFamily="sans-serif" fontSize="20px" fill="black">
+                            Loading...
+                        </text>
+                    </svg>
+                </div>
+            )
         }
     }
 }
