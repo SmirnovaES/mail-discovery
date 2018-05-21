@@ -15,7 +15,7 @@ class Piechart extends Component {
         var d3 = require("d3");
         this.state = {isReady: false, dateRange: props.date, search: props.search} ;
 
-        fetch("http://localhost:8000/letters/?get_personal_top=1&dateFrom=" +
+        fetch("http://35.202.93.3:8000/letters/?get_personal_top=1&dateFrom=" +
 			dateToJSON(this.state.dateRange.min) +'&dateTo=' +
 			dateToJSON(this.state.dateRange.max) +
             '&words=' + this.state.search.split(" ").join(","))
