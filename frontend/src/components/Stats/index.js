@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Search from './Search.js';
-import PieChart1 from './PieChart1.js';
-import PieChart2 from './PieChart2.js';
+import PieChartContainer from './PieChartContainer.js';
 
 import RangeSlider from '../Graph/RangeSlider.js'
 import MenuLeft from '../Graph/MenuLeft.js'
@@ -133,7 +132,6 @@ class Stats extends Component {
 
 	
 	render() {
-		console.log('mmm');
 		return (
 			<div className="container">
 				<div className='row'>
@@ -159,7 +157,7 @@ class Stats extends Component {
 					</div>
 
 					<div className='col-md-6 order-3'>
-						<PieChart1 search={this.state.searchAis} date={this.state.timeRange}/>
+						<PieChartContainer search={this.state.searchAis} date={this.state.timeRange}/>
 					</div>	
 				</div>
 				
