@@ -37,8 +37,8 @@ class Piechart extends Component {
                     users.push(top[i].label) ;
                 }
 
-                for(i=0; i < 5; i++){
-                    top[i].label = Math.round(100 * (top[i].value / sum))  + '%';
+                for(i=0; i < 5; i++) {
+                    top[i].label = top[i].value
                 }
 
         this.pie = d3.pie().value((d) => d.value);
