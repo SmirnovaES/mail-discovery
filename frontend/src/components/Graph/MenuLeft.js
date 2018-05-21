@@ -88,11 +88,6 @@ class Department extends Component {
 			elements : this.props.users,
 			checked: this.props.users.map((value) => users.indexOf(value) > -1)
 		});	
-		// if (this.props.value==='k') {
-		// 	console.log(this.props.users);
-		// 	console.log(users);
-		// 	console.log(this.props.users.map((value) => users.indexOf(value) > -1));
-		// }
 	}
 
 	changeVisible(e) {
@@ -138,12 +133,12 @@ class Department extends Component {
 				</label></dt>
 					
 				{this.state.elements.map((element, index) => (
-					<div style={this.state.pStyle} key={"user" + index}>   
-						<div className="form-check" key={"user" + index}>
-							<input type="checkbox" className="form-check-input" id={"user" + index} 
+					<div style={this.state.pStyle} key={"user" + element + index}>   
+						<div className="form-check" key={"user"  + element + index}>
+							<input type="checkbox" className="form-check-input" id={"user" + element + index} 
 								checked={this.state.checked[index]} 
 								onChange={(e) => this.changeCheckedUser.bind(this)(e, element, index)} />
-							<label className="form-check-label" htmlFor={"user" + index}> {element} </label>
+							<label className="form-check-label" htmlFor={"user" + element + index}> {element} </label>
 						</div>
 					</div>
 				))}
