@@ -13,9 +13,10 @@ class Piechart extends Component {
 
     request2(props){
         var d3 = require("d3");
-        this.state = {isReady: false, search: props.search}
-        fetch("http://localhost:8000/letters/?get_topic_top=1" +
-            '&words=' + this.state.search.split(" ").join(","))
+      
+        this.state = {isReady: false}
+        fetch("http://35.202.93.3:8000/letters/?get_topic_top=1" +
+              '&words=' + this.state.search.split(" ").join(","))
             .then(response => 
                 {
                     if (!response.ok) {

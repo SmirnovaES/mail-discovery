@@ -87,7 +87,7 @@ class Graph extends Component {
 		var readyToLoad = this.state.readyToLoad;
 		readyToLoad.date = false;
 		this.setState({readyToLoad : readyToLoad});
-		var dataDate = fetch("http://localhost:8000/letters/?get_date=1")
+		var dataDate = fetch("http://35.202.93.3:8000/letters/?get_date=1")
         .then(response => {
 			if (!response.ok) {
 				throw Error(response.statusText);
@@ -101,7 +101,7 @@ class Graph extends Component {
 		var readyToLoad = this.state.readyToLoad;
 		readyToLoad.user = false;
 		this.setState({readyToLoad : readyToLoad});
-		var dataUsers = fetch("http://localhost:8000/letters/?get_departments=1&dateFrom=" + 
+		var dataUsers = fetch("http://35.202.93.3:8000/letters/?get_departments=1&dateFrom=" + 
 			dateToJSON(this.state.timeRange.min) +'&dateTo=' + 
 			dateToJSON(this.state.timeRange.max))
 			.then(response => {
@@ -127,7 +127,7 @@ class Graph extends Component {
 		var readyToLoad = this.state.readyToLoad;
 		readyToLoad.graph = false;
 		this.setState({readyToLoad : readyToLoad});
-		var dataGraph = fetch("http://localhost:8000/letters/",{  
+		var dataGraph = fetch("http://35.202.93.3:8000/letters/",{  
 			method: 'post',  
 			headers: {  
 			"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
@@ -150,7 +150,7 @@ class Graph extends Component {
 	}
 	
 	loadTopics() {
-		var dataTopics = fetch('http://localhost:8000/letters/?get_topics=1')
+		var dataTopics = fetch('http://35.202.93.3:8000/letters/?get_topics=1')
 			.then(response => 
 			{
 				if (!response.ok) {
