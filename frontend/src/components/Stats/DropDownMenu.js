@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './DropDownMenu.css'
 
 class DropDownMenu extends Component {
 	constructor() {
@@ -32,17 +33,27 @@ class DropDownMenu extends Component {
 				</button>
 				
 				{ this.state.showMenu ? (
+					<div id="dropdown_1">
 						<div>
-							<button className="btn btn-light btn-sm dropdown-item" type="button"
-								onClick={(e) => this.updatePieChart(e, 1)}> 
-								PieChart1 
-							</button>
+							<div className="input-group">
+								<button className="btn btn-light btn-sm dropdown-item" type="button"
+									onClick={(e) => this.updatePieChart(e, 1)}> 
+									PieChart1
+									{ this.state.index === 1 ?
+										<span className="fa fa-check"></span>
+										: null } 
+								</button>
+							</div>
 
 							<button className="btn btn-light btn-sm dropdown-item" type="button" 
 								onClick={(e) => this.updatePieChart(e, 2)}> 
 								PieChart2
+								{ this.state.index === 2 ?
+									<span className="fa fa-check"></span>
+									: null }
 							</button>
 						</div>
+					</div>
 					) : (
 					   null
 					)

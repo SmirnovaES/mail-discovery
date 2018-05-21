@@ -34,7 +34,7 @@ class PieChartContainer extends Component {
 					(this.state.index === 1) ? (
 						<PieChart1 search={this.props.search} date={this.props.date}/>
 					) : (
-						<PieChart1 search="work" date={this.props.date}/>
+						<PieChart2 search={this.props.search}/>
 					)
 				}
 
